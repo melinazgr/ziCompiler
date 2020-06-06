@@ -1,0 +1,133 @@
+/* ----------------------Preliminary Declarations Section--------------------*/
+   
+import java_cup.runtime.*;
+
+
+/* error report */
+
+parser code {:
+    
+    public void report_error(String message, Object info) {
+   
+        StringBuilder m = new StringBuilder("Error");
+   
+        if (info instanceof java_cup.runtime.Symbol) {
+
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+   
+            /* Check if the line number in the input is greater or
+               equal to zero. */
+            if (s.left >= 0) {                
+                /* Add to the end of the StringBuilder error message
+                   the line number of the error in the input. */
+                m.append(" in line "+(s.left+1));   
+                /* Check if the column number in the input is greater
+                   or equal to zero. */
+                if (s.right >= 0)                    
+                    /* Add to the end of the StringBuilder error message
+                       the column number of the error in the input. */
+                    m.append(", column "+(s.right+1));
+            }
+        }
+   
+        /* Add to the end of the StringBuilder error message created in
+           this method the message that was passed into this method. */
+        m.append(" : "+message);
+   
+        System.err.println(m);
+    }
+   
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+:};
+   
+   
+/* ------------Declaration of Terminals and Non Terminals Section----------- */
+   
+/* Terminals (tokens returned by the scanner).  */
+
+terminal          NULL_STMT, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, INT, FLOAT, COMMA,
+                  LPAREN, RPAREN, LCBRA, RCBRA, ASSIGN, NOTEQUAL, EQUAL, GREAT, LESS, 
+                  LESSQ, GREATQ, ADD, SUBSTRACT, MULTI, DIV, NEWLINE;
+
+terminal String    NUM, ID, WHILE, IF, FOR, PRINT, ELSE;
+   
+/* Non terminals used in the grammar section.*/
+
+non terminal      PROGRAM,   
+                  COMP_STMT, STMT_LIST, STMT, ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT,
+                  ELSE_PART, DECLARATION, TYPE, ID_LIST, ASSIGN_EXPR, RVAL, OPASSIGN_EXPR,
+                  OPASSIGN_STMT, OPBOOL_EXPR, BOOL_EXPR, C_OP, TERM, FACTOR, EXPR;
+
+precedence left  ADD, SUBSTRACT;
+precedence left  MULTI, DIV;
+precedence left  ELSE;
+precedence left ASSIGN;
+
+start with PROGRAM;
+
+/* ----------------------------Grammar Section-------------------- */
+   
+/* The grammar for our parser. */
+
+   PROGRAM ::=  MAINCLASS ID LCBRA PUBLIC STATIC VOID MAIN LPAREN RPAREN COMP_STMT RCBRA;
+   COMP_STMT ::= LCBRA STMT_LIST RCBRA;
+   STMT_LIST ::=   STMT_LIST STMT 
+                 |  ;
+   STMT ::=    ASSIGN_STMT
+            | FOR_STMT
+            | WHILE_STMT
+            | IF_STMT
+            | COMP_STMT
+            | DECLARATION
+            | NULL_STMT
+            | PRINT LPAREN EXPR RPAREN NULL_STMT;
+
+   DECLARATION ::= TYPE ID_LIST;
+
+   TYPE  ::=   INT
+              | FLOAT;
+
+   NULL_STMT ::= ;
+
+   ID_LIST  ::=    ID COMMA ID_LIST
+                 | ID;
+   
+   ASSIGN_STMT ::= ASSIGN_EXPR;
+   ASSIGN_EXPR ::= ID ASSIGN EXPR;
+   EXPR  ::=    ASSIGN_EXPR
+              | RVAL;
+
+   FOR_STMT ::= FOR LPAREN OPASSIGN_EXPR NULL_STMT OPBOOL_EXPR NULL_STMT OPASSIGN_EXPR RPAREN STMT;
+   
+   
+   WHILE_STMT ::= WHILE LPAREN BOOL_EXPR RPAREN STMT;
+
+   IF_STMT ::= IF LPAREN BOOL_EXPR RPAREN STMT ELSE_PART;
+   
+   ELSE_PART ::=    ELSE STMT 
+                  | ;  
+
+   BOOL_EXPR::= EXPR C_OP EXPR;
+   C_OP::=     EQUAL
+            |  ASSIGN
+            |  GREAT
+            |  LESS
+            |  GREATQ
+            |  LESSQ
+            |  NOTEQUAL;
+
+   RVAL  ::=      RVAL ADD TERM
+               |  RVAL SUBSTRACT TERM
+               |  TERM;
+
+   TERM ::=    TERM MULTI FACTOR
+            |  TERM DIV FACTOR
+            |  FACTOR;
+
+   FACTOR ::=     LPAREN EXPR RPAREN
+               |  SUBSTRACT FACTOR
+               |  ID
+               |  NUM;
