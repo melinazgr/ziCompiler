@@ -35,7 +35,7 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\u10ff\u0100";
+    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -63,16 +63,17 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\1\0\1\1\1\3\22\0\1\1"+
-    "\1\4\6\0\1\5\1\6\1\7\1\10\1\11\1\12"+
-    "\1\13\1\14\12\15\1\0\1\16\1\17\1\20\1\21"+
-    "\2\0\32\22\4\0\1\23\1\0\1\24\1\25\1\26"+
-    "\1\27\1\30\1\31\1\22\1\32\1\33\2\22\1\34"+
-    "\1\35\1\36\1\37\1\40\1\22\1\41\1\42\1\43"+
-    "\1\44\1\45\1\46\3\22\1\47\1\0\1\50\u0182\0";
+    "\11\0\1\1\1\2\2\3\1\4\22\0\1\1\1\5"+
+    "\6\0\1\6\1\7\1\10\1\11\1\12\1\13\1\14"+
+    "\1\15\12\16\1\0\1\17\1\20\1\21\1\22\2\0"+
+    "\32\23\4\0\1\24\1\0\1\25\1\26\1\27\1\30"+
+    "\1\31\1\32\1\23\1\33\1\34\2\23\1\35\1\36"+
+    "\1\37\1\40\1\41\1\23\1\42\1\43\1\44\1\45"+
+    "\1\46\1\47\3\23\1\50\1\0\1\51\7\0\1\3"+
+    "\u01a2\0\2\3\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[512];
+    int [] result = new int[1024];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -96,15 +97,15 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\1\2\2\1\0\1\3\1\4\1\5\1\6\1\7"+
-    "\1\10\1\1\1\11\1\1\1\12\1\13\1\14\1\15"+
-    "\11\16\1\17\1\20\1\21\1\22\1\23\1\24\3\16"+
-    "\1\25\11\16\1\26\1\27\6\16\1\30\1\16\1\31"+
-    "\3\16\1\32\1\16\1\33\4\16\1\34\2\16\1\35"+
-    "\1\36\1\16\1\37\1\16\1\40";
+    "\1\0\1\1\2\2\1\1\1\3\1\4\1\5\1\6"+
+    "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16"+
+    "\11\17\1\20\1\21\1\22\1\12\1\23\1\24\1\25"+
+    "\3\17\1\26\11\17\1\27\1\30\6\17\1\31\1\17"+
+    "\1\32\3\17\1\33\1\17\1\34\4\17\1\35\2\17"+
+    "\1\36\1\37\1\17\1\40\1\17\1\41";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[75];
+    int [] result = new int[76];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -129,19 +130,19 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\51\0\122\0\173\0\51\0\51\0\51\0\51"+
-    "\0\51\0\51\0\244\0\51\0\315\0\51\0\366\0\u011f"+
-    "\0\u0148\0\u0171\0\u019a\0\u01c3\0\u01ec\0\u0215\0\u023e\0\u0267"+
-    "\0\u0290\0\u02b9\0\51\0\51\0\51\0\51\0\51\0\51"+
-    "\0\u02e2\0\u030b\0\u0334\0\u0171\0\u035d\0\u0386\0\u03af\0\u03d8"+
-    "\0\u0401\0\u042a\0\u0453\0\u047c\0\u04a5\0\u0171\0\u0171\0\u04ce"+
-    "\0\u04f7\0\u0520\0\u0549\0\u0572\0\u059b\0\u0171\0\u05c4\0\u05ed"+
-    "\0\u0616\0\u063f\0\u0668\0\u0171\0\u0691\0\u0171\0\u06ba\0\u06e3"+
-    "\0\u070c\0\u0735\0\u0171\0\u075e\0\u0787\0\u0171\0\u0171\0\u07b0"+
-    "\0\u0171\0\u07d9\0\u0171";
+    "\0\0\0\52\0\52\0\124\0\176\0\52\0\52\0\52"+
+    "\0\52\0\52\0\52\0\52\0\250\0\52\0\322\0\374"+
+    "\0\u0126\0\u0150\0\u017a\0\u01a4\0\u01ce\0\u01f8\0\u0222\0\u024c"+
+    "\0\u0276\0\u02a0\0\52\0\52\0\52\0\u02ca\0\52\0\52"+
+    "\0\52\0\u02f4\0\u031e\0\u0348\0\u0150\0\u0372\0\u039c\0\u03c6"+
+    "\0\u03f0\0\u041a\0\u0444\0\u046e\0\u0498\0\u04c2\0\u0150\0\u0150"+
+    "\0\u04ec\0\u0516\0\u0540\0\u056a\0\u0594\0\u05be\0\u0150\0\u05e8"+
+    "\0\u0612\0\u063c\0\u0666\0\u0690\0\u0150\0\u06ba\0\u0150\0\u06e4"+
+    "\0\u070e\0\u0738\0\u0762\0\u0150\0\u078c\0\u07b6\0\u0150\0\u0150"+
+    "\0\u07e0\0\u0150\0\u080a\0\u0150";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[75];
+    int [] result = new int[76];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -164,47 +165,47 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\0\2\2\1\3\1\4\1\5\1\6\1\7\1\10"+
-    "\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20"+
-    "\1\21\1\22\1\0\4\22\1\23\1\24\1\22\1\25"+
-    "\1\22\1\26\2\22\1\27\1\22\1\30\2\22\1\31"+
-    "\1\32\1\33\1\34\53\0\1\2\66\0\1\35\45\0"+
-    "\1\13\46\0\1\13\1\0\1\15\53\0\1\36\50\0"+
-    "\1\37\50\0\1\40\45\0\1\22\4\0\25\22\17\0"+
-    "\1\22\4\0\12\22\1\41\12\22\17\0\1\22\4\0"+
-    "\12\22\1\42\2\22\1\43\7\22\17\0\1\22\4\0"+
-    "\7\22\1\44\4\22\1\45\10\22\17\0\1\22\4\0"+
-    "\2\22\1\46\22\22\17\0\1\22\4\0\17\22\1\47"+
-    "\2\22\1\50\2\22\17\0\1\22\4\0\21\22\1\51"+
-    "\3\22\17\0\1\22\4\0\15\22\1\52\7\22\17\0"+
-    "\1\22\4\0\10\22\1\53\14\22\17\0\1\22\4\0"+
-    "\20\22\1\54\4\22\17\0\1\22\4\0\15\22\1\55"+
-    "\7\22\17\0\1\22\4\0\17\22\1\56\5\22\17\0"+
-    "\1\22\4\0\21\22\1\57\3\22\17\0\1\22\4\0"+
-    "\11\22\1\60\13\22\17\0\1\22\4\0\11\22\1\61"+
-    "\13\22\17\0\1\22\4\0\3\22\1\62\21\22\17\0"+
-    "\1\22\4\0\2\22\1\63\22\22\17\0\1\22\4\0"+
-    "\11\22\1\64\13\22\17\0\1\22\4\0\11\22\1\65"+
-    "\13\22\17\0\1\22\4\0\6\22\1\66\16\22\17\0"+
-    "\1\22\4\0\2\22\1\67\22\22\17\0\1\22\4\0"+
-    "\14\22\1\70\10\22\17\0\1\22\4\0\14\22\1\71"+
-    "\10\22\17\0\1\22\4\0\12\22\1\72\12\22\17\0"+
-    "\1\22\4\0\21\22\1\73\3\22\17\0\1\22\4\0"+
-    "\5\22\1\74\17\22\17\0\1\22\4\0\12\22\1\75"+
-    "\12\22\17\0\1\22\4\0\21\22\1\76\3\22\17\0"+
-    "\1\22\4\0\4\22\1\77\20\22\17\0\1\22\4\0"+
-    "\21\22\1\100\3\22\17\0\1\22\4\0\11\22\1\101"+
-    "\13\22\17\0\1\22\4\0\11\22\1\102\13\22\17\0"+
-    "\1\22\4\0\6\22\1\103\16\22\17\0\1\22\4\0"+
-    "\12\22\1\104\12\22\17\0\1\22\4\0\12\22\1\105"+
-    "\12\22\17\0\1\22\4\0\4\22\1\106\20\22\17\0"+
-    "\1\22\4\0\4\22\1\107\20\22\17\0\1\22\4\0"+
-    "\2\22\1\110\22\22\17\0\1\22\4\0\14\22\1\111"+
-    "\10\22\17\0\1\22\4\0\20\22\1\112\4\22\17\0"+
-    "\1\22\4\0\20\22\1\113\4\22\2\0";
+    "\1\2\2\3\1\0\1\4\1\5\1\6\1\7\1\10"+
+    "\1\11\1\12\1\13\1\2\1\14\1\15\1\16\1\17"+
+    "\1\20\1\21\1\22\1\2\4\22\1\23\1\24\1\22"+
+    "\1\25\1\22\1\26\2\22\1\27\1\22\1\30\2\22"+
+    "\1\31\1\32\1\33\1\34\54\0\1\3\70\0\1\35"+
+    "\44\0\1\36\1\0\1\15\54\0\1\37\51\0\1\40"+
+    "\51\0\1\41\46\0\1\22\4\0\25\22\20\0\1\22"+
+    "\4\0\12\22\1\42\12\22\20\0\1\22\4\0\12\22"+
+    "\1\43\2\22\1\44\7\22\20\0\1\22\4\0\7\22"+
+    "\1\45\4\22\1\46\10\22\20\0\1\22\4\0\2\22"+
+    "\1\47\22\22\20\0\1\22\4\0\17\22\1\50\2\22"+
+    "\1\51\2\22\20\0\1\22\4\0\21\22\1\52\3\22"+
+    "\20\0\1\22\4\0\15\22\1\53\7\22\20\0\1\22"+
+    "\4\0\10\22\1\54\14\22\20\0\1\36\51\0\1\22"+
+    "\4\0\20\22\1\55\4\22\20\0\1\22\4\0\15\22"+
+    "\1\56\7\22\20\0\1\22\4\0\17\22\1\57\5\22"+
+    "\20\0\1\22\4\0\21\22\1\60\3\22\20\0\1\22"+
+    "\4\0\11\22\1\61\13\22\20\0\1\22\4\0\11\22"+
+    "\1\62\13\22\20\0\1\22\4\0\3\22\1\63\21\22"+
+    "\20\0\1\22\4\0\2\22\1\64\22\22\20\0\1\22"+
+    "\4\0\11\22\1\65\13\22\20\0\1\22\4\0\11\22"+
+    "\1\66\13\22\20\0\1\22\4\0\6\22\1\67\16\22"+
+    "\20\0\1\22\4\0\2\22\1\70\22\22\20\0\1\22"+
+    "\4\0\14\22\1\71\10\22\20\0\1\22\4\0\14\22"+
+    "\1\72\10\22\20\0\1\22\4\0\12\22\1\73\12\22"+
+    "\20\0\1\22\4\0\21\22\1\74\3\22\20\0\1\22"+
+    "\4\0\5\22\1\75\17\22\20\0\1\22\4\0\12\22"+
+    "\1\76\12\22\20\0\1\22\4\0\21\22\1\77\3\22"+
+    "\20\0\1\22\4\0\4\22\1\100\20\22\20\0\1\22"+
+    "\4\0\21\22\1\101\3\22\20\0\1\22\4\0\11\22"+
+    "\1\102\13\22\20\0\1\22\4\0\11\22\1\103\13\22"+
+    "\20\0\1\22\4\0\6\22\1\104\16\22\20\0\1\22"+
+    "\4\0\12\22\1\105\12\22\20\0\1\22\4\0\12\22"+
+    "\1\106\12\22\20\0\1\22\4\0\4\22\1\107\20\22"+
+    "\20\0\1\22\4\0\4\22\1\110\20\22\20\0\1\22"+
+    "\4\0\2\22\1\111\22\22\20\0\1\22\4\0\14\22"+
+    "\1\112\10\22\20\0\1\22\4\0\20\22\1\113\4\22"+
+    "\20\0\1\22\4\0\20\22\1\114\4\22\2\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[2050];
+    int [] result = new int[2100];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -247,11 +248,11 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\1\1\11\1\1\1\0\6\11\1\1\1\11\1\1"+
-    "\1\11\14\1\6\11\53\1";
+    "\1\0\2\11\2\1\7\11\1\1\1\11\14\1\3\11"+
+    "\1\1\3\11\53\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[75];
+    int [] result = new int[76];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -340,6 +341,13 @@ class Lexer implements java_cup.runtime.Scanner {
 
     private Symbol symbol(int type, Object value) {
         return new Symbol(type, yyline, yycolumn, value);
+    }
+
+    
+    private void print_debug(String text) {
+        if(Main.Debug){
+            System.out.println(text);
+        }  
     }
 
 
@@ -744,170 +752,177 @@ class Lexer implements java_cup.runtime.Scanner {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          { return new java_cup.runtime.Symbol(sym.EOF); }
+              {
+                return symbol(sym.EOF);
+              }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { System.out.println(yytext() );return symbol(sym.NUM);
+            { return symbol(sym.error);
             }
             // fall through
-          case 33: break;
+          case 34: break;
           case 2:
             { 
             }
             // fall through
-          case 34: break;
-          case 3:
-            { System.out.println(" ( "); return symbol(sym.LPAREN);
-            }
-            // fall through
           case 35: break;
-          case 4:
-            { System.out.println(" ) "); return symbol(sym.RPAREN);
+          case 3:
+            { print_debug("("); return symbol(sym.LPAREN);
             }
             // fall through
           case 36: break;
-          case 5:
-            { System.out.println(" * "); return symbol(sym.MULTI);
+          case 4:
+            { print_debug(")"); return symbol(sym.RPAREN);
             }
             // fall through
           case 37: break;
-          case 6:
-            { System.out.println(" + "); return symbol(sym.ADD);
+          case 5:
+            { print_debug("*"); return symbol(sym.MULTI);
             }
             // fall through
           case 38: break;
-          case 7:
-            { System.out.println(" , "); return symbol(sym.COMMA);
+          case 6:
+            { print_debug("+"); return symbol(sym.ADD);
             }
             // fall through
           case 39: break;
-          case 8:
-            { System.out.println(" - "); return symbol(sym.SUBSTRACT);
+          case 7:
+            { print_debug(","); return symbol(sym.COMMA);
             }
             // fall through
           case 40: break;
-          case 9:
-            { System.out.println(" / "); return symbol(sym.DIV);
+          case 8:
+            { print_debug("-"); return symbol(sym.MINUS);
             }
             // fall through
           case 41: break;
-          case 10:
-            { System.out.println(";");return symbol(sym.NULL_STMT);
+          case 9:
+            { print_debug("/"); return symbol(sym.DIV);
             }
             // fall through
           case 42: break;
-          case 11:
-            { System.out.println(" < "); return symbol(sym.LESS);
+          case 10:
+            { print_debug(yytext());return symbol(sym.NUM);
             }
             // fall through
           case 43: break;
-          case 12:
-            { System.out.println(" = "); return symbol(sym.ASSIGN);
+          case 11:
+            { print_debug(";");return symbol(sym.SEMICOLON);
             }
             // fall through
           case 44: break;
-          case 13:
-            { System.out.println(" > "); return symbol(sym.GREAT);
+          case 12:
+            { print_debug("<"); return symbol(sym.LESS);
             }
             // fall through
           case 45: break;
-          case 14:
-            { System.out.println(yytext() );return symbol(sym.ID) ;
+          case 13:
+            { print_debug("="); return symbol(sym.ASSIGN);
             }
             // fall through
           case 46: break;
-          case 15:
-            { System.out.println(" { "); return symbol(sym.LCBRA);
+          case 14:
+            { print_debug(">"); return symbol(sym.GREAT);
             }
             // fall through
           case 47: break;
-          case 16:
-            { System.out.println(" } "); return symbol(sym.RCBRA);
+          case 15:
+            { print_debug(yytext());return symbol(sym.ID);
             }
             // fall through
           case 48: break;
-          case 17:
-            { System.out.println(" != "); return symbol(sym.NOTEQUAL);
+          case 16:
+            { print_debug("{"); return symbol(sym.LCBRA);
             }
             // fall through
           case 49: break;
-          case 18:
-            { System.out.println(" <= "); return symbol(sym.LESSQ);
+          case 17:
+            { print_debug("}"); return symbol(sym.RCBRA);
             }
             // fall through
           case 50: break;
-          case 19:
-            { System.out.println(" == "); return symbol(sym.EQUAL);
+          case 18:
+            { print_debug("!="); return symbol(sym.NOTEQUAL);
             }
             // fall through
           case 51: break;
-          case 20:
-            { System.out.println(" >= "); return symbol(sym.GREATQ);
+          case 19:
+            { print_debug("<="); return symbol(sym.LESSQ);
             }
             // fall through
           case 52: break;
-          case 21:
-            { System.out.println(" if "); return symbol(sym.IF);
+          case 20:
+            { print_debug("=="); return symbol(sym.EQUAL);
             }
             // fall through
           case 53: break;
-          case 22:
-            { System.out.println(" for "); return symbol(sym.FOR);
+          case 21:
+            { print_debug(">="); return symbol(sym.GREATQ);
             }
             // fall through
           case 54: break;
-          case 23:
-            { System.out.println(" int "); return symbol(sym.INT);
+          case 22:
+            { print_debug("if"); return symbol(sym.IF);
             }
             // fall through
           case 55: break;
-          case 24:
-            { System.out.println(" else "); return symbol(sym.ELSE);
+          case 23:
+            { print_debug("for"); return symbol(sym.FOR);
             }
             // fall through
           case 56: break;
-          case 25:
-            { System.out.println(" main "); return symbol(sym.MAIN);
+          case 24:
+            { print_debug("int"); return symbol(sym.INT);
             }
             // fall through
           case 57: break;
-          case 26:
-            { System.out.println(" void "); return symbol(sym.VOID);
+          case 25:
+            { print_debug("else"); return symbol(sym.ELSE);
             }
             // fall through
           case 58: break;
-          case 27:
-            { System.out.println(" float "); return symbol(sym.FLOAT);
+          case 26:
+            { print_debug("main"); return symbol(sym.MAIN);
             }
             // fall through
           case 59: break;
-          case 28:
-            { System.out.println(" while "); return symbol(sym.WHILE);
+          case 27:
+            { print_debug("void"); return symbol(sym.VOID);
             }
             // fall through
           case 60: break;
-          case 29:
-            { System.out.println(" public "); return symbol(sym.PUBLIC);
+          case 28:
+            { print_debug("float"); return symbol(sym.FLOAT);
             }
             // fall through
           case 61: break;
-          case 30:
-            { System.out.println(" static "); return symbol(sym.STATIC);
+          case 29:
+            { print_debug("while"); return symbol(sym.WHILE);
             }
             // fall through
           case 62: break;
-          case 31:
-            { System.out.println(" println "); return symbol(sym.PRINT);
+          case 30:
+            { print_debug("public"); return symbol(sym.PUBLIC);
             }
             // fall through
           case 63: break;
-          case 32:
-            { System.out.println(" mainclass "); return symbol(sym.MAINCLASS);
+          case 31:
+            { print_debug("static"); return symbol(sym.STATIC);
             }
             // fall through
           case 64: break;
+          case 32:
+            { print_debug("println"); return symbol(sym.PRINT);
+            }
+            // fall through
+          case 65: break;
+          case 33:
+            { print_debug("mainclass"); return symbol(sym.MAINCLASS);
+            }
+            // fall through
+          case 66: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

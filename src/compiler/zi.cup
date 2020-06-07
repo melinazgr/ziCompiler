@@ -1,6 +1,7 @@
 /* ----------------------Preliminary Declarations Section--------------------*/
    
 import java_cup.runtime.*;
+import Nodes.*;
 
 
 /* error report */
@@ -48,23 +49,29 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal          NULL_STMT, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, INT, FLOAT, COMMA,
-                  LPAREN, RPAREN, LCBRA, RCBRA, ASSIGN, NOTEQUAL, EQUAL, GREAT, LESS, 
-                  LESSQ, GREATQ, ADD, SUBSTRACT, MULTI, DIV, NEWLINE;
+terminal          SEMICOLON, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, COMMA,
+                  LPAREN, RPAREN, LCBRA, RCBRA, INT, FLOAT;
 
-terminal String    NUM, ID, WHILE, IF, FOR, PRINT, ELSE;
+terminal Operator NOTEQUAL, EQUAL, GREAT, LESS, LESSQ, GREATQ, ASSIGN, ADD, MINUS, MULTI, DIV;
+
+terminal String     WHILE, IF, FOR, PRINT, ELSE, ID, NUM ;
+
+
    
 /* Non terminals used in the grammar section.*/
 
-non terminal      PROGRAM,   
-                  COMP_STMT, STMT_LIST, STMT, ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT,
-                  ELSE_PART, DECLARATION, TYPE, ID_LIST, ASSIGN_EXPR, RVAL, OPASSIGN_EXPR,
-                  OPASSIGN_STMT, OPBOOL_EXPR, BOOL_EXPR, C_OP, TERM, FACTOR, EXPR;
+nonterminal    ProgramNode PROGRAM;
+nonterminal    NULL_STMT, ID_LIST ;
+nonterminal VariableType TYPE;
 
-precedence left  ADD, SUBSTRACT;
+nonterminal StatementListNode STMT_LIST;
+nonterminal StatementNode ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT, COMP_STMT, STMT, DECLARATION;
+nonterminal ExpressionNode  ASSIGN_EXPR, BOOL_EXPR, EXPRRVAL, OPASSIGN_EXPR, OPBOOL_EXPR, RVAL, TERM, FACTOR, EXPR;
+nonterminal Operator C_OP;
+
+precedence left  ADD, MINUS;
 precedence left  MULTI, DIV;
-precedence left  ELSE;
-precedence left ASSIGN;
+
 
 start with PROGRAM;
 
@@ -72,62 +79,195 @@ start with PROGRAM;
    
 /* The grammar for our parser. */
 
-   PROGRAM ::=  MAINCLASS ID LCBRA PUBLIC STATIC VOID MAIN LPAREN RPAREN COMP_STMT RCBRA;
+   PROGRAM ::= MAINCLASS ID:id LCBRA PUBLIC STATIC VOID MAIN LPAREN RPAREN COMP_STMT:compStmt RCBRA
+               {:
+                  RESULT = new ProgramNode (id, compStmt);
+               :};
+
    COMP_STMT ::= LCBRA STMT_LIST RCBRA;
-   STMT_LIST ::=   STMT_LIST STMT 
-                 |  ;
-   STMT ::=    ASSIGN_STMT
+
+   STMT_LIST ::= 
+                  {:
+                     RESULT = new StatementListNode();
+                  :}
+                 |  
+                  STMT_LIST:stmtList STMT:stmt
+                  {:
+                     stmtList.addStatement(stmt);
+                     RESULT = stmtList;
+                  :};
+
+   STMT ::=   ASSIGN_STMT:assignStmt
             | FOR_STMT
             | WHILE_STMT
             | IF_STMT
             | COMP_STMT
             | DECLARATION
             | NULL_STMT
-            | PRINT LPAREN EXPR RPAREN NULL_STMT;
+            | error SEMICOLON
+            | PRINT LPAREN EXPR RPAREN SEMICOLON;
 
-   DECLARATION ::= TYPE ID_LIST;
+   DECLARATION ::= TYPE ID_LIST SEMICOLON;
 
    TYPE  ::=   INT
-              | FLOAT;
+               {:
+                  RESULT = VariableType.INT;
+               :}
+              | 
+               FLOAT
+               {:
+                  RESULT = VariableType.FLOAT;
+               :};
 
-   NULL_STMT ::= ;
+   NULL_STMT ::= SEMICOLON;
 
-   ID_LIST  ::=    ID COMMA ID_LIST
-                 | ID;
+   ID_LIST  ::=   ID COMMA ID_LIST
+                 | 
+                  ID:id
+                  {:
+                     RESULT = new IdNode(id);
+                  :};
    
-   ASSIGN_STMT ::= ASSIGN_EXPR;
-   ASSIGN_EXPR ::= ID ASSIGN EXPR;
-   EXPR  ::=    ASSIGN_EXPR
-              | RVAL;
+   ASSIGN_STMT ::= ASSIGN_EXPR:assignExpr SEMICOLON
+                  {:
+                     RESULT = new AssignStmtNode(assignExpr);
+                  :};
+                   
+   ASSIGN_EXPR ::= ID:id ASSIGN EXPR:expr
+                   {:
+                     RESULT = new AssignExpressionNode (id, Operator.ASSIGN, expr);
+                   :};
 
-   FOR_STMT ::= FOR LPAREN OPASSIGN_EXPR NULL_STMT OPBOOL_EXPR NULL_STMT OPASSIGN_EXPR RPAREN STMT;
+   EXPR  ::=    ASSIGN_EXPR:assignExpr 
+               {:
+                  RESULT = assignExpr;
+               :}
+              | 
+               RVAL
+               {:
+                     RESULT = new ExpressionNode();
+               :};
+
+   FOR_STMT ::= FOR LPAREN OPASSIGN_EXPR:opAssignExpr1 SEMICOLON OPBOOL_EXPR:opBoolExpr SEMICOLON OPASSIGN_EXPR:opAssignExpr2 RPAREN STMT:stmt
+               {:
+                  RESULT = new ForStmtNode(opAssignExpr1, opBoolExpr, opAssignExpr2, stmt);
+               :};
    
    
-   WHILE_STMT ::= WHILE LPAREN BOOL_EXPR RPAREN STMT;
+   WHILE_STMT ::= WHILE:whileStmt LPAREN BOOL_EXPR:boolExpr RPAREN STMT:stmt
+                  {:
+                     RESULT = new WhileStmtNode(boolExpr, stmt);
+                  :};
 
-   IF_STMT ::= IF LPAREN BOOL_EXPR RPAREN STMT ELSE_PART;
+   IF_STMT ::=    IF LPAREN BOOL_EXPR:boolExpr RPAREN STMT:stmt1 ELSE STMT:stmt2 
+                  {:
+                     RESULT = new IfElseStmtNode (boolExpr, stmt1, stmt2);
+                  :} 
+               |  
+                  IF LPAREN BOOL_EXPR:boolExpr RPAREN STMT:stmt
+                  {:
+                     RESULT = new IfStmtNode (boolExpr, stmt);
+                  :};
    
-   ELSE_PART ::=    ELSE STMT 
-                  | ;  
+   OPASSIGN_EXPR ::=    ASSIGN_EXPR:assignExpr 
+                        {:
+                           RESULT = assignExpr;
+                        :}
+                        | ;
 
-   BOOL_EXPR::= EXPR C_OP EXPR;
-   C_OP::=     EQUAL
-            |  ASSIGN
-            |  GREAT
-            |  LESS
-            |  GREATQ
-            |  LESSQ
-            |  NOTEQUAL;
 
-   RVAL  ::=      RVAL ADD TERM
-               |  RVAL SUBSTRACT TERM
-               |  TERM;
+   OPBOOL_EXPR ::=    BOOL_EXPR:boolExpr 
+                     {:
+                        RESULT = boolExpr;
+                     :}
+                     | ;
 
-   TERM ::=    TERM MULTI FACTOR
-            |  TERM DIV FACTOR
-            |  FACTOR;
+   BOOL_EXPR::= EXPR:expr1 C_OP:operator EXPR:expr2
+               {:
+                  RESULT = new BoolExpressionNode (expr1, operator, expr2);
+               :};
 
-   FACTOR ::=     LPAREN EXPR RPAREN
-               |  SUBSTRACT FACTOR
-               |  ID
-               |  NUM;
+   C_OP::=     EQUAL 
+               {: 
+                  RESULT = Operator.EQUAL;
+               :}
+            |  
+               ASSIGN
+               {: 
+                  RESULT = Operator.ASSIGN;
+               :}
+            |  
+               GREAT
+               {: 
+                  RESULT = Operator.GREAT;
+               :}
+            |  
+               LESS
+               {: 
+                  RESULT = Operator.LESS;
+               :}
+            |  
+               GREATQ
+               {: 
+                  RESULT = Operator.GREATQ;
+               :}
+            |  
+               LESSQ
+               {: 
+                  RESULT = Operator.LESSQ;
+               :}
+            |  
+               NOTEQUAL
+               {: 
+                  RESULT = Operator.NOTEQUAL;
+               :};
+
+   RVAL  ::=      RVAL:rval ADD TERM:term
+                  {:
+                     RESULT = new AdditionNode (rval, term);
+                  :}
+               |  
+                  RVAL:rval MINUS TERM:term
+                  {:
+                     RESULT = new SubstructionNode (rval, term);
+                  :}
+               | 
+                  TERM:term
+                  {:
+                     RESULT = term;
+                  :};
+
+   TERM ::=    TERM:term MULTI FACTOR:factor
+               {:
+                  RESULT = new MultiNode (term, factor);
+               :}
+            |  
+               TERM:term DIV FACTOR:factor
+               {:
+                  RESULT = new DivisionNode (term, factor);
+               :}
+            |  
+               FACTOR:factor
+               {:
+                  RESULT = factor;
+               :};
+
+   FACTOR ::=     LPAREN EXPR:expr RPAREN
+                  {:
+                     RESULT = expr;
+                  :}
+               |  
+                  MINUS FACTOR:factor
+                  {:
+                      RESULT = new NegateNode( factor );
+                  :}
+               |  
+                  ID:id
+                  {:
+                     RESULT = new IdNode(id);
+                  :}
+               |  
+                  NUM:number
+                  {:
+                     RESULT = new NumberNode(number);
+                  :};

@@ -7,6 +7,7 @@
 public interface sym {
   /* terminals */
   public static final int ELSE = 33;
+  public static final int SEMICOLON = 2;
   public static final int RPAREN = 12;
   public static final int INT = 8;
   public static final int EQUAL = 17;
@@ -26,7 +27,6 @@ public interface sym {
   public static final int FLOAT = 9;
   public static final int EOF = 0;
   public static final int LESSQ = 20;
-  public static final int NULL_STMT = 2;
   public static final int RCBRA = 14;
   public static final int MAIN = 7;
   public static final int DIV = 25;
@@ -43,7 +43,7 @@ public interface sym {
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "NULL_STMT",
+  "SEMICOLON",
   "MAINCLASS",
   "PUBLIC",
   "STATIC",

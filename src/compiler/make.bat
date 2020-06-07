@@ -6,26 +6,26 @@ set CUPJARRUNTIME=c:\CUP\lib\java-cup-11b-runtime.jar
 set CUP=java -jar %CUPJAR%
 
 echo .
-echo generating flex file
+echo %JFLEX% --nobak zi.flex
 call %JFLEX% --nobak zi.flex
 if %ERRORLEVEL% NEQ 0 goto exit
 
 echo .
-echo generating cup file
-%CUP% -expect 0 -progress -interface zi.cup
+echo %CUP% -expect 0 -progress -interface zi.cup
+%CUP% -expect 2 -progress -interface zi.cup
 if %ERRORLEVEL% NEQ 0 goto exit
 
 echo .
 echo javac -cp %CUPJAR% Main.java sym.java Lexer.java parser.java
-javac -d Classes -cp %CUPJAR% Main.java sym.java Lexer.java parser.java 
+javac -d Classes -cp %CUPJAR% *.java Nodes\*.java
 if %ERRORLEVEL% NEQ 0 goto exit
 
 
 echo .
-echo jar cmf manifest.mf Zi.jar  Main.class sym.class Lexer.class parser.class
+echo creating jar file
 
 cd classes
-jar cmf ..\manifest.mf ..\Zi.jar *.class
+jar cmf ..\manifest.mf ..\Zi.jar *.class Nodes\*.class
 if %ERRORLEVEL% NEQ 0 goto exit
 cd ..
 

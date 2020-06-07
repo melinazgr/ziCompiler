@@ -48,7 +48,7 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal          NULL_STMT, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, INT, FLOAT, COMMA,
+terminal          SEMICOLON, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, INT, FLOAT, COMMA,
                   LPAREN, RPAREN, LCBRA, RCBRA, ASSIGN, NOTEQUAL, EQUAL, GREAT, LESS, 
                   LESSQ, GREATQ, ADD, SUBSTRACT, MULTI, DIV, NEWLINE;
 
@@ -56,7 +56,7 @@ terminal String    NUM, ID, WHILE, IF, FOR, PRINT, ELSE;
    
 /* Non terminals used in the grammar section.*/
 
-non terminal      PROGRAM,   
+non terminal      NULL_STMT, PROGRAM,   
                   COMP_STMT, STMT_LIST, STMT, ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT,
                   ELSE_PART, DECLARATION, TYPE, ID_LIST, ASSIGN_EXPR, RVAL, OPASSIGN_EXPR,
                   OPASSIGN_STMT, OPBOOL_EXPR, BOOL_EXPR, C_OP, TERM, FACTOR, EXPR;
@@ -83,24 +83,24 @@ start with PROGRAM;
             | COMP_STMT
             | DECLARATION
             | NULL_STMT
-            | PRINT LPAREN EXPR RPAREN NULL_STMT;
+            | PRINT LPAREN EXPR RPAREN SEMICOLON;
 
-   DECLARATION ::= TYPE ID_LIST;
+   DECLARATION ::= TYPE ID_LIST SEMICOLON;
 
    TYPE  ::=   INT
               | FLOAT;
 
-   NULL_STMT ::= ;
+   NULL_STMT ::= SEMICOLON;
 
    ID_LIST  ::=    ID COMMA ID_LIST
                  | ID;
    
-   ASSIGN_STMT ::= ASSIGN_EXPR;
+   ASSIGN_STMT ::= ASSIGN_EXPR SEMICOLON;
    ASSIGN_EXPR ::= ID ASSIGN EXPR;
    EXPR  ::=    ASSIGN_EXPR
               | RVAL;
 
-   FOR_STMT ::= FOR LPAREN OPASSIGN_EXPR NULL_STMT OPBOOL_EXPR NULL_STMT OPASSIGN_EXPR RPAREN STMT;
+   FOR_STMT ::= FOR LPAREN OPASSIGN_EXPR SEMICOLON OPBOOL_EXPR SEMICOLON OPASSIGN_EXPR RPAREN STMT;
    
    
    WHILE_STMT ::= WHILE LPAREN BOOL_EXPR RPAREN STMT;

@@ -60,7 +60,7 @@ id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
 <YYINITIAL> {
    
     /* Return the token NULL-STMT declared in the class sym that was found. */
-    ";"                { System.out.println(";");return symbol(sym.NULL_STMT); }
+    ";"                { System.out.println(";");return symbol(sym.SEMICOLON); }
     {LineTerminator}   { }
     {WhiteSpace}       { }   
    

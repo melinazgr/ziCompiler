@@ -794,7 +794,7 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 41: break;
           case 10:
-            { System.out.println(";");return symbol(sym.NULL_STMT);
+            { System.out.println(";");return symbol(sym.SEMICOLON);
             }
             // fall through
           case 42: break;

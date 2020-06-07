@@ -1,17 +1,26 @@
+import Nodes.*;
 import java.io.*;
-import java_cup.runtime.ComplexSymbolFactory;
 
 public class Main {
+
+    public static boolean Debug = false;
     public static void main(String[] argv)
     {
-        System.out.println("Starting program: " + argv[0]);
+        System.out.println("Compiling program: " + argv[0]);
         /* Start the parser */
-        try {
-        parser p = new parser(new Lexer(new FileReader(argv[0])));
-        Object result = p.parse().value;
+        try 
+        {
+            parser p = new parser(new Lexer(new FileReader(argv[0])));
+            ProgramNode result =(ProgramNode) p.parse().value;
         } catch (Exception e) {
-        /* do cleanup here -- possibly rethrow e */
-        e.printStackTrace();
+            /* do cleanup here -- possibly rethrow e */
+            e.printStackTrace();
         }
     }
-    }
+
+}
+
+
+    //TODO if else grammar conflict
+    //TODO assign grammar conflict
+    //TODO parse cmd args

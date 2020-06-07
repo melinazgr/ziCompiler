@@ -32,6 +32,13 @@ import java_cup.runtime.*;
     private Symbol symbol(int type, Object value) {
         return new Symbol(type, yyline, yycolumn, value);
     }
+
+    
+    private void print_debug(String text) {
+        if(Main.Debug){
+            System.out.println(text);
+        }  
+    }
 %}
    
 
@@ -43,10 +50,10 @@ LineTerminator = \r|\n|\r\n
    
 /* White space is a line terminator, space, tab, or line feed. */
 
-WhiteSpace = {LineTerminator} | [ \t\f]
+WhiteSpace = {LineTerminator} | [\ \t]
    
 
-num = [0-9]*("."[0-9]*)?    
+num = [0-9]+("."[0-9]*)?    
 id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
 
    
@@ -55,48 +62,44 @@ id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
    
 /* regular expressions and actions */
    
-   /* YYINITIAL is the state at which the lexer begins scanning */
-   
-<YYINITIAL> {
-   
     /* Return the token NULL-STMT declared in the class sym that was found. */
-    ";"                { System.out.println(";");return symbol(sym.NULL_STMT); }
+    ";"                {  print_debug(";");return symbol(sym.SEMICOLON); }
     {LineTerminator}   { }
     {WhiteSpace}       { }   
    
     /* Print the token found that was declared in the class sym and then return it. */
 
-      "+"                { System.out.println(" + "); return symbol(sym.ADD); }
-      "-"                { System.out.println(" - "); return symbol(sym.SUBSTRACT); }
-      "*"                { System.out.println(" * "); return symbol(sym.MULTI); }
-      "/"                { System.out.println(" / "); return symbol(sym.DIV); }
-      "("                { System.out.println(" ( "); return symbol(sym.LPAREN); }
-      ")"                { System.out.println(" ) "); return symbol(sym.RPAREN); }
-      "{"                { System.out.println(" { "); return symbol(sym.LCBRA); }
-      "}"                { System.out.println(" } "); return symbol(sym.RCBRA); }
-      "="                { System.out.println(" = "); return symbol(sym.ASSIGN); }
-      "!="               { System.out.println(" != "); return symbol(sym.NOTEQUAL); }
-      "=="               { System.out.println(" == "); return symbol(sym.EQUAL); }
-      ">"                { System.out.println(" > "); return symbol(sym.GREAT); }
-      "<"                { System.out.println(" < "); return symbol(sym.LESS); }
-      "<="               { System.out.println(" <= "); return symbol(sym.LESSQ); }
-      ">="               { System.out.println(" >= "); return symbol(sym.GREATQ); }
-      "while"            { System.out.println(" while "); return symbol(sym.WHILE); }
-      "for"              { System.out.println(" for "); return symbol(sym.FOR); }
-      "if"               { System.out.println(" if "); return symbol(sym.IF); }
-      "else"             { System.out.println(" else "); return symbol(sym.ELSE); }
-      "println"          { System.out.println(" println "); return symbol(sym.PRINT); }
-      "mainclass"        {System.out.println(" mainclass "); return symbol(sym.MAINCLASS);}
-      "public"           {System.out.println(" public "); return symbol(sym.PUBLIC);}
-      "static"           {System.out.println(" static "); return symbol(sym.STATIC);}
-      "void"             {System.out.println(" void "); return symbol(sym.VOID);}
-      "main"             {System.out.println(" main "); return symbol(sym.MAIN);}
-      "int"              {System.out.println(" int "); return symbol(sym.INT);}
-      "float"            {System.out.println(" float "); return symbol(sym.FLOAT);}
-      ","                {System.out.println(" , "); return symbol(sym.COMMA);}
+      "+"                { print_debug("+"); return symbol(sym.ADD);}
+      "-"                { print_debug("-"); return symbol(sym.MINUS);}
+      "*"                { print_debug("*"); return symbol(sym.MULTI);}
+      "/"                { print_debug("/"); return symbol(sym.DIV);}
+      "("                { print_debug("("); return symbol(sym.LPAREN);}
+      ")"                { print_debug(")"); return symbol(sym.RPAREN);}
+      "{"                { print_debug("{"); return symbol(sym.LCBRA);}
+      "}"                { print_debug("}"); return symbol(sym.RCBRA);}
+      "="                { print_debug("="); return symbol(sym.ASSIGN);}
+      "!="               { print_debug("!="); return symbol(sym.NOTEQUAL);}
+      "=="               { print_debug("=="); return symbol(sym.EQUAL);}
+      ">"                { print_debug(">"); return symbol(sym.GREAT);}
+      "<"                { print_debug("<"); return symbol(sym.LESS);}
+      "<="               { print_debug("<="); return symbol(sym.LESSQ);}
+      ">="               { print_debug(">="); return symbol(sym.GREATQ);}
+      "while"            { print_debug("while"); return symbol(sym.WHILE);}
+      "for"              { print_debug("for"); return symbol(sym.FOR);}
+      "if"               { print_debug("if"); return symbol(sym.IF);}
+      "else"             { print_debug("else"); return symbol(sym.ELSE);}
+      "println"          { print_debug("println"); return symbol(sym.PRINT);}
+      "mainclass"        { print_debug("mainclass"); return symbol(sym.MAINCLASS);}
+      "public"           { print_debug("public"); return symbol(sym.PUBLIC);}
+      "static"           { print_debug("static"); return symbol(sym.STATIC);}
+      "void"             { print_debug("void"); return symbol(sym.VOID);}
+      "main"             { print_debug("main"); return symbol(sym.MAIN);}
+      "int"              { print_debug("int"); return symbol(sym.INT);}
+      "float"            { print_debug("float"); return symbol(sym.FLOAT);}
+      ","                { print_debug(","); return symbol(sym.COMMA);}
     
+    {num}                { print_debug(yytext());return symbol(sym.NUM);}
+    {id}                 { print_debug(yytext());return symbol(sym.ID);}
 
-    {num}              { System.out.println(yytext() );return symbol(sym.NUM); }
-    {id}               { System.out.println(yytext() );return symbol(sym.ID) ; }
-
-     }
+    .                    {return symbol(sym.error);}
+    <<EOF>>              {return symbol(sym.EOF);}
