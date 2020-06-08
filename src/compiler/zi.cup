@@ -1,6 +1,7 @@
 /* ----------------------Preliminary Declarations Section--------------------*/
    
 import java_cup.runtime.*;
+import java.util.*;
 import Nodes.*;
 
 
@@ -50,9 +51,9 @@ parser code {:
 /* Terminals (tokens returned by the scanner).  */
 
 terminal          SEMICOLON, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, COMMA,
-                  LPAREN, RPAREN, LCBRA, RCBRA, INT, FLOAT;
+                  LPAREN, RPAREN, LCBRA, RCBRA, INT, FLOAT, ASSIGN, ADD, MINUS, MULTI, DIV;
 
-terminal Operator NOTEQUAL, EQUAL, GREAT, LESS, LESSQ, GREATQ, ASSIGN, ADD, MINUS, MULTI, DIV;
+terminal Operator NOTEQUAL, EQUAL, GREAT, LESS, LESSQ, GREATQ;
 
 terminal String     WHILE, IF, FOR, PRINT, ELSE, ID, NUM ;
 
@@ -61,7 +62,8 @@ terminal String     WHILE, IF, FOR, PRINT, ELSE, ID, NUM ;
 /* Non terminals used in the grammar section.*/
 
 nonterminal    ProgramNode PROGRAM;
-nonterminal    NULL_STMT, ID_LIST ;
+nonterminal    NULL_STMT;
+nonterminal ArrayList<String>  ID_LIST; 
 nonterminal VariableType TYPE;
 
 nonterminal StatementListNode STMT_LIST;
@@ -84,7 +86,10 @@ start with PROGRAM;
                   RESULT = new ProgramNode (id, compStmt);
                :};
 
-   COMP_STMT ::= LCBRA STMT_LIST RCBRA;
+   COMP_STMT ::= LCBRA STMT_LIST:stmtList RCBRA
+                  {:
+                     RESULT = stmtList;
+                  :};
 
    STMT_LIST ::= 
                   {:
@@ -98,16 +103,44 @@ start with PROGRAM;
                   :};
 
    STMT ::=   ASSIGN_STMT:assignStmt
-            | FOR_STMT
-            | WHILE_STMT
-            | IF_STMT
-            | COMP_STMT
-            | DECLARATION
-            | NULL_STMT
+            {:
+               RESULT = assignStmt;
+            :}
+            | FOR_STMT:forstmt
+            {:
+               RESULT = forstmt;
+            :}
+            | WHILE_STMT:whilestmt
+            {:
+               RESULT = whilestmt;
+            :}
+            | IF_STMT:ifstmt
+            {:
+               RESULT = ifstmt;
+            :}
+            | COMP_STMT:compstmt
+            {:
+               RESULT = compstmt;
+            :}
+            | DECLARATION:decstmt
+            {:
+               RESULT = decstmt;
+            :}
+            | NULL_STMT:nullstmt
+            {:
+               RESULT = new NullStmtNode();
+            :}
             | error SEMICOLON
-            | PRINT LPAREN EXPR RPAREN SEMICOLON;
+            | PRINT LPAREN EXPR:expr RPAREN SEMICOLON
+            {:
+               RESULT = new FunctionCallNode("println", expr);
+            :};
 
-   DECLARATION ::= TYPE ID_LIST SEMICOLON;
+   DECLARATION ::= TYPE:type ID_LIST:list SEMICOLON 
+                     {:
+                        RESULT = new DeclarationNode (type, list);
+                     :};
+
 
    TYPE  ::=   INT
                {:
@@ -121,12 +154,19 @@ start with PROGRAM;
 
    NULL_STMT ::= SEMICOLON;
 
-   ID_LIST  ::=   ID COMMA ID_LIST
+   ID_LIST  ::=   ID:id COMMA ID_LIST:list
+                  {:
+                     list.add(0, id);
+                     RESULT = list;
+                  :}
                  | 
                   ID:id
                   {:
-                     RESULT = new IdNode(id);
-                  :};
+                     ArrayList <String> list = new ArrayList <String>();
+                     list.add(0, id);
+                     RESULT = list;
+                  :}
+                  ;
    
    ASSIGN_STMT ::= ASSIGN_EXPR:assignExpr SEMICOLON
                   {:
@@ -135,7 +175,7 @@ start with PROGRAM;
                    
    ASSIGN_EXPR ::= ID:id ASSIGN EXPR:expr
                    {:
-                     RESULT = new AssignExpressionNode (id, Operator.ASSIGN, expr);
+                     RESULT = new AssignExpressionNode (id, expr);
                    :};
 
    EXPR  ::=    ASSIGN_EXPR:assignExpr 
@@ -143,9 +183,9 @@ start with PROGRAM;
                   RESULT = assignExpr;
                :}
               | 
-               RVAL
+               RVAL:rval
                {:
-                     RESULT = new ExpressionNode();
+                     RESULT = rval;
                :};
 
    FOR_STMT ::= FOR LPAREN OPASSIGN_EXPR:opAssignExpr1 SEMICOLON OPBOOL_EXPR:opBoolExpr SEMICOLON OPASSIGN_EXPR:opAssignExpr2 RPAREN STMT:stmt

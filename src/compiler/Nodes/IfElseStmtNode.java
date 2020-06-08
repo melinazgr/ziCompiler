@@ -9,4 +9,14 @@ public class IfElseStmtNode extends StatementNode{
         this.stmt1 = stmt1;
         this.stmt2 = stmt2;
     }
+
+    public String toString () {
+        String s = "if (" +   boolExpr.toString() + ") {\n" +
+                    stmt1.toString() + "\n}" 
+                    + "else { \n" 
+                    + stmt2.toString() 
+                    + "}\n";
+
+        return s;
+    }
 }

@@ -7,5 +7,13 @@ public class AdditionNode extends ExpressionNode{
         this.rval = rval;
         this.term = term;
     }
+
+    public String toString () {
+
+        String s =  rval.toString() + " + " 
+                    + term.toString();
+
+        return s; 
+    }
     
 }

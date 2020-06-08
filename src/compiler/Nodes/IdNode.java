@@ -6,4 +6,8 @@ public class IdNode extends ExpressionNode {
     public IdNode (String id) {
         this.id = id;
     }
+
+    public String toString () {
+        return id ; 
+    }
 }

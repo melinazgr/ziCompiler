@@ -6,4 +6,8 @@ public class NumberNode extends ExpressionNode{
     public NumberNode (String value) {
         this.value = value;
     }
+
+    public String toString () {
+        return value; 
+    }
 }

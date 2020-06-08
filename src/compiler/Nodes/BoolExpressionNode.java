@@ -8,4 +8,13 @@ public class BoolExpressionNode extends ExpressionNode{
         this.expr1 = expr1;
         this.expr2 = expr2;
     }
+
+    public String toString () {
+
+        String s =  expr1.toString() + " "
+                    + operator.toString() + " "
+                    + expr2.toString();
+
+        return s; 
+    }
 }

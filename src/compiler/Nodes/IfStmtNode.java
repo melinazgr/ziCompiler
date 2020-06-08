@@ -8,4 +8,10 @@ public class IfStmtNode extends StatementNode{
         this.boolExpr = boolExpr;
         this.stmt = stmt;
     }
+
+    public String toString () {
+        String s = "if (" +   boolExpr.toString() + ") {\n" +
+                    stmt.toString() + "\n}";
+        return s; 
+    }
 }

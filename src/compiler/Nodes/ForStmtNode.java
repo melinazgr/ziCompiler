@@ -10,4 +10,14 @@ public class ForStmtNode extends StatementNode{
         this.opBoolExpr = opBoolExpr;
         this.stmt = stmt;
     }
+
+    public String toString () {
+        String s = "for (" + opAssignExpr1.toString() + "; " 
+                    + opBoolExpr.toString() +"; "
+                    + opAssignExpr1.toString() + " ) {\n" 
+                    + stmt.toString()
+                    + "} \n"  ;
+
+        return s; 
+    }
 }

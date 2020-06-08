@@ -10,10 +10,10 @@ public interface sym {
   public static final int SEMICOLON = 2;
   public static final int RPAREN = 10;
   public static final int INT = 13;
-  public static final int EQUAL = 16;
+  public static final int EQUAL = 21;
   public static final int WHILE = 26;
-  public static final int NOTEQUAL = 15;
-  public static final int MULTI = 24;
+  public static final int NOTEQUAL = 20;
+  public static final int MULTI = 18;
   public static final int MAINCLASS = 3;
   public static final int IF = 27;
   public static final int LPAREN = 9;
@@ -21,24 +21,24 @@ public interface sym {
   public static final int PUBLIC = 4;
   public static final int NUM = 32;
   public static final int STATIC = 5;
-  public static final int GREAT = 17;
+  public static final int GREAT = 22;
   public static final int COMMA = 8;
   public static final int FLOAT = 14;
   public static final int EOF = 0;
-  public static final int LESSQ = 19;
+  public static final int LESSQ = 24;
   public static final int RCBRA = 12;
   public static final int MAIN = 7;
-  public static final int DIV = 25;
-  public static final int ADD = 22;
-  public static final int MINUS = 23;
+  public static final int DIV = 19;
+  public static final int ADD = 16;
+  public static final int MINUS = 17;
   public static final int PRINT = 29;
   public static final int error = 1;
-  public static final int ASSIGN = 21;
-  public static final int GREATQ = 20;
+  public static final int GREATQ = 25;
+  public static final int ASSIGN = 15;
   public static final int FOR = 28;
   public static final int LCBRA = 11;
   public static final int VOID = 6;
-  public static final int LESS = 18;
+  public static final int LESS = 23;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -55,17 +55,17 @@ public interface sym {
   "RCBRA",
   "INT",
   "FLOAT",
+  "ASSIGN",
+  "ADD",
+  "MINUS",
+  "MULTI",
+  "DIV",
   "NOTEQUAL",
   "EQUAL",
   "GREAT",
   "LESS",
   "LESSQ",
   "GREATQ",
-  "ASSIGN",
-  "ADD",
-  "MINUS",
-  "MULTI",
-  "DIV",
   "WHILE",
   "IF",
   "FOR",

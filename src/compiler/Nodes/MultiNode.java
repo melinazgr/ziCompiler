@@ -7,5 +7,13 @@ public class MultiNode extends ExpressionNode{
         this.factor = factor;
         this.term = term;
     }
+
+    public String toString () {
+
+        String s =  term.toString() + " * " 
+                    + factor.toString();
+
+        return s; 
+    }
     
 }

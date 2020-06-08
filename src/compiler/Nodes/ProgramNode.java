@@ -11,6 +11,10 @@ public class ProgramNode extends Node{
     }
 
     public String toString () {
-        return " ";
+        String s =  "mainclass " + id + " { \n"
+                    + "public static void main () {\n"
+                    + compStmt.toString() 
+                    +  "} \n} \n";
+        return s;
     }
 }

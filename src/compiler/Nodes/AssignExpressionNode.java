@@ -2,12 +2,18 @@ package Nodes;
 
 public class AssignExpressionNode extends ExpressionNode{
     ExpressionNode expr;
-    Operator operator;
     String id;
-    public AssignExpressionNode (String id, Operator operator, ExpressionNode expr) {
-        this.operator = operator;
+    public AssignExpressionNode (String id, ExpressionNode expr) {
         this.expr = expr;
         this.id = id;
+    }
+
+    public String toString () {
+
+        String s =  id + " = "
+                    + expr.toString();
+
+        return s; 
     }
     
 }

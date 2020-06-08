@@ -6,5 +6,9 @@ public class AssignStmtNode extends StatementNode{
     public AssignStmtNode (ExpressionNode expr){
         this.expr = expr;
     }
+
+    public String toString () {
+        return expr.toString(); 
+    }
     
 }

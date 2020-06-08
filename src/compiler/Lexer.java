@@ -333,7 +333,7 @@ class Lexer implements java_cup.runtime.Scanner {
        about the current token, with no value*/
        
     private Symbol symbol(int type) {
-        return new Symbol(type, yyline, yycolumn);
+        return new Symbol(type, yyline, yycolumn, yytext());
     }
     
     /* create java_cup.runtime.Symbol with information 

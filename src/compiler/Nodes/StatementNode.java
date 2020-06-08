@@ -1,7 +1,5 @@
 package Nodes;
 
-public class StatementNode extends Node{
-    public String toString () {
-        return " ";
-    }
+public abstract class StatementNode extends Node{
+
 }

@@ -9,4 +9,12 @@ public class WhileStmtNode extends StatementNode{
         this.stmt = stmt;
     }
 
+    public String toString () {
+
+        String s = "while (" + boolExpr.toString() + ") {\n" 
+                    + stmt.toString()
+                    + "} \n"  ;
+
+        return s; 
+    }
 }
