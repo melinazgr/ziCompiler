@@ -11,8 +11,8 @@ call %JFLEX% --nobak zi.flex
 if %ERRORLEVEL% NEQ 0 goto exit
 
 echo .
-echo %CUP% -expect 0 -progress -interface zi.cup
-%CUP% -expect 2 -progress -interface zi.cup
+echo %CUP% -expect 0 -progress -interface  zi.cup
+%CUP% -expect 2 -progress -interface -locations zi.cup
 if %ERRORLEVEL% NEQ 0 goto exit
 
 echo .

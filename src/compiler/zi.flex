@@ -1,5 +1,8 @@
 /* --------------------------Usercode Section------------------------ */
 import java_cup.runtime.*;
+import java.io.*;
+import java_cup.runtime.ComplexSymbolFactory.Location;
+
 
 %%
    
@@ -19,19 +22,39 @@ import java_cup.runtime.*;
 /* declaration of member variables and functions that are used inside
   scanner actions. */
 %{   
+    public Lexer(FileReader fr, ComplexSymbolFactory sf){
+	      this(fr);
+        symbolFactory = sf;
+    }
+
+    private StringBuffer sb;
+    private ComplexSymbolFactory symbolFactory;
+    private int csline,cscolumn;
+
+    
+    public Symbol symbol(int code){
+	      return symbolFactory.newSymbol(Integer.toString(code), code, new Location(yyline+1,yycolumn+1-yylength()),new Location(yyline+1,yycolumn+1));
+    }
+
+    public Symbol symbol(int code, String lexem){
+	      return symbolFactory.newSymbol(Integer.toString(code), code, new Location(yyline+1, yycolumn +1), new Location(yyline+1,yycolumn+yylength()), lexem);
+    }
+
+
+      
     /* create java_cup.runtime.Symbol with information 
        about the current token, with no value*/
        
-    private Symbol symbol(int type) {
-        return new Symbol(type, yyline, yycolumn, yytext());
-    }
+  //  private Symbol symbol(int type) {
+  //     return new ComplexSymbol(type, yyline, yycolumn, yytext());
+  //  }
     
     /* create java_cup.runtime.Symbol with information 
        about the current token, with value*/
 
-    private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn, value);
-    }
+   // private Symbol symbol(int type, Object value) {
+   //    return new Symbol(type, yyline, yycolumn, value);
+   // }
 
     
     private void print_debug(String text) {
@@ -70,7 +93,7 @@ id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
     {LineTerminator}   { }
     {WhiteSpace}       { }   
    
-    /* Print the token found that was declared in the class sym and then return it. */
+    /* Print  the token found that was declared in the class sym and then return it. */
 
       "+"                { print_debug("+"); return symbol(sym.ADD);}
       "-"                { print_debug("-"); return symbol(sym.MINUS);}
@@ -101,8 +124,8 @@ id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
       "float"            { print_debug("float"); return symbol(sym.FLOAT);}
       ","                { print_debug(","); return symbol(sym.COMMA);}
     
-    {num}                { print_debug(yytext());return symbol(sym.NUM);}
-    {id}                 { print_debug(yytext());return symbol(sym.ID);}
+    {num}                { print_debug(yytext());return symbol(sym.NUM, yytext());}
+    {id}                 { print_debug(yytext());return symbol(sym.ID, yytext());}
 
 
     "//"                 {yybegin (COMMENTLINESTATE);}

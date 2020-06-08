@@ -1,5 +1,6 @@
 import Nodes.*;
 import java.io.*;
+import java_cup.runtime.*;
 
 public class Main {
 
@@ -11,7 +12,8 @@ public class Main {
         /* Start the parser */
         try 
         {
-            parser p = new parser(new Lexer(new FileReader(argv[0])));
+            ComplexSymbolFactory sf = new ComplexSymbolFactory();
+            parser p = new parser(new Lexer(new FileReader(argv[0]), sf), sf);
             ProgramNode result =(ProgramNode) p.parse().value;
 
             System.out.println(result.toString());

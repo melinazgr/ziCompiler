@@ -4,6 +4,9 @@
 
 /* --------------------------Usercode Section------------------------ */
 import java_cup.runtime.*;
+import java.io.*;
+import java_cup.runtime.ComplexSymbolFactory.Location;
+
 
 
 // See https://github.com/jflex-de/jflex/issues/222
@@ -338,19 +341,39 @@ class Lexer implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
+    public Lexer(FileReader fr, ComplexSymbolFactory sf){
+	      this(fr);
+        symbolFactory = sf;
+    }
+
+    private StringBuffer sb;
+    private ComplexSymbolFactory symbolFactory;
+    private int csline,cscolumn;
+
+    
+    public Symbol symbol(int code){
+	      return symbolFactory.newSymbol(Integer.toString(code), code, new Location(yyline+1,yycolumn+1-yylength()),new Location(yyline+1,yycolumn+1));
+    }
+
+    public Symbol symbol(int code, String lexem){
+	      return symbolFactory.newSymbol(Integer.toString(code), code, new Location(yyline+1, yycolumn +1), new Location(yyline+1,yycolumn+yylength()), lexem);
+    }
+
+
+      
     /* create java_cup.runtime.Symbol with information 
        about the current token, with no value*/
        
-    private Symbol symbol(int type) {
-        return new Symbol(type, yyline, yycolumn, yytext());
-    }
+  //  private Symbol symbol(int type) {
+  //     return new ComplexSymbol(type, yyline, yycolumn, yytext());
+  //  }
     
     /* create java_cup.runtime.Symbol with information 
        about the current token, with value*/
 
-    private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn, value);
-    }
+   // private Symbol symbol(int type, Object value) {
+   //    return new Symbol(type, yyline, yycolumn, value);
+   // }
 
     
     private void print_debug(String text) {
@@ -814,7 +837,7 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 46: break;
           case 10:
-            { print_debug(yytext());return symbol(sym.NUM);
+            { print_debug(yytext());return symbol(sym.NUM, yytext());
             }
             // fall through
           case 47: break;
@@ -839,7 +862,7 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 51: break;
           case 15:
-            { print_debug(yytext());return symbol(sym.ID);
+            { print_debug(yytext());return symbol(sym.ID, yytext());
             }
             // fall through
           case 52: break;

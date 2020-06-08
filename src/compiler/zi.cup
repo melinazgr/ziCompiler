@@ -299,7 +299,7 @@ start with PROGRAM;
                |  
                   ID:id
                   {:
-                     RESULT = new IdNode(id);
+                     RESULT = new IdNode(id, idxleft.getColumn(), idxright.getLine());
                   :}
                |  
                   NUM:number
