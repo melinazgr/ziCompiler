@@ -6,6 +6,7 @@ public class Main {
     public static boolean Debug = false;
     public static void main(String[] argv)
     {
+        
         System.out.println("Compiling program: " + argv[0]);
         /* Start the parser */
         try 

@@ -2,16 +2,36 @@ package Nodes;
 
 public class IfStmtNode extends StatementNode{
     ExpressionNode boolExpr;
-    StatementNode stmt;
+    StatementNode  stmt1, stmt2;
 
-    public IfStmtNode (ExpressionNode boolExpr, StatementNode stmt) {
+    public IfStmtNode (ExpressionNode boolExpr, StatementNode stmt1) {
         this.boolExpr = boolExpr;
-        this.stmt = stmt;
+        this.stmt1 = stmt1;
     }
 
+    public IfStmtNode (ExpressionNode boolExpr, StatementNode stmt1, StatementNode stmt2) {
+        this.boolExpr = boolExpr;
+        this.stmt1 = stmt1;
+        this.stmt2 = stmt2;
+    }
+    
     public String toString () {
-        String s = "if (" +   boolExpr.toString() + ") {\n" +
-                    stmt.toString() + "\n}";
-        return s; 
+        StringBuilder s = new StringBuilder(); 
+        
+        s.append("if (" +   boolExpr.toString() + ") {\n");
+        s.append(stmt1.toString());
+        s.append(NodeFormatter.getInstance().getSpaces());
+        s.append("} \n");
+    
+        if(stmt2 != null){
+            s.append(NodeFormatter.getInstance().getSpaces());
+            s.append("else { \n");
+            s.append(stmt2.toString());
+            s.append(NodeFormatter.getInstance().getSpaces());
+            s.append("} \n");
+        }
+        
+        return s.toString();
     }
 }
+

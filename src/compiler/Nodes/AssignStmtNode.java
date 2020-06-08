@@ -8,7 +8,7 @@ public class AssignStmtNode extends StatementNode{
     }
 
     public String toString () {
-        return expr.toString(); 
+        return expr.toString() + ';'; 
     }
     
 }

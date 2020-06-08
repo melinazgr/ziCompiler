@@ -4,24 +4,20 @@ import java.util.*;
 
 public class StatementListNode extends StatementNode{
     ArrayList <StatementNode> statements = new ArrayList <StatementNode>();
+    static int depth = 0;
 
     public String toString () {
         
         StringBuilder s = new StringBuilder(); 
 
+        NodeFormatter.getInstance().incDepth();
         for (StatementNode statement : statements) { 
-            if(statement != null ){
-                s.append(statement.toString());
-                s.append("\n");
-            }
-
-            else {
-                s.append("null stmt\n");
-            }
-        
+            s.append(NodeFormatter.getInstance().getSpaces());
+            s.append(statement.toString());
+            s.append("\n");
         }
 
-
+        NodeFormatter.getInstance().decDepth();
 
         return s.toString();
     }

@@ -6,11 +6,6 @@ public enum Operator {
     GREAT, 
     LESS, 
     LESSQ, 
-    GREATQ,
-    ASSIGN, 
-    ADD, 
-    SUBSTRACT, 
-    MULTI, 
-    DIV
+    GREATQ    
 }
 

@@ -138,7 +138,7 @@ start with PROGRAM;
 
    DECLARATION ::= TYPE:type ID_LIST:list SEMICOLON 
                      {:
-                        RESULT = new DeclarationNode (type, list);
+                        RESULT = new DeclarationStmtNode (type, list);
                      :};
 
 
@@ -201,7 +201,7 @@ start with PROGRAM;
 
    IF_STMT ::=    IF LPAREN BOOL_EXPR:boolExpr RPAREN STMT:stmt1 ELSE STMT:stmt2 
                   {:
-                     RESULT = new IfElseStmtNode (boolExpr, stmt1, stmt2);
+                     RESULT = new IfStmtNode (boolExpr, stmt1, stmt2);
                   :} 
                |  
                   IF LPAREN BOOL_EXPR:boolExpr RPAREN STMT:stmt
@@ -231,12 +231,7 @@ start with PROGRAM;
                {: 
                   RESULT = Operator.EQUAL;
                :}
-            |  
-               ASSIGN
-               {: 
-                  RESULT = Operator.ASSIGN;
-               :}
-            |  
+            | 
                GREAT
                {: 
                   RESULT = Operator.GREAT;

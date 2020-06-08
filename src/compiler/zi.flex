@@ -41,9 +41,12 @@ import java_cup.runtime.*;
     }
 %}
    
+%init{
+    yybegin( DEFAULTPARSERSTATE );
+%init}
+
 
 /* Macro Declarations */
-   
 /* A line terminator is \r, \n , or \r\n. */
 
 LineTerminator = \r|\n|\r\n
@@ -51,17 +54,17 @@ LineTerminator = \r|\n|\r\n
 /* White space is a line terminator, space, tab, or line feed. */
 
 WhiteSpace = {LineTerminator} | [\ \t]
-   
-
 num = [0-9]+("."[0-9]*)?    
 id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
 
+%state DEFAULTPARSERSTATE COMMENTLINESTATE COMMENTBLOCKSTATE ERRORSTATE
    
 %%
 /* ------------------------Lexical Rules Section---------------------- */
    
 /* regular expressions and actions */
    
+   <DEFAULTPARSERSTATE> {
     /* Return the token NULL-STMT declared in the class sym that was found. */
     ";"                {  print_debug(";");return symbol(sym.SEMICOLON); }
     {LineTerminator}   { }
@@ -101,5 +104,29 @@ id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
     {num}                { print_debug(yytext());return symbol(sym.NUM);}
     {id}                 { print_debug(yytext());return symbol(sym.ID);}
 
-    .                    {return symbol(sym.error);}
+
+    "//"                 {yybegin (COMMENTLINESTATE);}
+    "/*"                 {yybegin (COMMENTBLOCKSTATE);}
+
+    .                    {yybegin (ERRORSTATE); return symbol(sym.error);}
+   }
+
+
+  <COMMENTLINESTATE> {
+    {LineTerminator}   {yybegin( DEFAULTPARSERSTATE ); }
+    .                  { }
+  }
+  <COMMENTBLOCKSTATE> {
+    "*/"             {yybegin( DEFAULTPARSERSTATE ); }
+    {LineTerminator}   { }
+
+
+    .                { }
+  }
+
+  <ERRORSTATE> {
+    ";"        {yybegin( DEFAULTPARSERSTATE ); return symbol(sym.SEMICOLON);}  
+    .                { }
+  }
+
     <<EOF>>              {return symbol(sym.EOF);}

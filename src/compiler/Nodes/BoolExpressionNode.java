@@ -12,7 +12,7 @@ public class BoolExpressionNode extends ExpressionNode{
     public String toString () {
 
         String s =  expr1.toString() + " "
-                    + operator.toString() + " "
+                    + FormatHelper.getOpName(operator) + " "
                     + expr2.toString();
 
         return s; 

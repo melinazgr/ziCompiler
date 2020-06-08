@@ -12,12 +12,13 @@ public class ForStmtNode extends StatementNode{
     }
 
     public String toString () {
-        String s = "for (" + opAssignExpr1.toString() + "; " 
-                    + opBoolExpr.toString() +"; "
-                    + opAssignExpr1.toString() + " ) {\n" 
-                    + stmt.toString()
-                    + "} \n"  ;
+        StringBuilder s = new StringBuilder(); 
+        
+        s.append("for (" + opAssignExpr1.toString() + "; " + opBoolExpr.toString() + "; " + opAssignExpr1.toString() + " ) {\n");
+        s.append(stmt.toString());
+        s.append(NodeFormatter.getInstance().getSpaces());
+        s.append("} \n");
 
-        return s; 
+        return s.toString();
     }
 }

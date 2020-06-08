@@ -10,11 +10,13 @@ public class WhileStmtNode extends StatementNode{
     }
 
     public String toString () {
+        StringBuilder s = new StringBuilder(); 
+        
+        s.append("while (" + boolExpr.toString() + ") {\n");
+        s.append(stmt.toString());
+        s.append(NodeFormatter.getInstance().getSpaces());
+        s.append("} \n");
 
-        String s = "while (" + boolExpr.toString() + ") {\n" 
-                    + stmt.toString()
-                    + "} \n"  ;
-
-        return s; 
+        return s.toString();
     }
 }
