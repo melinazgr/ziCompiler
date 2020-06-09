@@ -1,7 +1,7 @@
 package Nodes;
 
 public class AdditionNode extends ExpressionNode{
-    ExpressionNode rval, term;
+    public ExpressionNode rval, term;
 
     public AdditionNode (ExpressionNode rval, ExpressionNode term) {
         this.rval = rval;
@@ -14,6 +14,10 @@ public class AdditionNode extends ExpressionNode{
                     + term.toString();
 
         return s; 
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
     
 }

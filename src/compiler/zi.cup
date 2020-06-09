@@ -66,8 +66,8 @@ nonterminal    NULL_STMT;
 nonterminal ArrayList<String>  ID_LIST; 
 nonterminal VariableType TYPE;
 
-nonterminal StatementListNode STMT_LIST;
-nonterminal StatementNode ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT, COMP_STMT, STMT, DECLARATION;
+nonterminal StatementListNode STMT_LIST, COMP_STMT ;
+nonterminal StatementNode ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT, STMT, DECLARATION;
 nonterminal ExpressionNode  ASSIGN_EXPR, BOOL_EXPR, EXPRRVAL, OPASSIGN_EXPR, OPBOOL_EXPR, RVAL, TERM, FACTOR, EXPR;
 nonterminal Operator C_OP;
 
@@ -175,7 +175,8 @@ start with PROGRAM;
                    
    ASSIGN_EXPR ::= ID:id ASSIGN EXPR:expr
                    {:
-                     RESULT = new AssignExpressionNode (id, expr);
+                     IdNode idNode = new IdNode(id, idxleft.getColumn(), idxright.getLine());
+                     RESULT = new AssignExpressionNode (idNode, expr);
                    :};
 
    EXPR  ::=    ASSIGN_EXPR:assignExpr 

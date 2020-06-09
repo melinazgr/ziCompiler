@@ -10,4 +10,8 @@ public class NumberNode extends ExpressionNode{
     public String toString () {
         return value; 
     }
+
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
 }

@@ -3,8 +3,8 @@ import java.util.*;
 
 
 public class DeclarationStmtNode extends StatementNode {
-    VariableType type;
-    ArrayList<String> list;
+    public VariableType type;
+    public ArrayList<String> list;
 
     public DeclarationStmtNode (VariableType type, ArrayList<String> list) {
         this.type = type;
@@ -28,5 +28,8 @@ public class DeclarationStmtNode extends StatementNode {
         return s.toString() + ";"; 
     }
     
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
     
 }

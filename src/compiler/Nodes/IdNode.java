@@ -1,8 +1,8 @@
 package Nodes;
 
 public class IdNode extends ExpressionNode {
-    String id;
-    int idleft, idright;
+    public String id;
+    public int idleft, idright;
 
     public IdNode (String id, int idleft, int idright) {
         this.id = id;
@@ -12,5 +12,9 @@ public class IdNode extends ExpressionNode {
 
     public String toString () {
         return id + "["+ idleft+", " + idright + "]"; 
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

@@ -5,5 +5,8 @@ public class NullStmtNode extends StatementNode{
         return ";"; 
     }
 
+    public void accept(Visitor v){
+        v.visit(this);
+    }
     
 }

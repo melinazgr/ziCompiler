@@ -1,8 +1,8 @@
 package Nodes;
 
 public class ForStmtNode extends StatementNode{
-    ExpressionNode opAssignExpr1, opBoolExpr, opAssignExpr2;
-    StatementNode stmt;
+    public ExpressionNode opAssignExpr1, opBoolExpr, opAssignExpr2;
+    public StatementNode stmt;
 
     public ForStmtNode (ExpressionNode opAssignExpr1, ExpressionNode opBoolExpr, ExpressionNode opAssignExpr2, StatementNode stmt){
         this.opAssignExpr1 = opAssignExpr1;
@@ -20,5 +20,9 @@ public class ForStmtNode extends StatementNode{
         s.append("} \n");
 
         return s.toString();
+    }
+
+    public void accept(Visitor v){
+        v.visit(this);
     }
 }

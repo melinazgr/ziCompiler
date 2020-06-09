@@ -1,7 +1,7 @@
 package Nodes;
 
 public class MultiNode extends ExpressionNode{
-    ExpressionNode factor, term;
+    public ExpressionNode factor, term;
 
     public MultiNode (ExpressionNode term, ExpressionNode  factor) {
         this.factor = factor;
@@ -14,6 +14,10 @@ public class MultiNode extends ExpressionNode{
                     + factor.toString();
 
         return s; 
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
     
 }

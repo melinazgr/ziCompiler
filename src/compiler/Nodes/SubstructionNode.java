@@ -1,7 +1,7 @@
 package Nodes;
 
 public class SubstructionNode extends ExpressionNode {
-    ExpressionNode rval, term;
+    public ExpressionNode rval, term;
 
     public SubstructionNode (ExpressionNode rval, ExpressionNode term) {
         this.rval = rval;
@@ -14,5 +14,9 @@ public class SubstructionNode extends ExpressionNode {
                     + term.toString();
 
         return s; 
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

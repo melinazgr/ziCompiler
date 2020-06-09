@@ -1,8 +1,8 @@
 package Nodes;
 
 public class IfStmtNode extends StatementNode{
-    ExpressionNode boolExpr;
-    StatementNode  stmt1, stmt2;
+    public ExpressionNode boolExpr;
+    public StatementNode  stmt1, stmt2;
 
     public IfStmtNode (ExpressionNode boolExpr, StatementNode stmt1) {
         this.boolExpr = boolExpr;
@@ -33,5 +33,10 @@ public class IfStmtNode extends StatementNode{
         
         return s.toString();
     }
+
+    public void accept(Visitor v){
+        v.visit(this);
+    }
+    
 }
 

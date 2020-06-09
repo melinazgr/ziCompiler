@@ -1,7 +1,7 @@
 package Nodes;
 
 public class DivisionNode extends ExpressionNode {
-    ExpressionNode factor, term;
+    public ExpressionNode factor, term;
 
     public DivisionNode (ExpressionNode term, ExpressionNode  factor) {
         this.factor = factor;
@@ -14,5 +14,9 @@ public class DivisionNode extends ExpressionNode {
                     + factor.toString();
 
         return s; 
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

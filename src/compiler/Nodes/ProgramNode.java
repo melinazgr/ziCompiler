@@ -2,10 +2,10 @@ package Nodes;
 
 public class ProgramNode extends Node{
     
-    String id;
-    StatementNode compStmt;
+    public String id;
+    public StatementListNode compStmt;
 
-    public ProgramNode (String id, StatementNode compStmt) {
+    public ProgramNode (String id, StatementListNode compStmt) {
         this.id = id;
         this.compStmt = compStmt;
     }
@@ -29,5 +29,9 @@ public class ProgramNode extends Node{
         
 
         return s.toString();
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

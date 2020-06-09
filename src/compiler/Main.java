@@ -1,4 +1,5 @@
 import Nodes.*;
+import Model.*;
 import java.io.*;
 import java_cup.runtime.*;
 
@@ -12,11 +13,14 @@ public class Main {
         /* Start the parser */
         try 
         {
+            SemanticAnalysis semantic = new SemanticAnalysis();
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
             parser p = new parser(new Lexer(new FileReader(argv[0]), sf), sf);
-            ProgramNode result =(ProgramNode) p.parse().value;
+            ProgramNode result = (ProgramNode) p.parse().value;
 
             System.out.println(result.toString());
+
+            result.accept(semantic);
 
         } catch (Exception e) {
             /* do cleanup here -- possibly rethrow e */
@@ -26,7 +30,8 @@ public class Main {
 
 }
 
-
     //TODO if else grammar conflict
     //TODO assign grammar conflict
     //TODO parse cmd args
+
+

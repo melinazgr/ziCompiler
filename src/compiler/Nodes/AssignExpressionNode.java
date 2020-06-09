@@ -1,9 +1,9 @@
 package Nodes;
 
 public class AssignExpressionNode extends ExpressionNode{
-    ExpressionNode expr;
-    String id;
-    public AssignExpressionNode (String id, ExpressionNode expr) {
+    public ExpressionNode expr;
+    public IdNode id;
+    public AssignExpressionNode (IdNode id, ExpressionNode expr) {
         this.expr = expr;
         this.id = id;
     }
@@ -14,6 +14,10 @@ public class AssignExpressionNode extends ExpressionNode{
                     + expr.toString();
 
         return s; 
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
     
 }

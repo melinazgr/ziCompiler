@@ -1,8 +1,8 @@
 package Nodes;
 
 public class BoolExpressionNode extends ExpressionNode{
-    ExpressionNode expr1, expr2;
-    Operator operator;
+    public ExpressionNode expr1, expr2;
+    public Operator operator;
     public BoolExpressionNode (ExpressionNode expr1, Operator operator, ExpressionNode expr2) {
         this.operator = operator;
         this.expr1 = expr1;
@@ -17,4 +17,9 @@ public class BoolExpressionNode extends ExpressionNode{
 
         return s; 
     }
+
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+    
 }

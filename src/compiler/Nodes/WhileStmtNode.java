@@ -1,8 +1,8 @@
 package Nodes; 
 
 public class WhileStmtNode extends StatementNode{
-    ExpressionNode boolExpr;
-    StatementNode stmt;
+    public ExpressionNode boolExpr;
+    public StatementNode stmt;
 
     public WhileStmtNode (ExpressionNode boolExpr, StatementNode stmt) {
         this.boolExpr = boolExpr;
@@ -18,5 +18,9 @@ public class WhileStmtNode extends StatementNode{
         s.append("} \n");
 
         return s.toString();
+    }
+
+    public void accept(Visitor v){
+        v.visit(this);
     }
 }

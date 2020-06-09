@@ -11,4 +11,8 @@ public class FunctionCallNode extends StatementNode{
     public String toString () {
         return id + " ( " + argument.toString() + " );"; 
     }
+
+    public void accept(Visitor v){
+        v.visit(this);
+    }
 }
