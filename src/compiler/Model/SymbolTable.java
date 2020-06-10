@@ -45,7 +45,7 @@ public class SymbolTable {
 
         for (String key: map.keySet())
         {
-            s.append(key + "\n");
+            s.append(FormatHelper.getTypeName(map.get(key).type) + key + "\n");
             //TODO more info for the id
         }
 

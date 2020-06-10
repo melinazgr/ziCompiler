@@ -9,6 +9,10 @@ public class DeclarationStmtNode extends StatementNode {
     public DeclarationStmtNode (VariableType type, ArrayList<IdNode> list) {
         this.type = type;
         this.list = list;
+
+        for(IdNode id : list){
+            id.setType(type);
+        }
     }
 
     public String toString () {
