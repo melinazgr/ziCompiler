@@ -2,23 +2,42 @@ package Nodes;
 
 public class FormatHelper {
 
-    public static String getOpName(Operator op){
+    public static String getOpName(Operator op, boolean addSpaces){
+
+        String s;
         switch(op) {
             case NOTEQUAL:
-                return " != ";
+                s = "!=";
+                break;
             case EQUAL:
-                return " == ";
+                s =  "==";
+                break;
             case GREAT:
-                return " > ";
+                s = ">";
+                break;
             case LESS:
-                return " < ";
+                s = "<";
+                break;
             case GREATQ:
-                return " >= ";
-            case LESSQ:
-                return " <= ";
+                s = ">=";
+            break;
+                case LESSQ:
+                s = "<=";
+            break;    
             default:
                 return "";
         }
+
+        if (addSpaces)
+        {
+            return " " + s + " ";
+        }
+
+        return s;
+    }
+
+    public static String getOpName(Operator op){
+        return getOpName(op, true);
     }
 
     public static String getTypeName (VariableType t){

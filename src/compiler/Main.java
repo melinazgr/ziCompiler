@@ -15,6 +15,7 @@ public class Main {
         try 
         {
             SemanticAnalysis semantic = new SemanticAnalysis();
+            SyntaxAnalysis syntax = new SyntaxAnalysis();
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
             parser p = new parser(new Lexer(new FileReader(argv[0]), sf), sf);
             ProgramNode result = (ProgramNode) p.parse().value;
@@ -22,9 +23,15 @@ public class Main {
             System.out.println(result.toString());
 
             result.accept(semantic);
+            result.accept(syntax);
+
 
             ErrorHandler errors = ErrorHandler.getInstance();
+
+            
             errors.printError();
+            System.out.println(syntax.toString());
+
             
         } catch (Exception e) {
             /* do cleanup here -- possibly rethrow e */

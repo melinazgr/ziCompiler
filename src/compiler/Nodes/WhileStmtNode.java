@@ -1,10 +1,10 @@
 package Nodes; 
 
 public class WhileStmtNode extends StatementNode{
-    public ExpressionNode boolExpr;
+    public BoolExpressionNode boolExpr;
     public StatementNode stmt;
 
-    public WhileStmtNode (ExpressionNode boolExpr, StatementNode stmt) {
+    public WhileStmtNode (BoolExpressionNode boolExpr, StatementNode stmt) {
         this.boolExpr = boolExpr;
         this.stmt = stmt;
     }
