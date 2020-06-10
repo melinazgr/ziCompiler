@@ -4,9 +4,9 @@ import java.util.*;
 
 public class DeclarationStmtNode extends StatementNode {
     public VariableType type;
-    public ArrayList<String> list;
+    public ArrayList<IdNode> list;
 
-    public DeclarationStmtNode (VariableType type, ArrayList<String> list) {
+    public DeclarationStmtNode (VariableType type, ArrayList<IdNode> list) {
         this.type = type;
         this.list = list;
     }
@@ -17,7 +17,7 @@ public class DeclarationStmtNode extends StatementNode {
         s.append(FormatHelper.getTypeName(type));
         int count = 0;
 
-        for (String id : list) { 
+        for (IdNode id : list) { 
                 if(count > 0) {
                     s.append(",");
                 }

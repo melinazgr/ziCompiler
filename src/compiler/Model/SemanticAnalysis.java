@@ -1,5 +1,6 @@
 package Model;
 import Nodes.*;
+import Error.*;
 
 public class SemanticAnalysis implements Visitor {
     
@@ -12,8 +13,8 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(DeclarationStmtNode n){
-        for (String id : n.list) { 
-            currSymbolTable.put(id, n.type);               
+        for (IdNode id : n.list) { 
+            currSymbolTable.put(id.id, id);               
         }
     }
 
@@ -90,7 +91,7 @@ public class SemanticAnalysis implements Visitor {
         Object o = this.currSymbolTable.get(n.id);
 
         if(o == null){
-            System.out.printf("ERROR: Unknown symbol %s at line %d, column %d.\n", n.id, n.idright, n.idleft);
+            ErrorHandler.getInstance().addError(String.format("Undefined variable '%s'", n.id), n.id, n.idright, n.idleft);
         }
     }
 

@@ -17,7 +17,7 @@ if %ERRORLEVEL% NEQ 0 goto exit
 
 echo .
 echo javac -cp %CUPJAR% Main.java sym.java Lexer.java parser.java
-javac -d Classes -cp %CUPJAR% *.java Nodes\*.java Model\*.java
+javac -d Classes -cp %CUPJAR% *.java Nodes\*.java Model\*.java Error\*.java
 if %ERRORLEVEL% NEQ 0 goto exit
 
 
@@ -25,7 +25,7 @@ echo .
 echo creating jar file
 
 cd classes
-jar cmf ..\manifest.mf ..\Zi.jar *.class Nodes\*.class Model\*.class
+jar cmf ..\manifest.mf ..\Zi.jar *.class Nodes\*.class Model\*.class Error\*.class
 if %ERRORLEVEL% NEQ 0 goto exit
 cd ..
 

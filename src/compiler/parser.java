@@ -529,7 +529,7 @@ class CUP$parser$actions {
 		VariableType type = (VariableType)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		Location listxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).xleft;
 		Location listxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).xright;
-		ArrayList<String> list = (ArrayList<String>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		ArrayList<IdNode> list = (ArrayList<IdNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                         RESULT = new DeclarationStmtNode (type, list);
                      
@@ -571,15 +571,16 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 18: // ID_LIST ::= ID COMMA ID_LIST 
             {
-              ArrayList<String> RESULT =null;
+              ArrayList<IdNode> RESULT =null;
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).xright;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		Location listxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.peek()).xleft;
 		Location listxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.peek()).xright;
-		ArrayList<String> list = (ArrayList<String>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		ArrayList<IdNode> list = (ArrayList<IdNode>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                     list.add(0, id);
+                     IdNode idNode = new IdNode(id,  idxright.getLine(),idxleft.getColumn());
+                     list.add(0, idNode);
                      RESULT = list;
                   
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ID_LIST",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -589,13 +590,14 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 19: // ID_LIST ::= ID 
             {
-              ArrayList<String> RESULT =null;
+              ArrayList<IdNode> RESULT =null;
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.peek()).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.peek()).xright;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                     ArrayList <String> list = new ArrayList <String>();
-                     list.add(0, id);
+                     ArrayList <IdNode> list = new ArrayList <IdNode>();
+                     IdNode idNode = new IdNode(id,  idxright.getLine(),idxleft.getColumn());
+                     list.add(0, idNode);
                      RESULT = list;
                   
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ID_LIST",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -627,7 +629,7 @@ class CUP$parser$actions {
 		Location exprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.peek()).xright;
 		ExpressionNode expr = (ExpressionNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                     IdNode idNode = new IdNode(id, idxleft.getColumn(), idxright.getLine());
+                     IdNode idNode = new IdNode(id, idxright.getLine(), idxleft.getColumn());
                      RESULT = new AssignExpressionNode (idNode, expr);
                    
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ASSIGN_EXPR",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1006,7 +1008,7 @@ class CUP$parser$actions {
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.peek()).xright;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                     RESULT = new IdNode(id, idxleft.getColumn(), idxright.getLine());
+                     RESULT = new IdNode(id,  idxright.getLine(), idxleft.getColumn());
                   
               CUP$parser$result = parser.getSymbolFactory().newSymbol("FACTOR",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

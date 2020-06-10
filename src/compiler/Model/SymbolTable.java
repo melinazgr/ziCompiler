@@ -1,8 +1,10 @@
 package Model;
 import java.util.*; 
+import Error.*;
+import Nodes.*;
 
 public class SymbolTable {
-    private Map<String,Object> map = new HashMap<String,Object>();
+    private Map<String,IdNode> map = new HashMap<String,IdNode>();
     private SymbolTable parent;
 
     public SymbolTable(){
@@ -17,7 +19,7 @@ public class SymbolTable {
         return this.parent;
     }
     
-    public Object get(String key){
+    public IdNode get(String key){
         if(map.containsKey(key)){
             return map.get(key);
         }
@@ -29,9 +31,9 @@ public class SymbolTable {
         return null;
     }
 
-    public void put(String key, Object value){
+    public void put(String key, IdNode value){
         if(map.containsKey(key)){
-            System.out.printf("Error, identifier %s, already defined at line %d, column %d.", key, 0, 0);
+            ErrorHandler.getInstance().addError(String.format("Identifier '%s' already defined", key), key, value.idright, value.idleft);
         }
         else{
             map.put(key, value);

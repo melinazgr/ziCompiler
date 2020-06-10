@@ -1,5 +1,6 @@
 import Nodes.*;
 import Model.*;
+import Error.*;
 import java.io.*;
 import java_cup.runtime.*;
 
@@ -22,6 +23,9 @@ public class Main {
 
             result.accept(semantic);
 
+            ErrorHandler errors = ErrorHandler.getInstance();
+            errors.printError();
+            
         } catch (Exception e) {
             /* do cleanup here -- possibly rethrow e */
             e.printStackTrace();

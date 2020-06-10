@@ -63,7 +63,7 @@ terminal String     WHILE, IF, FOR, PRINT, ELSE, ID, NUM ;
 
 nonterminal    ProgramNode PROGRAM;
 nonterminal    NULL_STMT;
-nonterminal ArrayList<String>  ID_LIST; 
+nonterminal ArrayList<IdNode>  ID_LIST; 
 nonterminal VariableType TYPE;
 
 nonterminal StatementListNode STMT_LIST, COMP_STMT ;
@@ -156,14 +156,16 @@ start with PROGRAM;
 
    ID_LIST  ::=   ID:id COMMA ID_LIST:list
                   {:
-                     list.add(0, id);
+                     IdNode idNode = new IdNode(id,  idxright.getLine(),idxleft.getColumn());
+                     list.add(0, idNode);
                      RESULT = list;
                   :}
                  | 
                   ID:id
                   {:
-                     ArrayList <String> list = new ArrayList <String>();
-                     list.add(0, id);
+                     ArrayList <IdNode> list = new ArrayList <IdNode>();
+                     IdNode idNode = new IdNode(id,  idxright.getLine(),idxleft.getColumn());
+                     list.add(0, idNode);
                      RESULT = list;
                   :}
                   ;
@@ -175,7 +177,7 @@ start with PROGRAM;
                    
    ASSIGN_EXPR ::= ID:id ASSIGN EXPR:expr
                    {:
-                     IdNode idNode = new IdNode(id, idxleft.getColumn(), idxright.getLine());
+                     IdNode idNode = new IdNode(id, idxright.getLine(), idxleft.getColumn());
                      RESULT = new AssignExpressionNode (idNode, expr);
                    :};
 
@@ -300,7 +302,7 @@ start with PROGRAM;
                |  
                   ID:id
                   {:
-                     RESULT = new IdNode(id, idxleft.getColumn(), idxright.getLine());
+                     RESULT = new IdNode(id,  idxright.getLine(), idxleft.getColumn());
                   :}
                |  
                   NUM:number

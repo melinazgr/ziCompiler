@@ -3,6 +3,7 @@ mainclass Fibonacci {
     {
         int first, second, i, tmp;
         first= tmp = 0;
+        first = first + 1;
         second=1;
         i=0;
 
