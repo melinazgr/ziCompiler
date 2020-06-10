@@ -30,6 +30,6 @@ if %ERRORLEVEL% NEQ 0 goto exit
 cd ..
 
 echo java -classpath  Zi.jar;%CUPJARRUNTIME%  Main test.zi
-java -classpath  Zi.jar;%CUPJARRUNTIME%  Main test.zi
+java -classpath  Zi.jar;%CUPJARRUNTIME%  Main -i test.zi -ast test.gv
 
 :exit

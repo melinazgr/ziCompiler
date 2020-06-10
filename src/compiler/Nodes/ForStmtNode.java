@@ -1,10 +1,11 @@
 package Nodes;
 
 public class ForStmtNode extends StatementNode{
-    public ExpressionNode opAssignExpr1, opBoolExpr, opAssignExpr2;
+    public AssignExpressionNode opAssignExpr1, opAssignExpr2;
+    public ExpressionNode opBoolExpr;
     public StatementNode stmt;
 
-    public ForStmtNode (ExpressionNode opAssignExpr1, ExpressionNode opBoolExpr, ExpressionNode opAssignExpr2, StatementNode stmt){
+    public ForStmtNode (AssignExpressionNode opAssignExpr1, ExpressionNode opBoolExpr, AssignExpressionNode opAssignExpr2, StatementNode stmt){
         this.opAssignExpr1 = opAssignExpr1;
         this.opAssignExpr2 = opAssignExpr2;
         this.opBoolExpr = opBoolExpr;
