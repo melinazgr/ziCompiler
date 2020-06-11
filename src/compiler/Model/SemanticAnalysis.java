@@ -27,7 +27,6 @@ public class SemanticAnalysis implements Visitor {
             stmt.accept(this);
         }
 
-        System.out.println("SYMBOL TABLE\n"+ this.currSymbolTable.toString());
         this.currSymbolTable = this.currSymbolTable.getParentSymbolTable();
     }
 
@@ -51,6 +50,7 @@ public class SemanticAnalysis implements Visitor {
         n.opBoolExpr.accept(this);    
         n.stmt.accept(this); 
     }
+
     public void visit(AssignStmtNode n){
         n.expr.accept(this);
     }
@@ -64,6 +64,7 @@ public class SemanticAnalysis implements Visitor {
         n.rval.accept(this);
         n.term.accept(this);
     }
+
     public void visit(AdditionNode n){
         n.rval.accept(this);
         n.term.accept(this);
@@ -73,6 +74,7 @@ public class SemanticAnalysis implements Visitor {
         n.factor.accept(this);
         n.term.accept(this);
     }
+
     public void visit(MultiNode n){
         n.factor.accept(this);
         n.term.accept(this);
@@ -107,4 +109,3 @@ public class SemanticAnalysis implements Visitor {
 
     }
 }
-

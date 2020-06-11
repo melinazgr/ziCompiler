@@ -6,8 +6,10 @@ import Nodes.*;
 // struct3 [shape=record,label="symbol\ntable |{int a |<here> g | as} "];
 
 public class SymbolTable {
-    private Map<String,IdNode> map = new HashMap<String,IdNode>();
+    public  Map<String,IdNode> map = new HashMap<String,IdNode>();
     private SymbolTable parent;
+    public static int count = 0;
+    public String tableId;
 
     public SymbolTable(){
 
@@ -15,6 +17,7 @@ public class SymbolTable {
 
     public SymbolTable(SymbolTable parent){
         this.parent = parent;
+        this.tableId = "table"+Integer.toString(++count);
     }
 
     public SymbolTable getParentSymbolTable (){
@@ -37,6 +40,7 @@ public class SymbolTable {
         if(map.containsKey(key)){
             ErrorHandler.getInstance().addError(String.format("Identifier '%s' already defined", key), key, value.idright, value.idleft);
         }
+
         else{
             map.put(key, value);
         }        

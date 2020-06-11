@@ -81,6 +81,10 @@ public class Main {
 
     //TODO if else grammar conflict
     //TODO assign grammar conflict
-    //TODO parse cmd args
 
 
+    //TODO semantic int/float limits
+    //TODO warning not used
+    //TODO warning l - r value
+    //TODO attach type to id 
+     

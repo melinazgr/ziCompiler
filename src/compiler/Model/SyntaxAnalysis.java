@@ -1,11 +1,14 @@
 package Model;
 import Nodes.*;
-import Error.*;
 
 public class SyntaxAnalysis implements Visitor {
     
-    StringBuilder tree = new StringBuilder();
+    public static StringBuilder tree = new StringBuilder();
 
+    public static void  addToTree(String s){
+        tree.append(s);
+    }
+    
     public SyntaxAnalysis(){
     }
 
@@ -22,7 +25,6 @@ public class SyntaxAnalysis implements Visitor {
     public void visit(ProgramNode n){
         
         tree.append(n.NodeId + "[label = \"<f0>  | <f2> " + n.id + "\"];\n");
-        // tree.append("\""+n.NodeId+"\":f1 -> \"" + n.compStmt.NodeId + "\":f1");
         tree.append(String.format("\"%s\":f1->\"%s\":f0\n",n.NodeId, n.compStmt.NodeId));
 
         n.compStmt.accept(this);
@@ -32,35 +34,61 @@ public class SyntaxAnalysis implements Visitor {
     }
 
     public void visit(StatementListNode n){
-        int count = 1;
+        int countNode = 1;
+        int countTable = 1;
         StringBuilder s = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         s.append(n.NodeId + "[label=\"");
 
         for(StatementNode stmt: n.statements){
-            
-            
             if (!(stmt instanceof DeclarationStmtNode)){
-                if(count>1){
+                if(countNode>1){
                     s.append("|");
                 }
-                s.append(String.format("<f%d>", count++));
+                s.append(String.format("<f%d>", countNode++));
     
                 stmt.accept(this);
             }
-        }
-    
+        }            
+
         s.append("\"];\n");
-        
-        count = 1;
+
+        countNode = 1;
         for(StatementNode stmt: n.statements){
             
             if (!(stmt instanceof DeclarationStmtNode)){
-                s.append(String.format("\"%s\":f%d->\"%s\":f1;\n",n.NodeId, count++, stmt.NodeId));
+                s.append(String.format("\"%s\":f%d->\"%s\":f1;\n",n.NodeId, countNode++, stmt.NodeId));
             }
         }
 
         tree.append(s);
+            
+        String tableId = n.getSymbolTable().tableId;
+        
+        if(!n.getSymbolTable().map.isEmpty()){
 
+            sb.append( tableId+ "[shape=record,label=\"Symbol \ntable");
+        
+        countTable = 1;
+        for (String key: n.getSymbolTable().map.keySet()){
+        
+            if(countTable == 1){
+                sb.append("|{");
+            }
+
+            if(countTable>1){
+                sb.append("|");
+            }
+            sb.append(String.format("%s", FormatHelper.getTypeName(n.getSymbolTable().map.get(key).type) + " " + key ));
+
+            countTable++;
+        }
+
+        sb.append("}\"];\n");
+        tree.append(sb);
+        tree.append(String.format("\"%s\":f%d->\"%s\":f1;\n", n.NodeId, countNode, tableId));
+        tree.append(String.format("%s[shape=record,color=red];\n", tableId));
+        }
     }
 
     public void visit(WhileStmtNode n){
@@ -91,7 +119,6 @@ public class SyntaxAnalysis implements Visitor {
             tree.append(String.format("\"%s\":f0->\"%s\":f1;\n", n.NodeId, n.boolExpr.NodeId));
             tree.append(String.format("\"%s\":f2->\"%s\":f1;\n", n.NodeId, n.stmt1.NodeId));
 
-
             n.boolExpr.accept(this);    
             n.stmt1.accept(this);  
         }
@@ -109,11 +136,11 @@ public class SyntaxAnalysis implements Visitor {
         n.opBoolExpr.accept(this);    
         n.stmt.accept(this); 
     }
+
     public void visit(AssignStmtNode n){
         tree.append(String.format("%s[label=\"<f1>%s\"];\n", n.NodeId, "ASSIGN"));
         tree.append(String.format("\"%s\":f0->\"%s\":f1;\n", n.NodeId, n.expr.NodeId));
 
-        
         n.expr.accept(this);
     }
 
@@ -124,7 +151,6 @@ public class SyntaxAnalysis implements Visitor {
         
         n.expr1.accept(this);
         n.expr2.accept(this);
-
     }
 
     public void visit(SubstructionNode n){
@@ -134,6 +160,7 @@ public class SyntaxAnalysis implements Visitor {
         n.rval.accept(this);
         n.term.accept(this);
     }
+
     public void visit(AdditionNode n){
         tree.append(String.format("%s[label=\"<f0>|<f1> \\%s|<f2>\"];\n",n.NodeId, "+"));
         tree.append(String.format("\"%s\":f0->\"%s\":f1;\n", n.NodeId, n.rval.NodeId));
@@ -149,6 +176,7 @@ public class SyntaxAnalysis implements Visitor {
         n.factor.accept(this);
         n.term.accept(this);
     }
+
     public void visit(MultiNode n){
         tree.append(String.format("%s[label=\"<f0>|<f1> \\%s|<f2>\"];\n",n.NodeId, "*"));
         tree.append(String.format("\"%s\":f0->\"%s\":f1;\n", n.NodeId, n.factor.NodeId));
@@ -185,9 +213,6 @@ public class SyntaxAnalysis implements Visitor {
 
     public void visit(FunctionCallNode n){
         tree.append(String.format("%s[label=\"<f0>%s\"];\n",n.NodeId, n.toString() ));
-        
-
     }
-    
 }
 
