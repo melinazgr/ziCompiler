@@ -304,10 +304,10 @@ start with PROGRAM;
                |  
                   ID:id
                   {:
-                     RESULT = new IdNode(id,  idxright.getLine(), idxleft.getColumn());
+                     RESULT = new IdNode(id,  idxleft.getLine(), idxleft.getColumn());
                   :}
                |  
                   NUM:number
                   {:
-                     RESULT = new NumberNode(number);
+                     RESULT = new NumberNode(number, numberxleft.getColumn(), numberxleft.getLine());
                   :};

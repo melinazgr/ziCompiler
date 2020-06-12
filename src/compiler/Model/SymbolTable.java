@@ -3,8 +3,6 @@ import java.util.*;
 import Error.*;
 import Nodes.*;
 
-// struct3 [shape=record,label="symbol\ntable |{int a |<here> g | as} "];
-
 public class SymbolTable {
     public  Map<String,IdNode> map = new HashMap<String,IdNode>();
     private SymbolTable parent;

@@ -83,8 +83,7 @@ public class Main {
     //TODO assign grammar conflict
 
 
-    //TODO semantic int/float limits
-    //TODO warning not used
+    //TODO semantic float limits
     //TODO warning l - r value
-    //TODO attach type to id 
+
      

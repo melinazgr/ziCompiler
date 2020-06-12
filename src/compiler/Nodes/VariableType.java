@@ -1,7 +1,8 @@
 package Nodes;
 
-public enum VariableType {
+public enum VariableType{
     NONE,
     INT,
-    FLOAT
+    FLOAT,
+    BOOL
 }

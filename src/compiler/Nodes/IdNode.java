@@ -3,16 +3,18 @@ package Nodes;
 public class IdNode extends ExpressionNode {
     public String id;
     public int idleft, idright;
-    public VariableType type;
+    public int usedCount = 0;
 
     public IdNode (String id, int idleft, int idright) {
         this.id = id;
         this.idleft = idleft;
         this.idright = idright;
+        this.type = VariableType.NONE;
+
     }
 
     public String toString () {
-        return id + "["+ idleft+", " + idright + "]"; 
+        return id; 
     }
 
     public void accept(Visitor v) {

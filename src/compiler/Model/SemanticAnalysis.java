@@ -27,6 +27,11 @@ public class SemanticAnalysis implements Visitor {
             stmt.accept(this);
         }
 
+        for(IdNode id: this.currSymbolTable.map.values()){
+            if (id.usedCount == 0){
+                ErrorHandler.getInstance().addError(String.format("Variable '%s' defined but not used", id.id), id.id, id.idleft, id.idright);
+            }
+        }
         this.currSymbolTable = this.currSymbolTable.getParentSymbolTable();
     }
 
@@ -58,47 +63,102 @@ public class SemanticAnalysis implements Visitor {
     public void visit(BoolExpressionNode n){
         n.expr1.accept(this);
         n.expr2.accept(this);
+
+        n.type = VariableType.BOOL;
     }
 
     public void visit(SubstructionNode n){
         n.rval.accept(this);
         n.term.accept(this);
+
+        if(n.rval.type == VariableType.FLOAT || n.term.type == VariableType.FLOAT){
+            n.type = VariableType.FLOAT;
+        }
+        else{
+            n.type = VariableType.INT;
+        }
     }
 
     public void visit(AdditionNode n){
         n.rval.accept(this);
         n.term.accept(this);
+
+        
+        if(n.rval.type == VariableType.FLOAT || n.term.type == VariableType.FLOAT){
+            n.type = VariableType.FLOAT;
+        }
+        else{
+            n.type = VariableType.INT;
+        }
     }
 
     public void visit(DivisionNode n){
         n.factor.accept(this);
         n.term.accept(this);
+
+        
+        if(n.factor.type == VariableType.FLOAT || n.term.type == VariableType.FLOAT){
+            n.type = VariableType.FLOAT;
+        }
+        else{
+            n.type = VariableType.INT;
+        }
     }
 
     public void visit(MultiNode n){
         n.factor.accept(this);
         n.term.accept(this);
+
+        if(n.factor.type == VariableType.FLOAT || n.term.type == VariableType.FLOAT){
+            n.type = VariableType.FLOAT;
+        }
+        else{
+            n.type = VariableType.INT;
+        }
     }
 
     public void visit(NegateNode n){
         n.factor.accept(this);
+        n.type = n.factor.type;
+
     }
 
     public void visit(AssignExpressionNode n){
         n.expr.accept(this);
         n.id.accept(this);
+
+        n.type = n.id.type;
+
+        if(n.id.type != n.expr.type){
+            ErrorHandler.getInstance().addError(
+                String.format("Not compatible types '%s', %s != %s", 
+                    n.id.id, 
+                    n.id.type, 
+                    n.expr.type), 
+                n.id.id, 
+                n.id.idright, 
+                n.id.idleft);
+        }
     }
 
     public void visit(IdNode n){
-        Object o = this.currSymbolTable.get(n.id);
+        IdNode idNode = this.currSymbolTable.get(n.id);
 
-        if(o == null){
+        if(idNode == null){
             ErrorHandler.getInstance().addError(String.format("Undefined variable '%s'", n.id), n.id, n.idright, n.idleft);
+        }
+        else{
+            idNode.usedCount++;
+            n.setType(idNode.type);
         }
     }
 
     public void visit(NumberNode n){
-
+        if(n.type == VariableType.INT){
+            if(n.intValue > 1073741823 || n.intValue < -1073741823){
+                ErrorHandler.getInstance().addError(String.format("Numeric value %s out of supported integer range", n.value), "num", n.row, n.col);
+            }
+        }
     }
    
     public void visit(NullStmtNode n){

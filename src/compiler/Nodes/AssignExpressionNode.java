@@ -10,8 +10,7 @@ public class AssignExpressionNode extends ExpressionNode{
 
     public String toString () {
 
-        String s =  id + " = "
-                    + expr.toString();
+        String s =  id + " = " + expr.toString();
 
         return s; 
     }

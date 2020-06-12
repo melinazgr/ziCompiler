@@ -7,6 +7,7 @@ public class DeclarationStmtNode extends StatementNode {
     public ArrayList<IdNode> list;
 
     public DeclarationStmtNode (VariableType type, ArrayList<IdNode> list) {
+        
         this.type = type;
         this.list = list;
 
