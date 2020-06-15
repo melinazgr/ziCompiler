@@ -38,4 +38,25 @@ public class StatementListNode extends StatementNode{
     public SymbolTable getSymbolTable(){
         return this.table;
     }
+
+    public void genCode(CodeGenerator cg, int begin, int after, StatementTypeGeneration stmtGenType) {
+        
+        for (StatementNode statement : statements) { 
+            if(statement instanceof DeclarationStmtNode && stmtGenType == StatementTypeGeneration.DECL_SKIP){
+                continue;
+            }
+            if(!(statement instanceof DeclarationStmtNode) && stmtGenType == StatementTypeGeneration.DECL_ONLY){
+                
+                continue;
+            }
+
+            int label1 = newLabel();
+            int label2 = newLabel();
+            cg.emitLabel(label1);
+            statement.genCode(cg, label1, label2, stmtGenType);
+            cg.emitLabel(label2);
+            
+        }
+    } 
+
 }

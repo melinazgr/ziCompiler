@@ -77,7 +77,7 @@ LineTerminator = \r|\n|\r\n
 /* White space is a line terminator, space, tab, or line feed. */
 
 WhiteSpace = {LineTerminator} | [\ \t]
-num = [0-9]+("."[0-9]*)?    
+num = "-"?[0-9]+("."[0-9]*)?    
 id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
 
 %state DEFAULTPARSERSTATE COMMENTLINESTATE COMMENTBLOCKSTATE ERRORSTATE

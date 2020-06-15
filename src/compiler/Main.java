@@ -51,6 +51,7 @@ public class Main {
             SemanticAnalysis semantic = new SemanticAnalysis();
             SyntaxAnalysis syntax = new SyntaxAnalysis();
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
+            CodeGeneratorIR cgM = new CodeGeneratorIR();
             parser p = new parser(new Lexer(new FileReader(compileName), sf), sf);
             ProgramNode result = (ProgramNode) p.parse().value;
 
@@ -63,18 +64,26 @@ public class Main {
 
             errors.printError();
             
+            if(errors.hasError()){
+                System.exit(1);
+            }
+
             if(astFilename != null) {
                 PrintStream ps = new PrintStream( new FileOutputStream( new File(astFilename)));
                 ps.print(syntax.toString());
                 ps.flush();
                 ps.close();
             }
-          
-            
+
+            result.genCode(cgM);
+            System.out.println(cgM.toString());
+
         } catch (Exception e) {
-            /* do cleanup here -- possibly rethrow e */
             e.printStackTrace();
+            System.exit(100);
+
         }
+
     }
 
 }

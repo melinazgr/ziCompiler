@@ -68,9 +68,9 @@ nonterminal VariableType TYPE;
 
 nonterminal StatementListNode STMT_LIST, COMP_STMT ;
 nonterminal StatementNode ASSIGN_STMT, FOR_STMT, WHILE_STMT, IF_STMT, STMT, DECLARATION;
-nonterminal ExpressionNode   EXPRRVAL,  OPBOOL_EXPR, RVAL, TERM, FACTOR, EXPR;
+nonterminal ExpressionNode   EXPRRVAL, RVAL, TERM, FACTOR, EXPR;
 nonterminal Operator C_OP;
-nonterminal BoolExpressionNode  BOOL_EXPR;
+nonterminal BoolExpressionNode  BOOL_EXPR, OPBOOL_EXPR;
 nonterminal AssignExpressionNode OPASSIGN_EXPR,  ASSIGN_EXPR;
 
 precedence left  ADD, MINUS;

@@ -25,7 +25,7 @@ public class SyntaxAnalysis implements Visitor {
     public void visit(ProgramNode n){
         
         tree.append(n.NodeId + "[label = \"<f0>  | <f2> " + n.id + "\"];\n");
-        tree.append(String.format("\"%s\":f1->\"%s\":f0\n",n.NodeId, n.compStmt.NodeId));
+        tree.append(String.format("\"%s\":f1->\"%s\":f0\n", n.NodeId, n.compStmt.NodeId));
 
         n.compStmt.accept(this);
     }
@@ -215,4 +215,3 @@ public class SyntaxAnalysis implements Visitor {
         tree.append(String.format("%s[label=\"<f0>%s\"];\n",n.NodeId, n.toString() ));
     }
 }
-

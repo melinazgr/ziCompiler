@@ -29,4 +29,8 @@ public class ErrorHandler {
             System.out.println(e.toString());
         }
     }
+
+    public boolean hasError(){
+        return !errors.isEmpty();
+    }
 }

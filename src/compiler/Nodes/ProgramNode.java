@@ -1,5 +1,7 @@
 package Nodes;
 
+import Model.CodeGenerator;
+
 public class ProgramNode extends Node{
     
     public String id;
@@ -33,5 +35,14 @@ public class ProgramNode extends Node{
 
     public void accept(Visitor v) {
         v.visit(this);
+    }
+
+    public void genCode (CodeGenerator cg){
+        int label1 = newLabel();
+        int label2 = newLabel();
+
+        cg.emitLabel(label1);
+        compStmt.genCode(cg, label1, label2, StatementTypeGeneration.ALL);
+        cg.emitLabel(label2);
     }
 }

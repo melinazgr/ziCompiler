@@ -1,5 +1,7 @@
 package Nodes;
 
+import Model.*;
+
 public class AssignExpressionNode extends ExpressionNode{
     public ExpressionNode expr;
     public IdNode id;
@@ -19,4 +21,16 @@ public class AssignExpressionNode extends ExpressionNode{
         v.visit(this);
     }
     
+    public ExpressionNode reduce(CodeGenerator cg){
+        ExpressionNode expression = expr.reduce(cg);
+        cg.emitStatement("=", expression, null, this.id);
+
+        return this.id;
+    }
+
+    public void genCode(CodeGenerator cg) {
+        ExpressionNode expression = this.expr.reduce(cg);
+
+        cg.emitStatement("=", expression, null, this.id);
+    } 
 }

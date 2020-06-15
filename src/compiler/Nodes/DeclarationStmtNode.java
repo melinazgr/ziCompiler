@@ -1,6 +1,6 @@
 package Nodes;
 import java.util.*;
-
+import Model.*;
 
 public class DeclarationStmtNode extends StatementNode {
     public VariableType type;
@@ -36,5 +36,18 @@ public class DeclarationStmtNode extends StatementNode {
     public void accept(Visitor v) {
         v.visit(this);
     }
-    
+
+    public void genCode(CodeGenerator cg, int begin, int after, StatementTypeGeneration stmtGenType){
+
+        for(IdNode idNode: list){
+            if(idNode.type == VariableType.FLOAT){
+                cg.emitStatement("=", new NumberNode("0.0", idNode.idleft, idNode.idright), null, idNode);
+            }
+            else{
+                cg.emitStatement("=", new NumberNode("0", idNode.idleft, idNode.idright), null, idNode);
+            }
+
+            
+        }
+    } 
 }

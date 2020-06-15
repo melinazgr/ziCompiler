@@ -1,26 +1,24 @@
-mainclass Fibonacci {
-    public static void main ( )
-    {
-        int first, second, i, tmp;
-        first= tmp = 0;
-        first = first + 1;
-        second=1;
-        i=0;
 
-        //this is a line comment
+ mainclass Fibonacci {
+     public static void main ( ) {
+//         int first, second, i, tmp;
+//         first = tmp;
+//         tmp = 0;
+//         first = first + 1;
+//         second=1;
 
-        while (ii<10)
-        {
-            int foo;
-            i=i+1;
-            tmp=first+second;
-            println (tmp);
-            /*  this is 
-                a block 
-                comment 
-            */
-            first=second;
-            second=tmp;
-        }
-    }
-}
+       int a; int b; int c; 
+
+	a = b + c;
+
+//         i=0;
+//         int a;
+//         a = 2;
+//         float b;
+//         b = 9.3;
+//         //this is a line comment
+//        for(i = 2; i > 10; i = i+2 ){
+//            second = tmp * 10;
+//        }
+     }
+ }

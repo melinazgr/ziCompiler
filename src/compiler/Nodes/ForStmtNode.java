@@ -1,11 +1,13 @@
 package Nodes;
 
+import Model.*;
+
 public class ForStmtNode extends StatementNode{
     public AssignExpressionNode opAssignExpr1, opAssignExpr2;
-    public ExpressionNode opBoolExpr;
+    public BoolExpressionNode opBoolExpr;
     public StatementNode stmt;
 
-    public ForStmtNode (AssignExpressionNode opAssignExpr1, ExpressionNode opBoolExpr, AssignExpressionNode opAssignExpr2, StatementNode stmt){
+    public ForStmtNode (AssignExpressionNode opAssignExpr1, BoolExpressionNode opBoolExpr, AssignExpressionNode opAssignExpr2, StatementNode stmt){
         this.opAssignExpr1 = opAssignExpr1;
         this.opAssignExpr2 = opAssignExpr2;
         this.opBoolExpr = opBoolExpr;
@@ -26,6 +28,28 @@ public class ForStmtNode extends StatementNode{
     public void accept(Visitor v){
         v.visit(this);
     }
+
+    public void genCode(CodeGenerator cg, int begin, int after, StatementTypeGeneration stmtGenType){
+        
+        int label1 = newLabel();
+        int label2 = newLabel();
+
+        stmt.genCode(cg, label2, after, StatementTypeGeneration.DECL_ONLY);
+
+        opAssignExpr1.genCode(cg);
+
+        this.after = after;
+        cg.emitLabel(label1);
+
+        opBoolExpr.jump(cg, false, after);
+        
+        cg.emitLabel(label2);
+        stmt.genCode(cg, label2, after, StatementTypeGeneration.DECL_SKIP);
+
+        opAssignExpr2.genCode(cg);
+
+        cg.emitJump(label1);
+    } 
 }
 
 

@@ -4,10 +4,15 @@ abstract public class Node {
 
     public static int nodeId = 0;
     public String NodeId;
+    static int labels = 0;
 
     public Node(){
         this.NodeId = "node"+Integer.toString(++nodeId);
     }
+    
     public abstract String toString();
     
+    public int newLabel(){
+        return ++labels;
+    }
 }

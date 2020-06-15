@@ -1,5 +1,7 @@
 package Nodes;
 
+import Model.*;
+
 public class BoolExpressionNode extends ExpressionNode{
     public ExpressionNode expr1, expr2;
     public Operator operator;
@@ -21,5 +23,11 @@ public class BoolExpressionNode extends ExpressionNode{
     public void accept(Visitor v) {
         v.visit(this);
     }
-    
+
+    public void jump(CodeGenerator cg, boolean condition, int label){
+        ExpressionNode a = expr1.reduce(cg);
+        ExpressionNode b = expr2.reduce(cg);
+
+        cg.emitJump(condition, this.operator.toString(), a, b, label);
+    }
 }
