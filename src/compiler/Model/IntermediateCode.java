@@ -63,12 +63,15 @@ public class IntermediateCode {
             
             return "";
         }
+
         else if(operation == "jump"){
             return "goto L" + label + "\n";
         }
+        
         else if(operation == "call"){
             return "call " + functionName + " " + expr1.toString() + "\n";
         }
+
         else if (expr2 != null && expr1 != null && resultExpr != null && operation !=null){
             return  resultExpr.toString() +
                     " = " + expr1.toString() + 
@@ -79,11 +82,18 @@ public class IntermediateCode {
         }
         
         else if (operation != null &&  expr1 != null && resultExpr != null){
+            if(operation.toString() == "-"){
+                return  resultExpr.toString() +
+                    " = 0 - " +
+                    expr1.toString() + 
+                    "\n";
+            }
             return  resultExpr.toString()+ 
                     " " + operation.toString() + 
                     " " + expr1.toString() + 
                     "\n";
         }
+        
         else if (resultExpr == null && expr2 != null){
             return  "if" + condition + 
                     " " + expr1.toString() + 
