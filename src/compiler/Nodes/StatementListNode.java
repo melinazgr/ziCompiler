@@ -1,8 +1,10 @@
 package Nodes;
+
 import Model.*;
 import java.util.*;
 
 public class StatementListNode extends StatementNode{
+    
     public ArrayList <StatementNode> statements = new ArrayList <StatementNode>();
     static int depth = 0;
     private SymbolTable table;
@@ -12,6 +14,7 @@ public class StatementListNode extends StatementNode{
         StringBuilder s = new StringBuilder(); 
 
         NodeFormatter.getInstance().incDepth();
+        
         for (StatementNode statement : statements) { 
             s.append(NodeFormatter.getInstance().getSpaces());
             s.append(statement.toString());
@@ -45,18 +48,17 @@ public class StatementListNode extends StatementNode{
             if(statement instanceof DeclarationStmtNode && stmtGenType == StatementTypeGeneration.DECL_SKIP){
                 continue;
             }
-            if(!(statement instanceof DeclarationStmtNode) && stmtGenType == StatementTypeGeneration.DECL_ONLY){
-                
+
+            if(!(statement instanceof DeclarationStmtNode) && stmtGenType == StatementTypeGeneration.DECL_ONLY){    
                 continue;
             }
 
             int label1 = newLabel();
             int label2 = newLabel();
+
             cg.emitLabel(label1);
             statement.genCode(cg, label1, label2, stmtGenType);
-            cg.emitLabel(label2);
-            
+            cg.emitLabel(label2);      
         }
     } 
-
 }

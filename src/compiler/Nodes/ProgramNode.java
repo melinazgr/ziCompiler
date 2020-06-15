@@ -1,6 +1,6 @@
 package Nodes;
 
-import Model.CodeGenerator;
+import Model.*;
 
 public class ProgramNode extends Node{
     
@@ -13,7 +13,9 @@ public class ProgramNode extends Node{
     }
 
     public String toString () {
+        
         StringBuilder s = new StringBuilder();
+        
         s.append("mainclass " + id + " { \n");
         NodeFormatter.getInstance().incDepth();
         s.append(NodeFormatter.getInstance().getSpaces());
@@ -29,7 +31,6 @@ public class ProgramNode extends Node{
         s.append("}\n");
         NodeFormatter.getInstance().decDepth();
         
-
         return s.toString();
     }
 

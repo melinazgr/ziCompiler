@@ -5,6 +5,7 @@ import Model.*;
 public class BoolExpressionNode extends ExpressionNode{
     public ExpressionNode expr1, expr2;
     public Operator operator;
+
     public BoolExpressionNode (ExpressionNode expr1, Operator operator, ExpressionNode expr2) {
         this.operator = operator;
         this.expr1 = expr1;

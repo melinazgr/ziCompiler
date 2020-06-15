@@ -1,6 +1,7 @@
 package Nodes;
 
 public class TempExprNode extends ExpressionNode{
+    
     static int count = 0;
     int number = 0;
 
@@ -14,6 +15,6 @@ public class TempExprNode extends ExpressionNode{
         return "t" + number; }
 
     public void accept(Visitor v) {
-        
+
     }
 }

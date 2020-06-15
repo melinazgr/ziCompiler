@@ -14,7 +14,6 @@ public class SubstructionNode extends ExpressionNode {
 
         String s =  rval.toString() + " - " 
                     + term.toString();
-
         return s; 
     }
 
@@ -27,6 +26,7 @@ public class SubstructionNode extends ExpressionNode {
         TempExprNode temp = new TempExprNode(this.type);
         
         cg.emitStatement("-", reducedAddNode.rval, reducedAddNode.term, temp);
+        
         return temp;
     }
 

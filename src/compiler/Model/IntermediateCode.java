@@ -78,7 +78,6 @@ public class IntermediateCode {
                     " " + operation.toString() + 
                     " " + expr2.toString() + 
                     "\n";
-            
         }
         
         else if (operation != null &&  expr1 != null && resultExpr != null){
@@ -88,6 +87,7 @@ public class IntermediateCode {
                     expr1.toString() + 
                     "\n";
             }
+
             return  resultExpr.toString()+ 
                     " " + operation.toString() + 
                     " " + expr1.toString() + 
@@ -102,11 +102,11 @@ public class IntermediateCode {
                     " goto " + "L" + label + "\n";
             
         }
+
         else if (jumpOperation != null){
             return "goto L" + label + "\n";
         }
 
         return "Unknown IR \n";
     }
-
 }

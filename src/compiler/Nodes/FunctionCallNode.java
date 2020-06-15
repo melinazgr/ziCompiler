@@ -1,10 +1,11 @@
 package Nodes;
-import Model.*;
 
+import Model.*;
 
 public class FunctionCallNode extends StatementNode{
     public String id;
     public ExpressionNode argument;
+    
     public FunctionCallNode (String id, ExpressionNode argument){
         this.id = id;
         this.argument = argument;
@@ -19,10 +20,8 @@ public class FunctionCallNode extends StatementNode{
     }
 
     public void genCode(CodeGenerator cg, int begin, int after, StatementTypeGeneration stmtGenType){
-        ExpressionNode temp = this.argument.reduce(cg);
-
-        cg.emitFunctionCall(id, temp);
         
+        ExpressionNode temp = this.argument.reduce(cg);
+        cg.emitFunctionCall(id, temp);   
     }
-
 }

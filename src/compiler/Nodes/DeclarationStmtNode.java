@@ -1,4 +1,5 @@
 package Nodes;
+
 import java.util.*;
 import Model.*;
 
@@ -45,9 +46,7 @@ public class DeclarationStmtNode extends StatementNode {
             }
             else{
                 cg.emitStatement("=", new NumberNode("0", idNode.idleft, idNode.idright), null, idNode);
-            }
-
-            
+            }          
         }
     } 
 }

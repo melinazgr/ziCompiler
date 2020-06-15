@@ -32,6 +32,5 @@ public class MultiNode extends ExpressionNode{
 
     public ExpressionNode genTerm(CodeGenerator cg){
         return new MultiNode(this.term.reduce(cg), this.factor.reduce(cg));
-    }
-    
+    } 
 }

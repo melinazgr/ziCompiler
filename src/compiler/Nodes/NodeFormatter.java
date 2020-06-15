@@ -6,9 +6,11 @@ public class NodeFormatter {
     int depth = 0;
 
     private NodeFormatter () {
+
     }
 
     public static NodeFormatter getInstance(){
+        
         if(singleInstance == null){
             singleInstance = new NodeFormatter();
         }
@@ -29,7 +31,9 @@ public class NodeFormatter {
     }
 
     public String getSpaces(){
+        
         StringBuilder s = new StringBuilder();
+        
         for(int i = 0; i < depth; i ++){
             s.append(" ");
         }

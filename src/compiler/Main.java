@@ -20,19 +20,20 @@ public class Main {
 					Main.Debug = true;
 				}
 				else if ( argv[ i ].equals( "-ast" ) ) {
-					i++;
-                    if ( i >= argv.length )
-                    {
+                    i++;
+                    
+                    if ( i >= argv.length ){
                         throw new Exception( "Missing AST filename" );
                     }
+
 					astFilename = argv[ i ];
                 }
                 else if ( argv[ i ].equals( "-i" ) ) {
 					i++;
-                    if ( i >= argv.length )
-                    {
+                    if ( i >= argv.length ){
                         throw new Exception( "Missing filename" );
                     }
+
 					compileName = argv[ i ];
 				}
 				else {
@@ -42,8 +43,7 @@ public class Main {
             }
 
             if (compileName == null){
-                throw new Exception( 
-                    "Usage: java Main [-debug] [-ast <ast filename>] -i filename" );
+                throw new Exception("Usage: java Main [-debug] [-ast <ast filename>] -i filename" );
             }
 
             System.out.println("Compiling program: " + compileName);
@@ -52,6 +52,7 @@ public class Main {
             SyntaxAnalysis syntax = new SyntaxAnalysis();
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
             CodeGeneratorIR cgM = new CodeGeneratorIR();
+            
             parser p = new parser(new Lexer(new FileReader(compileName), sf), sf);
             ProgramNode result = (ProgramNode) p.parse().value;
 
@@ -81,11 +82,8 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(100);
-
         }
-
     }
-
 }
 
     //TODO if else grammar conflict
@@ -94,5 +92,3 @@ public class Main {
 
     //TODO semantic float limits
     //TODO warning l - r value
-
-     

@@ -15,6 +15,7 @@ public class ForStmtNode extends StatementNode{
     }
 
     public String toString () {
+
         StringBuilder s = new StringBuilder(); 
         
         s.append("for (" + opAssignExpr1.toString() + "; " + opBoolExpr.toString() + "; " + opAssignExpr1.toString() + " ) {\n");
@@ -50,7 +51,4 @@ public class ForStmtNode extends StatementNode{
 
         cg.emitJump(label1);
     } 
-}
-
-
-    
+}    

@@ -18,6 +18,7 @@ public class IfStmtNode extends StatementNode{
     }
     
     public String toString () {
+
         StringBuilder s = new StringBuilder(); 
         
         s.append("if (" +   boolExpr.toString() + ") {\n");
@@ -50,6 +51,7 @@ public class IfStmtNode extends StatementNode{
             cg.emitLabel(label1);
             stmt1.genCode(cg, label1, after, StatementTypeGeneration.ALL);
         }
+        
         else{
             int label1 = newLabel();
             int label2 = newLabel();

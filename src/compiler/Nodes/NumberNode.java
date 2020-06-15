@@ -1,11 +1,11 @@
 package Nodes;
 
 public class NumberNode extends ExpressionNode{
+    
     public String value;
     public float floatValue;
     public int intValue;
     public int row, col;
-
 
     public NumberNode (String value, int row, int col) {
         this.value = value;
@@ -16,6 +16,7 @@ public class NumberNode extends ExpressionNode{
             this.type = VariableType.FLOAT;
             this.floatValue = Float.parseFloat(value);
         }
+        
         else{
             this.type = VariableType.INT;
             this.intValue = Integer.parseInt(value);

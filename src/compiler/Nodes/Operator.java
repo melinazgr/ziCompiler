@@ -8,4 +8,3 @@ public enum Operator {
     LESSQ, 
     GREATQ    
 }
-

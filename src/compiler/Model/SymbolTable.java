@@ -1,4 +1,5 @@
 package Model;
+
 import java.util.*; 
 import Error.*;
 import Nodes.*;
@@ -36,7 +37,10 @@ public class SymbolTable {
 
     public void put(String key, IdNode value){
         if(map.containsKey(key)){
-            ErrorHandler.getInstance().addError(String.format("Identifier '%s' already defined", key), key, value.idright, value.idleft);
+            ErrorHandler.getInstance().addError(String.format("Identifier '%s' already defined", key), 
+                                                                key, 
+                                                                value.idright, 
+                                                                value.idleft);
         }
 
         else{

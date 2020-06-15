@@ -29,5 +29,4 @@ public class AdditionNode extends ExpressionNode{
         cg.emitStatement("+", reducedAddNode.rval, reducedAddNode.term, temp);
         return temp;
     }
-    
 }

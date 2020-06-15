@@ -3,6 +3,7 @@ package Nodes;
 import Model.*;
 
 public class WhileStmtNode extends StatementNode{
+    
     public BoolExpressionNode boolExpr;
     public StatementNode stmt;
 

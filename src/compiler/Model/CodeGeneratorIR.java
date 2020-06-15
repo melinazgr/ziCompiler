@@ -7,7 +7,6 @@ public class CodeGeneratorIR implements CodeGenerator{
 
     public static ArrayList<IntermediateCode> code = new ArrayList<IntermediateCode>();
 
-
     public CodeGeneratorIR(){
             
     }
