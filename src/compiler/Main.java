@@ -15,6 +15,8 @@ public class Main {
         String astOutFilename = null;
         String srcInputFilename = null;
         String irOutFilename = null;
+        String mixalOutFilename = null;
+
 
         /* Start the parser */
         try 
@@ -26,7 +28,7 @@ public class Main {
                 else if ( argv[ i ].equals( "-i" ) ) {
 					i++;
                     if ( i >= argv.length ){
-                        throw new Exception( "Missing filename" );
+                        throw new Exception( "Missing input filename" );
                     }
 
 					srcInputFilename = argv[ i ];
@@ -44,10 +46,19 @@ public class Main {
                 else if ( argv[ i ].equals( "-ir" ) ) {
 					i++;
                     if ( i >= argv.length ){
-                        throw new Exception( "Missing filename" );
+                        throw new Exception( "Missing ir filename" );
                     }
 
 					irOutFilename = argv[ i ];
+                }
+
+                else if ( argv[ i ].equals( "-out" ) ) {
+					i++;
+                    if ( i >= argv.length ){
+                        throw new Exception( "Missing out filename" );
+                    }
+
+					mixalOutFilename = argv[ i ];
                 }
                 
 				else {
@@ -58,13 +69,19 @@ public class Main {
             if (srcInputFilename == null){
                 throw new Exception(helpText);
             }
+            
+            if(mixalOutFilename == null){
+                mixalOutFilename = srcInputFilename + ".mixal";
+            }
 
             System.out.println("Compiling program: " + srcInputFilename);
+            System.out.println("Generating output MIXAL program: " + mixalOutFilename);
 
             SemanticAnalysis semantic = new SemanticAnalysis();
             SyntaxAnalysis syntax = new SyntaxAnalysis();
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
-            CodeGeneratorIR cgM = new CodeGeneratorIR();
+            CodeGeneratorIR cgIR = new CodeGeneratorIR();
+            CodeGeneratorMIXAL cgM = new CodeGeneratorMIXAL();
             
             parser p = new parser(new Lexer(new FileReader(srcInputFilename), sf), sf);
             ProgramNode result = (ProgramNode) p.parse().value;
@@ -89,13 +106,21 @@ public class Main {
                 ps.close();
             }
             
-            result.genCode(cgM);
+            result.genCode(cgIR);
+
             if(irOutFilename != null){
                 PrintStream ps = new PrintStream( new FileOutputStream( new File(irOutFilename)));
-                ps.print(cgM.toString());
+                ps.print(cgIR.toString());
                 ps.flush();
                 ps.close();
             }
+
+            PrintStream ps = new PrintStream( new FileOutputStream( new File(mixalOutFilename)));
+            cgM.genCode(cgIR);
+
+            ps.print(cgM.toString());
+            ps.flush();
+            ps.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +131,6 @@ public class Main {
 
     //TODO if else grammar conflict
     //TODO assign grammar conflict
-
 
     //TODO semantic float limits
     //TODO warning l - r value

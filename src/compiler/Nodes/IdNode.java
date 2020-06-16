@@ -15,7 +15,7 @@ public class IdNode extends ExpressionNode {
     }
 
     public String toString () {
-        return id; 
+        return id + " [&" + offset + "]" ; 
     }
 
     public void accept(Visitor v) {
@@ -28,5 +28,12 @@ public class IdNode extends ExpressionNode {
 
     public IdNode genTerm(CodeGenerator cg){
         return this;
+    }
+
+    public void setAlias(IdNode other){
+        this.type = other.type;
+        this.idleft = other.idleft;
+        this.idright = other.idright;
+        this.offset = other.offset;
     }
 }

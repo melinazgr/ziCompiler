@@ -15,6 +15,5 @@ public class TempExprNode extends ExpressionNode{
         return "t" + number; }
 
     public void accept(Visitor v) {
-
     }
 }

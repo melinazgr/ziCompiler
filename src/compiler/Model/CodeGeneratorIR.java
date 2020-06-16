@@ -5,7 +5,7 @@ import java.util.*;
 
 public class CodeGeneratorIR implements CodeGenerator{
 
-    public static ArrayList<IntermediateCode> code = new ArrayList<IntermediateCode>();
+    public ArrayList<IntermediateCode> code = new ArrayList<IntermediateCode>();
 
     public CodeGeneratorIR(){
             

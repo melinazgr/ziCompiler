@@ -128,7 +128,7 @@ public class SemanticAnalysis implements Visitor {
         n.expr.accept(this);
         n.id.accept(this);
 
-        n.type = n.id.type;
+        n.id.setAlias(n.id);
 
         if(n.id.type != n.expr.type){
             ErrorHandler.getInstance().addError(
@@ -150,7 +150,7 @@ public class SemanticAnalysis implements Visitor {
         }
         else{
             idNode.usedCount++;
-            n.setType(idNode.type);
+            n.setAlias(idNode);
         }
     }
 

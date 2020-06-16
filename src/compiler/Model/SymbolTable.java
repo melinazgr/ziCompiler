@@ -8,6 +8,7 @@ public class SymbolTable {
     public  Map<String,IdNode> map = new HashMap<String,IdNode>();
     private SymbolTable parent;
     public static int count = 0;
+    public int nextOffset = 0;
     public String tableId;
 
     public SymbolTable(){
@@ -16,11 +17,18 @@ public class SymbolTable {
 
     public SymbolTable(SymbolTable parent){
         this.parent = parent;
+        if(parent != null){
+            this.nextOffset = parent.getNextOffset();
+        }
         this.tableId = "table"+Integer.toString(++count);
     }
 
     public SymbolTable getParentSymbolTable (){
         return this.parent;
+    }
+
+    public int getNextOffset(){
+        return this.nextOffset;
     }
     
     public IdNode get(String key){
@@ -44,6 +52,8 @@ public class SymbolTable {
         }
 
         else{
+            value.offset = nextOffset;
+            nextOffset++;
             map.put(key, value);
         }        
     }
@@ -54,7 +64,6 @@ public class SymbolTable {
         for (String key: map.keySet())
         {
             s.append(FormatHelper.getTypeName(map.get(key).type) + key + "\n");
-            //TODO more info for the id
         }
 
         return s.toString();
