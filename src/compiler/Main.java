@@ -9,9 +9,13 @@ public class Main {
     public static boolean Debug = false;
     public static void main(String[] argv)
     {
-        
-        String astFilename = null;
-        String compileName = null;
+
+
+        String helpText = "Usage: java Main [-debug] [-ast <ast filename>] [-ir <filename>] -i <src filename>"; 
+        String astOutFilename = null;
+        String srcInputFilename = null;
+        String irOutFilename = null;
+
         /* Start the parser */
         try 
         {
@@ -19,41 +23,50 @@ public class Main {
 				if ( argv[ i ].equals( "-debug" ) ) {
 					Main.Debug = true;
 				}
-				else if ( argv[ i ].equals( "-ast" ) ) {
-                    i++;
-                    
-                    if ( i >= argv.length ){
-                        throw new Exception( "Missing AST filename" );
-                    }
-
-					astFilename = argv[ i ];
-                }
                 else if ( argv[ i ].equals( "-i" ) ) {
 					i++;
                     if ( i >= argv.length ){
                         throw new Exception( "Missing filename" );
                     }
 
-					compileName = argv[ i ];
-				}
+					srcInputFilename = argv[ i ];
+                }
+                else if ( argv[ i ].equals( "-ast" ) ) {
+                    i++;
+                    
+                    if ( i >= argv.length ){
+                        throw new Exception( "Missing AST filename" );
+                    }
+
+					astOutFilename = argv[ i ];
+                }
+                                
+                else if ( argv[ i ].equals( "-ir" ) ) {
+					i++;
+                    if ( i >= argv.length ){
+                        throw new Exception( "Missing filename" );
+                    }
+
+					irOutFilename = argv[ i ];
+                }
+                
 				else {
-					throw new Exception( 
-						"Usage: java Main [-debug] [-ast <ast filename>] -i filename" );
+					throw new Exception(helpText);
                 }
             }
 
-            if (compileName == null){
-                throw new Exception("Usage: java Main [-debug] [-ast <ast filename>] -i filename" );
+            if (srcInputFilename == null){
+                throw new Exception(helpText);
             }
 
-            System.out.println("Compiling program: " + compileName);
+            System.out.println("Compiling program: " + srcInputFilename);
 
             SemanticAnalysis semantic = new SemanticAnalysis();
             SyntaxAnalysis syntax = new SyntaxAnalysis();
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
             CodeGeneratorIR cgM = new CodeGeneratorIR();
             
-            parser p = new parser(new Lexer(new FileReader(compileName), sf), sf);
+            parser p = new parser(new Lexer(new FileReader(srcInputFilename), sf), sf);
             ProgramNode result = (ProgramNode) p.parse().value;
 
             System.out.println(result.toString());
@@ -69,15 +82,20 @@ public class Main {
                 System.exit(1);
             }
 
-            if(astFilename != null) {
-                PrintStream ps = new PrintStream( new FileOutputStream( new File(astFilename)));
+            if(astOutFilename != null) {
+                PrintStream ps = new PrintStream( new FileOutputStream( new File(astOutFilename)));
                 ps.print(syntax.toString());
                 ps.flush();
                 ps.close();
             }
-
+            
             result.genCode(cgM);
-            System.out.println(cgM.toString());
+            if(irOutFilename != null){
+                PrintStream ps = new PrintStream( new FileOutputStream( new File(irOutFilename)));
+                ps.print(cgM.toString());
+                ps.flush();
+                ps.close();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
