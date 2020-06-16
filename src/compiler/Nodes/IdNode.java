@@ -1,5 +1,6 @@
 package Nodes;
 import Model.*;
+import Main.*;
 
 public class IdNode extends ExpressionNode {
     public String id;
@@ -15,7 +16,11 @@ public class IdNode extends ExpressionNode {
     }
 
     public String toString () {
-        return id + " [&" + offset + "]" ; 
+        if(Main.Debug == true){
+            return id + "[&" + offset + "]"; 
+
+        }
+        return id; 
     }
 
     public void accept(Visitor v) {

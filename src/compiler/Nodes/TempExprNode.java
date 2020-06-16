@@ -1,5 +1,7 @@
 package Nodes;
 
+import Main.*;
+
 public class TempExprNode extends ExpressionNode{
     
     static int count = 0;
@@ -13,7 +15,12 @@ public class TempExprNode extends ExpressionNode{
     }
 
     public String toString(){ 
-        return "t" + number + "[&" + offset + "]"; 
+        if(Main.Debug == true){
+            return "t" + number + "[&" + offset + "]"; 
+
+        }
+        return "t" + number; 
+
     }
 
     public void accept(Visitor v) {

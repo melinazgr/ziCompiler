@@ -1,7 +1,9 @@
 /* --------------------------Usercode Section------------------------ */
+package Main;
 import java_cup.runtime.*;
 import java.io.*;
 import java_cup.runtime.ComplexSymbolFactory.Location;
+
 
 
 %%
@@ -94,38 +96,38 @@ id = [A-Za-z]([A-Za-z]|[0-9]|"_")*
     {WhiteSpace}       { }   
    
     /* Print  the token found that was declared in the class sym and then return it. */
-
-      "+"                { print_debug("+"); return symbol(sym.ADD);}
-      "-"                { print_debug("-"); return symbol(sym.MINUS);}
-      "*"                { print_debug("*"); return symbol(sym.MULTI);}
-      "/"                { print_debug("/"); return symbol(sym.DIV);}
-      "("                { print_debug("("); return symbol(sym.LPAREN);}
-      ")"                { print_debug(")"); return symbol(sym.RPAREN);}
-      "{"                { print_debug("{"); return symbol(sym.LCBRA);}
-      "}"                { print_debug("}"); return symbol(sym.RCBRA);}
-      "="                { print_debug("="); return symbol(sym.ASSIGN);}
-      "!="               { print_debug("!="); return symbol(sym.NOTEQUAL);}
-      "=="               { print_debug("=="); return symbol(sym.EQUAL);}
-      ">"                { print_debug(">"); return symbol(sym.GREAT);}
-      "<"                { print_debug("<"); return symbol(sym.LESS);}
-      "<="               { print_debug("<="); return symbol(sym.LESSQ);}
-      ">="               { print_debug(">="); return symbol(sym.GREATQ);}
-      "while"            { print_debug("while"); return symbol(sym.WHILE);}
-      "for"              { print_debug("for"); return symbol(sym.FOR);}
-      "if"               { print_debug("if"); return symbol(sym.IF);}
-      "else"             { print_debug("else"); return symbol(sym.ELSE);}
-      "println"          { print_debug("println"); return symbol(sym.PRINT);}
-      "mainclass"        { print_debug("mainclass"); return symbol(sym.MAINCLASS);}
-      "public"           { print_debug("public"); return symbol(sym.PUBLIC);}
-      "static"           { print_debug("static"); return symbol(sym.STATIC);}
-      "void"             { print_debug("void"); return symbol(sym.VOID);}
-      "main"             { print_debug("main"); return symbol(sym.MAIN);}
-      "int"              { print_debug("int"); return symbol(sym.INT);}
-      "float"            { print_debug("float"); return symbol(sym.FLOAT);}
-      ","                { print_debug(","); return symbol(sym.COMMA);}
     
-    {num}                { print_debug(yytext());return symbol(sym.NUM, yytext());}
-    {id}                 { print_debug(yytext());return symbol(sym.ID, yytext());}
+      "+"                { return symbol(sym.ADD);}
+      "-"                { return symbol(sym.MINUS);}
+      "*"                { return symbol(sym.MULTI);}
+      "/"                { return symbol(sym.DIV);}
+      "("                { return symbol(sym.LPAREN);}
+      ")"                { return symbol(sym.RPAREN);}
+      "{"                { return symbol(sym.LCBRA);}
+      "}"                { return symbol(sym.RCBRA);}
+      "="                { return symbol(sym.ASSIGN);}
+      "!="               { return symbol(sym.NOTEQUAL);}
+      "=="               { return symbol(sym.EQUAL);}
+      ">"                { return symbol(sym.GREAT);}
+      "<"                { return symbol(sym.LESS);}
+      "<="               { return symbol(sym.LESSQ);}
+      ">="               { return symbol(sym.GREATQ);}
+      "while"            { return symbol(sym.WHILE);}
+      "for"              { return symbol(sym.FOR);}
+      "if"               { return symbol(sym.IF);}
+      "else"             { return symbol(sym.ELSE);}
+      "println"          { return symbol(sym.PRINT);}
+      "mainclass"        { return symbol(sym.MAINCLASS);}
+      "public"           { return symbol(sym.PUBLIC);}
+      "static"           { return symbol(sym.STATIC);}
+      "void"             { return symbol(sym.VOID);}
+      "main"             { return symbol(sym.MAIN);}
+      "int"              { return symbol(sym.INT);}
+      "float"            { return symbol(sym.FLOAT);}
+      ","                { return symbol(sym.COMMA);}
+    
+    {num}                { return symbol(sym.NUM, yytext());}
+    {id}                 { return symbol(sym.ID, yytext());}
 
 
     "//"                 {yybegin (COMMENTLINESTATE);}
