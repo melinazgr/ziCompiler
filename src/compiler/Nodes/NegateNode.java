@@ -10,7 +10,7 @@ public class NegateNode extends ExpressionNode{
     }
 
     public String toString () {
-        return factor.toString(); 
+        return "-" + factor.toString(); 
     }
 
     public void accept(Visitor v) {

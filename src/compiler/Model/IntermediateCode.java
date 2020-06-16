@@ -83,7 +83,7 @@ public class IntermediateCode {
         else if (operation != null &&  expr1 != null && resultExpr != null){
             if(operation.toString() == "-"){
                 return  resultExpr.toString() +
-                    " = 0 - " +
+                    " = -" +
                     expr1.toString() + 
                     "\n";
             }
