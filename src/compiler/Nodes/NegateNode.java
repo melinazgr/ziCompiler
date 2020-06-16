@@ -19,9 +19,15 @@ public class NegateNode extends ExpressionNode{
 
     public ExpressionNode reduce(CodeGenerator cg){
         NegateNode reducedAddNode =  new NegateNode(this.factor.reduce(cg));
-        TempExprNode temp = new TempExprNode(this.type);
+        StatementListNode scope = (StatementListNode) this.getScopeParent();
+        TempExprNode temp = scope.getTemp(this.type);
         
         cg.emitStatement("-", reducedAddNode.factor, null, temp);
+
+        if(reducedAddNode.factor instanceof TempExprNode){
+            scope.returnTemp((TempExprNode)reducedAddNode.factor);
+        }
+        
         return temp;
     }
 

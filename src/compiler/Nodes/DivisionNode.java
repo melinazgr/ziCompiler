@@ -24,9 +24,19 @@ public class DivisionNode extends ExpressionNode {
 
     public ExpressionNode reduce(CodeGenerator cg){
         DivisionNode reducedAddNode =  new DivisionNode(this.term.reduce(cg), this.factor.reduce(cg));
-        TempExprNode temp = new TempExprNode(this.type);
+        StatementListNode scope = (StatementListNode) this.getScopeParent();
+        TempExprNode temp = scope.getTemp(this.type);
         
         cg.emitStatement("/", reducedAddNode.term, reducedAddNode.factor, temp);
+
+        if(reducedAddNode.factor instanceof TempExprNode){
+            scope.returnTemp((TempExprNode)reducedAddNode.factor);
+        }
+        if(reducedAddNode.term instanceof TempExprNode){
+            scope.returnTemp((TempExprNode)reducedAddNode.term);
+        }
+        
+
         return temp;
     }
 

@@ -25,7 +25,12 @@ public class AssignExpressionNode extends ExpressionNode{
     public ExpressionNode reduce(CodeGenerator cg){
         ExpressionNode expression = expr.reduce(cg);
         cg.emitStatement("=", expression, null, this.id);
-
+        
+        if(expression instanceof TempExprNode){
+            StatementListNode scope = (StatementListNode) this.getScopeParent();
+            scope.returnTemp((TempExprNode) expression);
+        }
+        
         return this.id;
     }
 
@@ -33,5 +38,9 @@ public class AssignExpressionNode extends ExpressionNode{
         ExpressionNode expression = this.expr.reduce(cg);
 
         cg.emitStatement("=", expression, null, this.id);
+        if(expression instanceof TempExprNode){
+            StatementListNode scope = (StatementListNode) this.getScopeParent();
+            scope.returnTemp((TempExprNode) expression);
+        }
     } 
 }

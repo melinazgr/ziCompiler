@@ -24,9 +24,19 @@ public class AdditionNode extends ExpressionNode{
 
     public ExpressionNode reduce(CodeGenerator cg){
         AdditionNode reducedAddNode =  new AdditionNode(this.rval.reduce(cg), this.term.reduce(cg));
-        TempExprNode temp = new TempExprNode(this.type);
+        StatementListNode scope = (StatementListNode) this.getScopeParent();
+        TempExprNode temp = scope.getTemp(this.type);
         
         cg.emitStatement("+", reducedAddNode.rval, reducedAddNode.term, temp);
+        
+        if(reducedAddNode.rval instanceof TempExprNode){
+            scope.returnTemp((TempExprNode)reducedAddNode.rval);
+        }
+        if(reducedAddNode.term instanceof TempExprNode){
+            scope.returnTemp((TempExprNode)reducedAddNode.term);
+        }
+        
+        
         return temp;
     }
 }

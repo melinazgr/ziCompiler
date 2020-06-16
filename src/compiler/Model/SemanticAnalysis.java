@@ -15,7 +15,8 @@ public class SemanticAnalysis implements Visitor {
 
     public void visit(DeclarationStmtNode n){
         for (IdNode id : n.list) { 
-            currSymbolTable.put(id.id, id);               
+            currSymbolTable.put(id.id, id);         
+            id.setScopeParent(n);
         }
     }
 
@@ -25,6 +26,7 @@ public class SemanticAnalysis implements Visitor {
         this.currSymbolTable = table;
 
         for(StatementNode stmt: n.statements){
+            stmt.setScopeParent(n);
             stmt.accept(this);
         }
 
@@ -37,20 +39,30 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(WhileStmtNode n){
+        n.boolExpr.setScopeParent(n.getScopeParent());
+        n.stmt.setScopeParent(n.getScopeParent());
         n.boolExpr.accept(this);    
         n.stmt.accept(this);    
     }
 
     public void visit(IfStmtNode n){
+        n.boolExpr.setScopeParent(n.getScopeParent());
+        n.stmt1.setScopeParent(n.getScopeParent());
         n.boolExpr.accept(this);    
         n.stmt1.accept(this);    
 
         if(n.stmt2 != null){
+            n.stmt2.setScopeParent(n.getScopeParent());
             n.stmt2.accept(this);    
         }
     }
 
     public void visit(ForStmtNode n){
+        n.opBoolExpr.setScopeParent(n.getScopeParent());
+        n.opAssignExpr1.setScopeParent(n.getScopeParent());
+        n.opAssignExpr2.setScopeParent(n.getScopeParent());
+        n.stmt.setScopeParent(n.getScopeParent());
+
         n.opAssignExpr1.accept(this);    
         n.opAssignExpr2.accept(this);    
         n.opBoolExpr.accept(this);    
@@ -58,10 +70,13 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(AssignStmtNode n){
+        n.expr.setScopeParent(n.getScopeParent());
         n.expr.accept(this);
     }
 
     public void visit(BoolExpressionNode n){
+        n.expr1.setScopeParent(n.getScopeParent());
+        n.expr2.setScopeParent(n.getScopeParent());
         n.expr1.accept(this);
         n.expr2.accept(this);
 
@@ -69,6 +84,8 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(SubstructionNode n){
+        n.rval.setScopeParent(n.getScopeParent());
+        n.term.setScopeParent(n.getScopeParent());
         n.rval.accept(this);
         n.term.accept(this);
 
@@ -81,6 +98,8 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(AdditionNode n){
+        n.rval.setScopeParent(n.getScopeParent());
+        n.term.setScopeParent(n.getScopeParent());
         n.rval.accept(this);
         n.term.accept(this);
 
@@ -94,6 +113,8 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(DivisionNode n){
+        n.factor.setScopeParent(n.getScopeParent());
+        n.term.setScopeParent(n.getScopeParent());
         n.factor.accept(this);
         n.term.accept(this);
 
@@ -107,6 +128,9 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(MultiNode n){
+        n.factor.setScopeParent(n.getScopeParent());
+        n.term.setScopeParent(n.getScopeParent());
+
         n.factor.accept(this);
         n.term.accept(this);
 
@@ -119,16 +143,20 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(NegateNode n){
+        n.factor.setScopeParent(n.getScopeParent());
+      
         n.factor.accept(this);
         n.type = n.factor.type;
 
     }
 
     public void visit(AssignExpressionNode n){
+        n.expr.setScopeParent(n.getScopeParent());
+        n.id.setScopeParent(n.getScopeParent());
         n.expr.accept(this);
         n.id.accept(this);
 
-        n.id.setAlias(n.id);
+        n.type = n.id.type;
 
         if(n.id.type != n.expr.type){
             ErrorHandler.getInstance().addError(

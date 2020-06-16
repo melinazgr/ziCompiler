@@ -9,6 +9,8 @@ public class StatementListNode extends StatementNode{
     static int depth = 0;
     private SymbolTable table;
 
+    public Stack<TempExprNode> tempNodes = new Stack<TempExprNode>();
+
     public String toString () {
         
         StringBuilder s = new StringBuilder(); 
@@ -61,4 +63,16 @@ public class StatementListNode extends StatementNode{
             cg.emitLabel(label2);      
         }
     } 
+
+    public TempExprNode getTemp(VariableType type){
+        if(tempNodes.isEmpty()){
+            return new TempExprNode(type); 
+        } 
+
+        return tempNodes.pop();
+    }
+
+    public void returnTemp(TempExprNode temp){
+        tempNodes.push(temp);
+    }
 }
