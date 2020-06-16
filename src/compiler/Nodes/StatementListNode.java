@@ -10,6 +10,7 @@ public class StatementListNode extends StatementNode{
     private SymbolTable table;
 
     public Stack<TempExprNode> tempNodes = new Stack<TempExprNode>();
+    public Stack<TempExprNode> createdTempNodes = new Stack<TempExprNode>();
 
     public String toString () {
         
@@ -64,9 +65,21 @@ public class StatementListNode extends StatementNode{
         }
     } 
 
+    public int getTotalTempVarSize(){
+        int offset = createdTempNodes.size();
+        if(this.getScopeParent() != null){
+            offset += ((StatementListNode) this.getScopeParent()).getTotalTempVarSize();
+        }
+
+        return offset;
+    }
+
     public TempExprNode getTemp(VariableType type){
         if(tempNodes.isEmpty()){
-            return new TempExprNode(type); 
+            TempExprNode temp = new TempExprNode(type);
+            createdTempNodes.push(temp);
+            temp.offset = getTotalTempVarSize(); 
+            return temp;
         } 
 
         return tempNodes.pop();

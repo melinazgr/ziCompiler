@@ -4,6 +4,7 @@ public class TempExprNode extends ExpressionNode{
     
     static int count = 0;
     int number = 0;
+    public int offset;
 
     public TempExprNode(VariableType type){
         this.isTemp = true;
@@ -12,7 +13,8 @@ public class TempExprNode extends ExpressionNode{
     }
 
     public String toString(){ 
-        return "t" + number; }
+        return "t" + number + "[&" + offset + "]"; 
+    }
 
     public void accept(Visitor v) {
     }
