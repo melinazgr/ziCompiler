@@ -9,7 +9,7 @@ public class IntermediateCode {
     ExpressionNode expr1, expr2, resultExpr;
     boolean condition;
 
-    public HashSet<Integer> usedLabels = new HashSet<Integer>();
+    public static HashSet<Integer> usedLabels = new HashSet<Integer>();
 
     public IntermediateCode(){
 

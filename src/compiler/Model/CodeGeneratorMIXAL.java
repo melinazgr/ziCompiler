@@ -16,7 +16,15 @@ public class CodeGeneratorMIXAL {
         
 
         if(expr instanceof NumberNode){
-            code.append("\tCMPA " + expr.toString());
+            NumberNode n = (NumberNode) expr;
+            if (n.intValue > 4095 || n.intValue < -4095){
+                constants.add(n);
+                code.append("\tCMPA " + n.NodeId.toUpperCase());
+            } 
+            else{
+                code.append("\tCMPA =" + expr.toString() + "=");
+            }
+            
         }
         else if(expr instanceof IdNode){
             code.append("\tCMPA SYM+" + ((IdNode) expr).offset);
@@ -30,28 +38,35 @@ public class CodeGeneratorMIXAL {
         code.append("\n");
     }
 
-    private void jumpOnOperation(String operation, int label)throws Exception{
-        if(operation == "EQUAL"){
-            code.append("\tJE L" + label);
-        }
-        else if(operation == "NOTEQUAL"){
-            code.append("\tJNE L" + label);
-        }
-        else if(operation == "GREAT"){
-            code.append("\tJG L" + label);
-        }
-        else if(operation == "GREATQ"){
-            code.append("\tJGE L" + label);
-        }
-        else if(operation == "LESSQ"){
-            code.append("\tJLE L" + label);
-        }
-        else if(operation == "LESS"){
-            code.append("\tJL L" + label);
-        }
-        else{
+    private void jumpOnOperation(boolean condition, String operation, int label)throws Exception{
+        if(condition){
+           
             throw new Exception("jumOnOperation: unsupported expression");
         }
+        else {
+            if(operation == "EQUAL"){
+                code.append("\tJNE L" + label);
+            }
+            else if(operation == "NOTEQUAL"){
+                code.append("\tJE L" + label);
+            }
+            else if(operation == "GREAT"){
+                code.append("\tJLE L" + label);
+            }
+            else if(operation == "GREATQ"){
+                code.append("\tJL L" + label);
+            }
+            else if(operation == "LESSQ"){
+                code.append("\tJG L" + label);
+            }
+            else if(operation == "LESS"){
+                code.append("\tJGE L" + label);
+            }
+            else{
+                throw new Exception("jumOnOperation: unsupported expression");
+            }
+        }
+        
         code.append("\n");
     }
 
@@ -108,7 +123,14 @@ public class CodeGeneratorMIXAL {
         }
 
         if(expr instanceof NumberNode){
-            code.append("\t" + prefix + operation + " " + expr.toString());
+             NumberNode n = (NumberNode) expr;
+            if (n.intValue > 4095 || n.intValue < -4095){
+                constants.add(n);
+                code.append("\t" + prefix + operation + n.NodeId.toUpperCase());
+            } 
+            else{
+                code.append("\t" + prefix + operation + " =" + expr.toString() + "=");
+            }
         }
         else if(expr instanceof IdNode){
             code.append("\t" + prefix + operation + " SYM+" + ((IdNode) expr).offset);
@@ -174,12 +196,18 @@ public class CodeGeneratorMIXAL {
             else if(ir.resultExpr == null && ir.expr2 != null){
                 loadAValue(ir.expr1);
                 compareAValue(ir.expr2);
-                jumpOnOperation(ir.operation, ir.label);
+                jumpOnOperation(ir.condition, ir.operation, ir.label);
             }
             else if(ir.operation == "label"){
-                if(ir.usedLabels.contains(ir.label)){
+                if(IntermediateCode.usedLabels.contains(ir.label)){
                     code.append("L"+ ir.label+ "");
                 }
+            }
+            else if(ir.operation == "jump"){
+                code.append("\tJMP L"+ ir.label+ "\n");
+            }
+            else if(ir.jumpOperation != null){
+                code.append("L"+ ir.label+ "");
             }
         }
 

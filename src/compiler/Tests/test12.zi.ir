@@ -1,13 +1,13 @@
 a = 0
 b = 0
-a = 10
-b = 20
-c = 0
-L15:
-iffalse a LESS b goto L12
-t1 = a + 2
+a = 1
+b = 1
+L13:
+iffalse a LESS 10 goto L12
+t1 = a + 1
 a = t1
-t1 = c + 1
-c = t1
-goto L15
+t1 = b + 1
+b = t1
+call println b
+goto L13
 L12:
