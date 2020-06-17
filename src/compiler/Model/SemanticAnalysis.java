@@ -41,6 +41,7 @@ public class SemanticAnalysis implements Visitor {
     public void visit(WhileStmtNode n){
         n.boolExpr.setScopeParent(n.getScopeParent());
         n.stmt.setScopeParent(n.getScopeParent());
+
         n.boolExpr.accept(this);    
         n.stmt.accept(this);    
     }
@@ -195,6 +196,8 @@ public class SemanticAnalysis implements Visitor {
     }
 
     public void visit(FunctionCallNode n){
-
+        n.argument.setScopeParent(n.getScopeParent());
+        
+        n.argument.accept(this);
     }
 }
