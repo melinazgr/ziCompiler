@@ -72,7 +72,7 @@ public class IntermediateCode {
             return "call " + functionName + " " + expr1.toString() + "\n";
         }
 
-        else if (expr2 != null && expr1 != null && resultExpr != null && operation !=null){
+        else if (operation !=null && expr1 != null && resultExpr != null && expr2 != null){
             return  resultExpr.toString() +
                     " = " + expr1.toString() + 
                     " " + operation.toString() + 
@@ -80,7 +80,7 @@ public class IntermediateCode {
                     "\n";
         }
         
-        else if (operation != null &&  expr1 != null && resultExpr != null){
+        else if (operation != null &&  expr1 != null && resultExpr != null && expr2 == null){
             if(operation.toString() == "-"){
                 return  resultExpr.toString() +
                     " = -" +

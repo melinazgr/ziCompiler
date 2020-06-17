@@ -804,42 +804,42 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 39: break;
           case 3:
-            { print_debug("("); return symbol(sym.LPAREN);
+            { return symbol(sym.LPAREN);
             }
             // fall through
           case 40: break;
           case 4:
-            { print_debug(")"); return symbol(sym.RPAREN);
+            { return symbol(sym.RPAREN);
             }
             // fall through
           case 41: break;
           case 5:
-            { print_debug("*"); return symbol(sym.MULTI);
+            { return symbol(sym.MULTI);
             }
             // fall through
           case 42: break;
           case 6:
-            { print_debug("+"); return symbol(sym.ADD);
+            { return symbol(sym.ADD);
             }
             // fall through
           case 43: break;
           case 7:
-            { print_debug(","); return symbol(sym.COMMA);
+            { return symbol(sym.COMMA);
             }
             // fall through
           case 44: break;
           case 8:
-            { print_debug("-"); return symbol(sym.MINUS);
+            { return symbol(sym.MINUS);
             }
             // fall through
           case 45: break;
           case 9:
-            { print_debug("/"); return symbol(sym.DIV);
+            { return symbol(sym.DIV);
             }
             // fall through
           case 46: break;
           case 10:
-            { print_debug(yytext());return symbol(sym.NUM, yytext());
+            { return symbol(sym.NUM, yytext());
             }
             // fall through
           case 47: break;
@@ -849,32 +849,32 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 48: break;
           case 12:
-            { print_debug("<"); return symbol(sym.LESS);
+            { return symbol(sym.LESS);
             }
             // fall through
           case 49: break;
           case 13:
-            { print_debug("="); return symbol(sym.ASSIGN);
+            { return symbol(sym.ASSIGN);
             }
             // fall through
           case 50: break;
           case 14:
-            { print_debug(">"); return symbol(sym.GREAT);
+            { return symbol(sym.GREAT);
             }
             // fall through
           case 51: break;
           case 15:
-            { print_debug(yytext());return symbol(sym.ID, yytext());
+            { return symbol(sym.ID, yytext());
             }
             // fall through
           case 52: break;
           case 16:
-            { print_debug("{"); return symbol(sym.LCBRA);
+            { return symbol(sym.LCBRA);
             }
             // fall through
           case 53: break;
           case 17:
-            { print_debug("}"); return symbol(sym.RCBRA);
+            { return symbol(sym.RCBRA);
             }
             // fall through
           case 54: break;
@@ -889,7 +889,7 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 56: break;
           case 20:
-            { print_debug("!="); return symbol(sym.NOTEQUAL);
+            { return symbol(sym.NOTEQUAL);
             }
             // fall through
           case 57: break;
@@ -904,77 +904,77 @@ class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 59: break;
           case 23:
-            { print_debug("<="); return symbol(sym.LESSQ);
+            { return symbol(sym.LESSQ);
             }
             // fall through
           case 60: break;
           case 24:
-            { print_debug("=="); return symbol(sym.EQUAL);
+            { return symbol(sym.EQUAL);
             }
             // fall through
           case 61: break;
           case 25:
-            { print_debug(">="); return symbol(sym.GREATQ);
+            { return symbol(sym.GREATQ);
             }
             // fall through
           case 62: break;
           case 26:
-            { print_debug("if"); return symbol(sym.IF);
+            { return symbol(sym.IF);
             }
             // fall through
           case 63: break;
           case 27:
-            { print_debug("for"); return symbol(sym.FOR);
+            { return symbol(sym.FOR);
             }
             // fall through
           case 64: break;
           case 28:
-            { print_debug("int"); return symbol(sym.INT);
+            { return symbol(sym.INT);
             }
             // fall through
           case 65: break;
           case 29:
-            { print_debug("else"); return symbol(sym.ELSE);
+            { return symbol(sym.ELSE);
             }
             // fall through
           case 66: break;
           case 30:
-            { print_debug("main"); return symbol(sym.MAIN);
+            { return symbol(sym.MAIN);
             }
             // fall through
           case 67: break;
           case 31:
-            { print_debug("void"); return symbol(sym.VOID);
+            { return symbol(sym.VOID);
             }
             // fall through
           case 68: break;
           case 32:
-            { print_debug("float"); return symbol(sym.FLOAT);
+            { return symbol(sym.FLOAT);
             }
             // fall through
           case 69: break;
           case 33:
-            { print_debug("while"); return symbol(sym.WHILE);
+            { return symbol(sym.WHILE);
             }
             // fall through
           case 70: break;
           case 34:
-            { print_debug("public"); return symbol(sym.PUBLIC);
+            { return symbol(sym.PUBLIC);
             }
             // fall through
           case 71: break;
           case 35:
-            { print_debug("static"); return symbol(sym.STATIC);
+            { return symbol(sym.STATIC);
             }
             // fall through
           case 72: break;
           case 36:
-            { print_debug("println"); return symbol(sym.PRINT);
+            { return symbol(sym.PRINT);
             }
             // fall through
           case 73: break;
           case 37:
-            { print_debug("mainclass"); return symbol(sym.MAINCLASS);
+            { return symbol(sym.MAINCLASS);
             }
             // fall through
           case 74: break;
