@@ -12,6 +12,49 @@ public class CodeGeneratorMIXAL {
     
     }
 
+    private void compareAValue(ExpressionNode expr) throws Exception{
+        
+
+        if(expr instanceof NumberNode){
+            code.append("\tCMPA " + expr.toString());
+        }
+        else if(expr instanceof IdNode){
+            code.append("\tCMPA SYM+" + ((IdNode) expr).offset);
+        }
+        else if(expr instanceof TempExprNode){
+            code.append("\tCMPA SYM-" + ((TempExprNode) expr).offset);
+        }
+        else{
+            throw new Exception("compareAValue: unsupported expression "+ expr.toString() + " " + expr.getClass());
+        }
+        code.append("\n");
+    }
+
+    private void jumpOnOperation(String operation, int label)throws Exception{
+        if(operation == "EQUAL"){
+            code.append("\tJE L" + label);
+        }
+        else if(operation == "NOTEQUAL"){
+            code.append("\tJNE L" + label);
+        }
+        else if(operation == "GREAT"){
+            code.append("\tJG L" + label);
+        }
+        else if(operation == "GREATQ"){
+            code.append("\tJGE L" + label);
+        }
+        else if(operation == "LESSQ"){
+            code.append("\tJLE L" + label);
+        }
+        else if(operation == "LESS"){
+            code.append("\tJL L" + label);
+        }
+        else{
+            throw new Exception("jumOnOperation: unsupported expression");
+        }
+        code.append("\n");
+    }
+
     private void loadAValue(ExpressionNode expr) throws Exception{
         if(expr instanceof NumberNode){
             NumberNode n = (NumberNode) expr;
@@ -126,6 +169,17 @@ public class CodeGeneratorMIXAL {
                 code.append("\tSTA PRINT\n");
                 code.append("\tSTX PRINT+1\n");
                 code.append("\tOUT PRINT(TERM)\n");
+            }
+
+            else if(ir.resultExpr == null && ir.expr2 != null){
+                loadAValue(ir.expr1);
+                compareAValue(ir.expr2);
+                jumpOnOperation(ir.operation, ir.label);
+            }
+            else if(ir.operation == "label"){
+                if(ir.usedLabels.contains(ir.label)){
+                    code.append("L"+ ir.label+ "");
+                }
             }
         }
 
