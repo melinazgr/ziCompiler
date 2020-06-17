@@ -1,0 +1,28 @@
+a = 0
+b = 0
+c = 0
+a = 80
+b = 40
+t1 = a / b
+c = t1
+call println c
+a = -80
+b = 10
+t1 = a / b
+c = t1
+call println c
+a = 80
+b = -20
+t1 = a / b
+c = t1
+call println c
+a = -80
+b = -30
+t1 = a / b
+c = t1
+call println c
+a = 80
+b = 0
+t1 = a / b
+c = t1
+call println c

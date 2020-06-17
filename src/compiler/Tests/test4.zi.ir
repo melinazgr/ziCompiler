@@ -1,0 +1,16 @@
+a = 0
+b = 0
+c = 0
+d = 0
+t1 = a - b
+t2 = t1 - c
+d = t2
+t2 = a * b
+t1 = t2 * c
+d = t1
+t1 = b * c
+t2 = a + t1
+d = t2
+t2 = a * b
+t1 = t2 + c
+d = t1

@@ -1,0 +1,7 @@
+mainclass test10 {
+     public static void main ( ) {
+        
+        int a, b;
+        a = b;
+     }
+ }

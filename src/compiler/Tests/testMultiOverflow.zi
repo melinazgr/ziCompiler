@@ -1,0 +1,11 @@
+mainclass testMultiOverflow {
+     public static void main ( ) {
+        
+        int a, b, c;
+
+        a = 1073741822;
+        b = 1073741823;
+        c = a * b;
+        println(c);
+     }
+ }

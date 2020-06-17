@@ -1,0 +1,31 @@
+mainclass testDivision {
+     public static void main ( ) {
+        
+        int a, b, c;
+
+        a = 80;
+        b = 40;
+        c = a / b;
+        println(c);
+        
+        a = -80;
+        b = 10;
+        c = a / b;
+        println(c);
+
+        a = 80;
+        b = -20;
+        c = a / b;
+        println(c);
+
+        a = -80;
+        b = -30;
+        c = a / b;
+        println(c);
+
+        a = 80;
+        b = 0;
+        c = a / b;
+        println(c);
+     }
+ }

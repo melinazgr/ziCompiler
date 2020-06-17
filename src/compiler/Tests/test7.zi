@@ -1,0 +1,21 @@
+mainclass test7 {
+     public static void main ( ) {
+        
+        int a, b;
+
+        a = 10;
+        b = 20;
+
+        if( a < b){
+            a = b;
+        }
+
+        if( a == b){
+            a = b;
+        }
+
+        if (a < b){
+            a = b;
+        }
+     }
+ }

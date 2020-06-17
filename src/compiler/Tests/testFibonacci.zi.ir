@@ -1,0 +1,18 @@
+first = 0
+second = 0
+i = 0
+tmp = 0
+first = 0
+second = 1
+i = 0
+L13:
+iffalse i LESS 10 goto L12
+t1 = i + 1
+i = t1
+t1 = first + second
+tmp = t1
+call println tmp
+first = second
+second = tmp
+goto L13
+L12:

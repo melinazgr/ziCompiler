@@ -1,0 +1,13 @@
+mainclass test3 {
+     public static void main ( ) {
+        
+        int a; 
+        int b; 
+        int c; 
+
+        a = b + c;
+        a = b - c;
+        a = b * c;
+        a = b / c;
+     }
+ }

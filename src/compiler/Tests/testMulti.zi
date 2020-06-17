@@ -1,0 +1,11 @@
+mainclass testMulti {
+     public static void main ( ) {
+        
+        int a, b, c;
+
+        a = 50;
+        b = 80;
+        c = a * b;
+        println(c);
+     }
+ }

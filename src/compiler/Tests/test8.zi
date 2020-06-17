@@ -1,0 +1,17 @@
+mainclass test8 {
+     public static void main ( ) {
+        
+        int a, b;
+
+        a = 90;
+        b = 20;
+
+        if( a < b){
+            a = b;
+        }
+
+        else {
+            b = 40;
+        }
+     }
+ }

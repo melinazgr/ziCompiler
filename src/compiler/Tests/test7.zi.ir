@@ -1,0 +1,13 @@
+a = 0
+b = 0
+a = 10
+b = 20
+iffalse a LESS b goto L10
+a = b
+L10:
+iffalse a EQUAL b goto L15
+a = b
+L15:
+iffalse a LESS b goto L20
+a = b
+L20:

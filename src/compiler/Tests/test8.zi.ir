@@ -1,0 +1,8 @@
+a = 0
+b = 0
+a = 90
+b = 20
+iffalse a LESS b goto L12
+a = b
+L12:
+b = 40

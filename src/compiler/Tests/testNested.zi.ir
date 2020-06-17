@@ -1,0 +1,27 @@
+a = 0
+b = 0
+c = 0
+a = 90
+b = 20
+t1 = a + b
+c = t1
+iffalse a LESS b goto L14
+k = 0
+a = b
+t2 = k * c
+t3 = b + t2
+a = t3
+k = 0
+L14:
+l = 0
+b = 40
+t4 = l * b
+a = t4
+k = 0
+L33:
+iffalse a GREAT 0 goto L30
+t5 = k * c
+t6 = b + t5
+a = t6
+goto L33
+L30:
