@@ -91,20 +91,33 @@ public class CodeGeneratorMIXAL {
                 storeRegisterValue(ir.resultExpr, "A");
             }
             else if (ir.operation !=null && ir.expr1 != null && ir.resultExpr != null && ir.expr2 != null){
-                loadAValue(ir.expr1);
-                
+                              
                 if(ir.operation == "+"){
+                    loadAValue(ir.expr1);
                     operateAValue(ir.expr2, "ADD");
+                    code.append("\tJOV TOOLARGE\n");
                     storeRegisterValue(ir.resultExpr, "A");
                 }
                 else if(ir.operation == "-"){
+                    loadAValue(ir.expr1);
                     operateAValue(ir.expr2, "SUB");
+                    code.append("\tJOV TOOLARGE\n");
                     storeRegisterValue(ir.resultExpr, "A");
                 }
                 else if(ir.operation == "*"){
+                    loadAValue(ir.expr1);
                     operateAValue(ir.expr2, "MUL");
                     code.append("\tJANZ TOOLARGE\n");
                     storeRegisterValue(ir.resultExpr, "X");
+                }
+                else if(ir.operation == "/"){
+                    loadAValue(ir.expr2);
+                    code.append("\tJAZ ZERO\n");
+                    loadAValue(ir.expr1);
+                    code.append("\tSRAX 5\n");
+                    operateAValue(ir.expr2, "DIV");
+                    code.append("\tJOV TOOLARGE\n");
+                    storeRegisterValue(ir.resultExpr, "A");
                 }
             }
             else if(ir.operation == "call"){
@@ -140,17 +153,27 @@ public class CodeGeneratorMIXAL {
 
     private String genAfterProgr(){
         StringBuilder s = new StringBuilder();
-
+        
         s.append(
             "\tHLT\n"+
             "TOOLARGE\tOUT OVERFLOW(TERM)\n" +
             "\tHLT 0\n" +
-            "OVERFLOW\tALF \"OVER \"\n" +
-	        "\tALF \"FLOW \"\n" +
-	        "\tALF \"     \"\n" +
-	        "\tALF \"     \"\n" +
-            "\tALF \"     \"\n"
-        ); 
+            "OVERFLOW\tALF OVER \n" +
+	        "\tALF FLOW \n");
+        
+        for(int i = 0; i < 7; i++){
+            s.append("\tALF      \n");
+        }
+
+        s.append(
+            "ZERO\tOUT DIVZERO(TERM)\n" +
+            "\tHLT 0\n" +
+            "DIVZERO\tALF DIV  \n" +
+            "\tALF ZERO \n");
+            
+        for(int i = 0; i < 7; i++){
+            s.append("\tALF      \n");
+        }
         
         for(NumberNode n: constants){
             s.append(n.NodeId.toUpperCase() + "\tCON "+ n.value + "\n");
@@ -160,7 +183,6 @@ public class CodeGeneratorMIXAL {
         s.append(
             "\tEND BEGIN\n"
         );
-
 
         return s.toString();
     }    

@@ -18,6 +18,7 @@ public class Main {
         String srcInputFilename = null;
         String irOutFilename = null;
         String mixalOutFilename = null;
+        boolean verbose = false;
 
 
         /* Start the parser */
@@ -62,7 +63,9 @@ public class Main {
 
 					mixalOutFilename = argv[ i ];
                 }
-                
+                else if ( argv[ i ].equals( "-v" ) ) {
+					verbose = true;
+                }
 				else {
 					throw new Exception(helpText);
                 }
@@ -88,7 +91,9 @@ public class Main {
             parser p = new parser(new Lexer(new FileReader(srcInputFilename), sf), sf);
             ProgramNode result = (ProgramNode) p.parse().value;
 
-            System.out.println(result.toString());
+            if(verbose){
+                System.out.println(result.toString());
+            }
 
             result.accept(semantic);
             result.accept(syntax);
