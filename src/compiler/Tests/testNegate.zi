@@ -1,4 +1,4 @@
-mainclass test11 {
+mainclass testNegate {
     public static void main ( ) {
         
         int a;
@@ -6,5 +6,7 @@ mainclass test11 {
         b = 10;
 
         a = -b;
+
+        println(a);
     }
  }

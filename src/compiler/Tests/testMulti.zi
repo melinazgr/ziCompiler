@@ -7,5 +7,9 @@ mainclass testMulti {
         b = 80;
         c = a * b;
         println(c);
+
+        a = -10;
+        c = a * b;
+        println(c);
      }
  }

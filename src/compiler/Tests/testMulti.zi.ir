@@ -6,3 +6,7 @@ b = 80
 t1 = a * b
 c = t1
 call println c
+a = -10
+t1 = a * b
+c = t1
+call println c

@@ -71,28 +71,38 @@ public class CodeGeneratorMIXAL {
     }
 
     private void loadAValue(ExpressionNode expr) throws Exception{
+        loadAValue(expr, false);
+    }
+
+    private void loadAValue(ExpressionNode expr, boolean negate ) throws Exception{
+        String LDA = "LDA", ENTA = "ENTA";
+        if(negate){
+            LDA = "LDAN";
+            ENTA = "ENNA";
+        }
+
         if(expr instanceof NumberNode){
             NumberNode n = (NumberNode) expr;
             if(n.type == VariableType.INT){
                 if (n.intValue > 4095 || n.intValue < -4095){
                     constants.add(n);
-                    code.append("\tLDA " + n.NodeId.toUpperCase());
+                    code.append("\t" + LDA +" "+ n.NodeId.toUpperCase());
                 } 
                 else{
-                    code.append("\tENTA " + expr.toString());
+                    code.append("\t" + ENTA +" "+ expr.toString());
                 }
             }
 
             else{
                 constants.add(n);
-                code.append("\tLDA " + n.NodeId.toUpperCase());
+                code.append("\t" + LDA + " " + n.NodeId.toUpperCase());
             }
         }
         else if(expr instanceof IdNode){
-            code.append("\tLDA SYM+" + ((IdNode) expr).offset);
+            code.append("\t" + LDA +" SYM+" + ((IdNode) expr).offset);
         }
         else if(expr instanceof TempExprNode){
-            code.append("\tLDA SYM-" + ((TempExprNode) expr).offset);
+            code.append("\t" + LDA +" SYM-" + ((TempExprNode) expr).offset);
         }
         else{
             throw new Exception("loadAValue: unsupported expression "+ expr.getClass());
@@ -152,8 +162,14 @@ public class CodeGeneratorMIXAL {
         
         for(IntermediateCode ir: codeIR.code){
             if(ir.operation != null &&  ir.expr1 != null && ir.resultExpr != null  && ir.expr2 == null){
-                loadAValue(ir.expr1);
-                storeRegisterValue(ir.resultExpr, "A");
+                if(ir.operation == "-"){
+                    loadAValue(ir.expr1, true);
+                    storeRegisterValue(ir.resultExpr, "A");
+                }
+                else{
+                    loadAValue(ir.expr1);
+                    storeRegisterValue(ir.resultExpr, "A");
+                }
             }
             else if (ir.operation !=null && ir.expr1 != null && ir.resultExpr != null && ir.expr2 != null){
                               
@@ -187,10 +203,7 @@ public class CodeGeneratorMIXAL {
             }
             else if(ir.operation == "call"){
                 loadAValue(ir.expr1);
-                code.append("\tCHAR\n");
-                code.append("\tSTA PRINT\n");
-                code.append("\tSTX PRINT+1\n");
-                code.append("\tOUT PRINT(TERM)\n");
+                code.append("\tJMP PRINTLN\n");
             }
 
             else if(ir.resultExpr == null && ir.expr2 != null){
@@ -225,8 +238,7 @@ public class CodeGeneratorMIXAL {
         s.append(
             "TERM\tEQU 19\tthe terminal\n" +
             "SYM\tEQU 3000\n" +
-            "PRINT\tEQU 2\n" +
-            "\tORIG PRINT+24\n" +
+            "\tORIG 3000\n" +
             "BEGIN\tNOP\n"
             );
 
@@ -236,14 +248,27 @@ public class CodeGeneratorMIXAL {
     private String genAfterProgr(){
         StringBuilder s = new StringBuilder();
         
+        s.append("\tHLT\n");
+
         s.append(
-            "\tHLT\n"+
+            "PRINTLN\tSTJ PRINTEX\n" +
+            "\tCMPA 0\n" +
+            "\tCHAR\n" +
+            "\tSTA PRINT1\n" +
+            "\tSTX PRINT2\n" +
+            "\tJGE 1F\n" +
+            "\tOUT PRINT(TERM)\n" +
+            "\tJMP PRINTEX\n" +
+            "1H\tOUT PRINT1(TERM)\n" +
+            "PRINTEX\tJMP *\n");
+
+        s.append(
             "TOOLARGE\tOUT OVERFLOW(TERM)\n" +
             "\tHLT 0\n" +
             "OVERFLOW\tALF OVER \n" +
-	        "\tALF FLOW \n");
+            "\tALF FLOW \n");
         
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 24; i++){
             s.append("\tALF      \n");
         }
 
@@ -253,7 +278,7 @@ public class CodeGeneratorMIXAL {
             "DIVZERO\tALF DIV  \n" +
             "\tALF ZERO \n");
             
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 24; i++){
             s.append("\tALF      \n");
         }
         
@@ -263,6 +288,15 @@ public class CodeGeneratorMIXAL {
         }
 
         s.append(
+            "PRINT\tALF   - \n"+
+            "PRINT1\tCON 0\n" +
+            "PRINT2\tCON 0\n");
+
+        for(int i = 0; i < 24; i++){
+            s.append("\tALF      \n");
+        }
+        
+        s.append(  
             "\tEND BEGIN\n"
         );
 
