@@ -2,14 +2,29 @@ package Nodes;
 
 import Model.*;
 
+/**
+ * Division Node Class
+ * 
+ * @author Melina Zikou
+ */
 public class DivisionNode extends ExpressionNode {
+    
     public ExpressionNode factor, term;
 
+    /**
+     * Constructor which creates the addition node
+     * @param factor one of the terms of division
+     * @param term one of the terms of the division
+     */
     public DivisionNode (ExpressionNode term, ExpressionNode factor) {
         this.factor = factor;
         this.term = term;
     }
 
+    /**
+     * Function that converts division to string
+     * @return division stirng
+     */
     public String toString () {
 
         String s =  term.toString() + " / " 
@@ -18,10 +33,11 @@ public class DivisionNode extends ExpressionNode {
         return s; 
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
-
+    /**
+     * the right and left value of division to something simpler
+     * @param cg CodeGenerator object, the structure where code is saved
+     * @return temporary variable 
+     */
     public ExpressionNode reduce(CodeGenerator cg){
         DivisionNode reducedAddNode =  new DivisionNode(this.term.reduce(cg), this.factor.reduce(cg));
         StatementListNode scope = (StatementListNode) this.getScopeParent();
@@ -35,12 +51,15 @@ public class DivisionNode extends ExpressionNode {
         if(reducedAddNode.term instanceof TempExprNode){
             scope.returnTemp((TempExprNode)reducedAddNode.term);
         }
-        
-
+    
         return temp;
     }
 
-    public ExpressionNode genTerm(CodeGenerator cg){
-        return new DivisionNode(this.term.reduce(cg), this.factor.reduce(cg));
+    /**
+     * accept function for the visitor
+     * @param v the visitor
+     */
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

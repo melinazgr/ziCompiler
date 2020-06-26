@@ -6,6 +6,17 @@ import Error.*;
 import java.io.*;
 import java_cup.runtime.*;
 
+/**
+ * 
+ * 
+ * 
+ * @author Melina Zikou
+ * 
+ * 
+ *
+ */
+
+ 
 public class Main {
 
     public static boolean Debug = false;
@@ -21,7 +32,7 @@ public class Main {
         boolean verbose = false;
 
 
-        /* Start the parser */
+        /* command line / batch file arguments */
         try 
         {
             for ( int i = 0; i < argv.length; i++ ) {
@@ -67,7 +78,7 @@ public class Main {
 					verbose = true;
                 }
 				else {
-					throw new Exception(helpText);
+					throw new Exception(helpText);  
                 }
             }
 
@@ -82,9 +93,12 @@ public class Main {
             System.out.println("Compiling program: " + srcInputFilename);
             System.out.println("Generating output MIXAL program: " + mixalOutFilename);
 
+
             SemanticAnalysis semantic = new SemanticAnalysis();
             SyntaxAnalysis syntax = new SyntaxAnalysis();
+            
             ComplexSymbolFactory sf = new ComplexSymbolFactory();
+            
             CodeGeneratorIR cgIR = new CodeGeneratorIR();
             CodeGeneratorMIXAL cgM = new CodeGeneratorMIXAL();
             
@@ -141,3 +155,5 @@ public class Main {
 
     //TODO semantic float limits
     //TODO warning l - r value
+
+    //TODO decltype comments

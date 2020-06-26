@@ -3,10 +3,21 @@ package Nodes;
 import java.util.*;
 import Model.*;
 
+/**
+ * Declare Statement Statement Node Class
+ * 
+ * @author Melina Zikou
+ */
 public class DeclarationStmtNode extends StatementNode {
+    
     public VariableType type;
     public ArrayList<IdNode> list;
 
+    /**
+     * constructor creating declaration statement node
+     * @param type the type of the variable (float/int)
+     * @param list the list where the variables of declaration are saved
+     */
     public DeclarationStmtNode (VariableType type, ArrayList<IdNode> list) {
         
         this.type = type;
@@ -17,6 +28,10 @@ public class DeclarationStmtNode extends StatementNode {
         }
     }
 
+    /**
+     * Convert to string
+     * @return string
+     */
     public String toString () {
 
         StringBuilder s = new StringBuilder(); 
@@ -34,10 +49,21 @@ public class DeclarationStmtNode extends StatementNode {
         return s.toString() + ";"; 
     }
     
+    /**
+     * accept function for the visitor
+     * @param v the visitor
+     */
     public void accept(Visitor v) {
         v.visit(this);
     }
 
+    /**
+     * generates code
+     * @param cg where the code is saved
+     * @param begin starting label 
+     * @param after ending label
+     * @param stmtGenType type of statement
+     */
     public void genCode(CodeGenerator cg, int begin, int after, StatementTypeGeneration stmtGenType){
 
         for(IdNode idNode: list){

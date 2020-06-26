@@ -2,10 +2,17 @@ package Model;
 
 import Nodes.*;
 
+/**
+ * Syntax Analysis Class 
+ * Code format to depict AST using Graphiz software
+ * 
+ * @author Melina Zikou
+ */
 public class SyntaxAnalysis implements Visitor {
     
     public static StringBuilder tree = new StringBuilder();
 
+    // add code to the tree
     public static void  addToTree(String s){
         tree.append(s);
     }
@@ -14,6 +21,9 @@ public class SyntaxAnalysis implements Visitor {
 
     }
 
+    /**
+     * add to the tree the beginning of the ast
+     */
     public String toString(){
         StringBuilder s = new StringBuilder();
 
@@ -23,6 +33,8 @@ public class SyntaxAnalysis implements Visitor {
         
         return s.toString();
     }
+
+    /* ------------------- Visit functions -------------------*/
 
     public void visit(ProgramNode n){
         
@@ -93,6 +105,8 @@ public class SyntaxAnalysis implements Visitor {
             sb.append("}\"];\n");
             tree.append(sb);
             tree.append(String.format("\"%s\":f%d->\"%s\":f1;\n", n.NodeId, countNode, tableId));
+            
+            //print symbol table of this scope
             tree.append(String.format("%s[shape=record,color=red];\n", tableId));
         }
     }

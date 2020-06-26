@@ -1,5 +1,11 @@
 package Nodes;
 
+/**
+ * Class that prints out operators, with or without spaces
+ * and the type of variables
+ * 
+ * @author Melina Zikou
+ */
 public class FormatHelper {
 
     public static String getOpName(Operator op, boolean addSpaces){

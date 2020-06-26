@@ -1,5 +1,10 @@
 package Nodes;
 
+/**
+ * Visitor pattern
+ * 
+ * @author Melina Zikou
+ */
 public interface Visitor {
     public void visit(ProgramNode n);
     public void visit(DeclarationStmtNode n);
@@ -10,7 +15,6 @@ public interface Visitor {
     public void visit(FunctionCallNode n);
     public void visit(ForStmtNode n);
     public void visit(AssignStmtNode n);
-
     public void visit(BoolExpressionNode n);
     public void visit(SubstructionNode n);
     public void visit(NumberNode n);

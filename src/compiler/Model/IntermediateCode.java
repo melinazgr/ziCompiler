@@ -3,11 +3,20 @@ package Model;
 import Nodes.*;
 import java.util.*;
 
+/**
+ * Intermediate Code class
+ * 
+ * statements and source code are analyzed 
+ * and placed into different statement formats
+ * 
+ * @author Melina Zikou
+ */
 public class IntermediateCode {
+    
     String operation, jumpOperation, functionName;
-    int label;
     ExpressionNode expr1, expr2, resultExpr;
     boolean condition;
+    int label;
 
     public static HashSet<Integer> usedLabels = new HashSet<Integer>();
 
@@ -15,6 +24,8 @@ public class IntermediateCode {
 
     }
     
+    //constructors for each statement / operation 
+
     public IntermediateCode (String operation, ExpressionNode expr1, ExpressionNode expr2, ExpressionNode resultExpr){
         this.operation = operation;
         this.expr1 = expr1;
@@ -55,6 +66,11 @@ public class IntermediateCode {
         this.operation = "call";
     }
 
+    /**
+     * print intermediate code 
+     * 
+     * @return String 
+     */
     public String toString(){
         if(operation == "label"){
             if(usedLabels.contains(label)){

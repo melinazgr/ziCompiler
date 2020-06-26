@@ -3,6 +3,11 @@ package Model;
 import Nodes.*;
 import java.util.*;
 
+/**
+ * Goal Code Generator
+ * 
+ * @author Melina Zikou
+ */
 public class CodeGeneratorMIXAL {
 
     StringBuilder code = new StringBuilder();
@@ -12,152 +17,13 @@ public class CodeGeneratorMIXAL {
     
     }
 
-    private void compareAValue(ExpressionNode expr) throws Exception{
-        
-
-        if(expr instanceof NumberNode){
-            NumberNode n = (NumberNode) expr;
-            if (n.intValue > 4095 || n.intValue < -4095){
-                constants.add(n);
-                code.append("\tCMPA " + n.NodeId.toUpperCase());
-            } 
-            else{
-                code.append("\tCMPA =" + expr.toString() + "=");
-            }
-            
-        }
-        else if(expr instanceof IdNode){
-            code.append("\tCMPA SYM+" + ((IdNode) expr).offset);
-        }
-        else if(expr instanceof TempExprNode){
-            code.append("\tCMPA SYM-" + ((TempExprNode) expr).offset);
-        }
-        else{
-            throw new Exception("compareAValue: unsupported expression "+ expr.toString() + " " + expr.getClass());
-        }
-        code.append("\n");
-    }
-
-    private void jumpOnOperation(boolean condition, String operation, int label)throws Exception{
-        if(condition){
-           
-            throw new Exception("jumOnOperation: unsupported expression");
-        }
-        else {
-            if(operation == "EQUAL"){
-                code.append("\tJNE L" + label);
-            }
-            else if(operation == "NOTEQUAL"){
-                code.append("\tJE L" + label);
-            }
-            else if(operation == "GREAT"){
-                code.append("\tJLE L" + label);
-            }
-            else if(operation == "GREATQ"){
-                code.append("\tJL L" + label);
-            }
-            else if(operation == "LESSQ"){
-                code.append("\tJG L" + label);
-            }
-            else if(operation == "LESS"){
-                code.append("\tJGE L" + label);
-            }
-            else{
-                throw new Exception("jumOnOperation: unsupported expression");
-            }
-        }
-        
-        code.append("\n");
-    }
-
-    private void loadAValue(ExpressionNode expr) throws Exception{
-        loadAValue(expr, false);
-    }
-
-    private void loadAValue(ExpressionNode expr, boolean negate ) throws Exception{
-        String LDA = "LDA", ENTA = "ENTA";
-        if(negate){
-            LDA = "LDAN";
-            ENTA = "ENNA";
-        }
-
-        if(expr instanceof NumberNode){
-            NumberNode n = (NumberNode) expr;
-            if(n.type == VariableType.INT){
-                if (n.intValue > 4095 || n.intValue < -4095){
-                    constants.add(n);
-                    code.append("\t" + LDA +" "+ n.NodeId.toUpperCase());
-                } 
-                else{
-                    code.append("\t" + ENTA +" "+ expr.toString());
-                }
-            }
-
-            else{
-                constants.add(n);
-                code.append("\t" + LDA + " " + n.NodeId.toUpperCase());
-            }
-        }
-        else if(expr instanceof IdNode){
-            code.append("\t" + LDA +" SYM+" + ((IdNode) expr).offset);
-        }
-        else if(expr instanceof TempExprNode){
-            code.append("\t" + LDA +" SYM-" + ((TempExprNode) expr).offset);
-        }
-        else{
-            throw new Exception("loadAValue: unsupported expression "+ expr.getClass());
-        }
-
-        code.append("\n");
-    }
-
-    private void storeRegisterValue(ExpressionNode expr, String register) throws Exception{
-        if(expr instanceof IdNode){
-            code.append("\tST" + register + " SYM+" + ((IdNode) expr).offset);
-        }
-        else if(expr instanceof TempExprNode){
-            code.append("\tST" + register + " SYM-" + ((TempExprNode) expr).offset);
-        }
-        else{
-            throw new Exception("storeAValue: unsupported expression "+ expr.getClass());
-        }
-
-        code.append("\n");
-    }
-
-    private void operateAValue(ExpressionNode expr, String operation)throws Exception{
-        String prefix = "";
-
-        if(expr.type == VariableType.FLOAT) {
-            prefix = "F";
-        }
-
-        if(expr instanceof NumberNode){
-             NumberNode n = (NumberNode) expr;
-            if (n.intValue > 4095 || n.intValue < -4095){
-                constants.add(n);
-                code.append("\t" + prefix + operation + n.NodeId.toUpperCase());
-            } 
-            else{
-                code.append("\t" + prefix + operation + " =" + expr.toString() + "=");
-            }
-        }
-        else if(expr instanceof IdNode){
-            code.append("\t" + prefix + operation + " SYM+" + ((IdNode) expr).offset);
-        }
-        else if(expr instanceof TempExprNode){
-            code.append("\t" + prefix + operation + " SYM-" + ((TempExprNode) expr).offset);
-        }
-        else{
-            throw new Exception("operateAValue: unsupported expression "+ expr.toString() + " " + expr.getClass());
-        }
-
-        code.append("\n");
-    }
-
+    /**
+     * generate mixal code according to the ir code 
+     * @param codeIR 
+     * @throws Exception
+     */
     public void genCode(CodeGeneratorIR codeIR)throws Exception{
-        
-        
+                
         code.append(genBeforeProgr());
         
         for(IntermediateCode ir: codeIR.code){
@@ -228,10 +94,195 @@ public class CodeGeneratorMIXAL {
 
     }
 
+    /**
+     * Convert to string
+     * @return string
+     */
     public String toString(){
         return code.toString();
     }
     
+    /**
+     * comparison commands in mixal
+     * @param expr the expression to be compared
+     * @throws Exception
+     */
+    private void compareAValue(ExpressionNode expr) throws Exception{
+        
+
+        if(expr instanceof NumberNode){
+            NumberNode n = (NumberNode) expr;
+            if (n.intValue > 4095 || n.intValue < -4095){
+                constants.add(n);
+                code.append("\tCMPA " + n.NodeId.toUpperCase());
+            } 
+            else{
+                code.append("\tCMPA =" + expr.toString() + "=");
+            }
+            
+        }
+        else if(expr instanceof IdNode){
+            code.append("\tCMPA SYM+" + ((IdNode) expr).offset);
+        }
+        else if(expr instanceof TempExprNode){
+            code.append("\tCMPA SYM-" + ((TempExprNode) expr).offset);
+        }
+        else{
+            throw new Exception("compareAValue: unsupported expression "+ expr.toString() + " " + expr.getClass());
+        }
+        code.append("\n");
+    }
+
+    /**
+     * jump operation in mixal
+     * jump on grater / less / grater or equal / less or equal / equal / not equal
+     * @param condition iffalse / iftrue
+     * @param operation the operator (> / < / >= / <= / == / !=)
+     * @param label the label to jump to
+     * @throws Exception
+     */
+    private void jumpOnOperation(boolean condition, String operation, int label)throws Exception{
+        if(condition){
+           
+            throw new Exception("jumOnOperation: unsupported expression");
+        }
+        else {
+            if(operation == "EQUAL"){
+                code.append("\tJNE L" + label);
+            }
+            else if(operation == "NOTEQUAL"){
+                code.append("\tJE L" + label);
+            }
+            else if(operation == "GREAT"){
+                code.append("\tJLE L" + label);
+            }
+            else if(operation == "GREATQ"){
+                code.append("\tJL L" + label);
+            }
+            else if(operation == "LESSQ"){
+                code.append("\tJG L" + label);
+            }
+            else if(operation == "LESS"){
+                code.append("\tJGE L" + label);
+            }
+            else{
+                throw new Exception("jumOnOperation: unsupported expression");
+            }
+        }
+        
+        code.append("\n");
+    }
+
+    
+    private void loadAValue(ExpressionNode expr) throws Exception{
+        loadAValue(expr, false);
+    }
+
+    /**
+     * load command in mixal
+     * @param expr expression to load
+     * @param negate if negate == true add '-'
+     *               else dont do anything
+     * @throws Exception
+     */
+    private void loadAValue(ExpressionNode expr, boolean negate ) throws Exception{
+        String LDA = "LDA", ENTA = "ENTA";
+        if(negate){
+            LDA = "LDAN";
+            ENTA = "ENNA";
+        }
+
+        if(expr instanceof NumberNode){
+            NumberNode n = (NumberNode) expr;
+            if(n.type == VariableType.INT){
+                if (n.intValue > 4095 || n.intValue < -4095){
+                    constants.add(n);
+                    code.append("\t" + LDA +" "+ n.NodeId.toUpperCase());
+                } 
+                else{
+                    code.append("\t" + ENTA +" "+ expr.toString());
+                }
+            }
+
+            else{
+                constants.add(n);
+                code.append("\t" + LDA + " " + n.NodeId.toUpperCase());
+            }
+        }
+        else if(expr instanceof IdNode){
+            code.append("\t" + LDA +" SYM+" + ((IdNode) expr).offset);
+        }
+        else if(expr instanceof TempExprNode){
+            code.append("\t" + LDA +" SYM-" + ((TempExprNode) expr).offset);
+        }
+        else{
+            throw new Exception("loadAValue: unsupported expression "+ expr.getClass());
+        }
+
+        code.append("\n");
+    }
+
+    /**
+     * store command in mixal
+     * @param expr expression to store
+     * @param register where to store this expression
+     * @throws Exception
+     */
+    private void storeRegisterValue(ExpressionNode expr, String register) throws Exception{
+        if(expr instanceof IdNode){
+            code.append("\tST" + register + " SYM+" + ((IdNode) expr).offset);
+        }
+        else if(expr instanceof TempExprNode){
+            code.append("\tST" + register + " SYM-" + ((TempExprNode) expr).offset);
+        }
+        else{
+            throw new Exception("storeAValue: unsupported expression "+ expr.getClass());
+        }
+
+        code.append("\n");
+    }
+
+    /**
+     * operation commands in mixal
+     * addition, multiplication, substruction, division
+     * @param expr expression to be operated
+     * @param operation the operation that is to happen
+     * @throws Exception
+     */
+    private void operateAValue(ExpressionNode expr, String operation)throws Exception{
+        String prefix = "";
+
+        if(expr.type == VariableType.FLOAT) {
+            prefix = "F";
+        }
+
+        if(expr instanceof NumberNode){
+             NumberNode n = (NumberNode) expr;
+            if (n.intValue > 4095 || n.intValue < -4095){
+                constants.add(n);
+                code.append("\t" + prefix + operation + n.NodeId.toUpperCase());
+            } 
+            else{
+                code.append("\t" + prefix + operation + " =" + expr.toString() + "=");
+            }
+        }
+        else if(expr instanceof IdNode){
+            code.append("\t" + prefix + operation + " SYM+" + ((IdNode) expr).offset);
+        }
+        else if(expr instanceof TempExprNode){
+            code.append("\t" + prefix + operation + " SYM-" + ((TempExprNode) expr).offset);
+        }
+        else{
+            throw new Exception("operateAValue: unsupported expression "+ expr.toString() + " " + expr.getClass());
+        }
+
+        code.append("\n");
+    }
+
+    /**
+     * default code before the program starts in mixal
+     * @return the code
+     */
     private String genBeforeProgr(){
         StringBuilder s = new StringBuilder();
 
@@ -245,6 +296,10 @@ public class CodeGeneratorMIXAL {
         return s.toString();
     }    
 
+    /**
+     * default code after the program starts in mixal
+     * @return the code
+     */
     private String genAfterProgr(){
         StringBuilder s = new StringBuilder();
         
@@ -302,5 +357,4 @@ public class CodeGeneratorMIXAL {
 
         return s.toString();
     }    
-
 }

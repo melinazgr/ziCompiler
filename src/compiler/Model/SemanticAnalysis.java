@@ -2,12 +2,26 @@ package Model;
 
 import Nodes.*;
 import Error.*;
-
+/**
+ * Semantic Analysis class
+ * 
+ * in every node the visitor visits
+ * there is added a variable to the
+ * symbol table according to the scope
+ * of the table
+ * 
+ * the symbol table is printed for every scope
+ * along with the AST in Graphiz format
+ * 
+ * @author Melina Zikou
+ */
 public class SemanticAnalysis implements Visitor {
     
     SymbolTable currSymbolTable;
     public SemanticAnalysis(){
     }
+
+    /* ------------------- Visit functions -------------------*/
 
     public void visit(ProgramNode n){
         n.compStmt.accept(this);

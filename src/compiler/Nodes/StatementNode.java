@@ -2,6 +2,11 @@ package Nodes;
 
 import Model.*;
 
+/**
+ * Statement Node Class
+ * 
+ * @author Melina Zikou
+ */
 public abstract class StatementNode extends Node{
     
     public abstract void accept(Visitor v);

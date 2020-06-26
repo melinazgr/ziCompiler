@@ -2,14 +2,28 @@ package Nodes;
 
 import Model.*;
 
+/**
+ * Substruction Node Class
+ * 
+ * @author Melina Zikou
+ */
 public class SubstructionNode extends ExpressionNode {
     public ExpressionNode rval, term;
 
+    /**
+     * Constructor which creates the substruction node
+     * @param rval right value of substruction
+     * @param term the other term of the substruction
+     */
     public SubstructionNode (ExpressionNode rval, ExpressionNode term) {
         this.rval = rval;
         this.term = term;
     }
 
+    /**
+     * Function that converts substruction to string
+     * @return substruction stirng
+     */
     public String toString () {
 
         String s =  rval.toString() + " - " 
@@ -17,10 +31,11 @@ public class SubstructionNode extends ExpressionNode {
         return s; 
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
-
+    /**
+     * the right and left value of substruction to something simpler
+     * @param cg CodeGenerator object, the structure where code is saved
+     * @return temporary variable 
+     */
     public ExpressionNode reduce(CodeGenerator cg){
         SubstructionNode reducedAddNode =  new SubstructionNode(this.rval.reduce(cg), this.term.reduce(cg));
         StatementListNode scope = (StatementListNode) this.getScopeParent();
@@ -39,7 +54,11 @@ public class SubstructionNode extends ExpressionNode {
         return temp;
     }
 
-    public ExpressionNode genTerm(CodeGenerator cg){
-        return new SubstructionNode(this.rval.reduce(cg), this.term.reduce(cg));
+    /**
+     * accept function for the visitor
+     * @param v the visitor
+     */
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

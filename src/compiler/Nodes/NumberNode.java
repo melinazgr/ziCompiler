@@ -1,5 +1,10 @@
 package Nodes;
 
+/**
+ * Null Statement Node 
+ * 
+ * @author Melina Zikou
+ */
 public class NumberNode extends ExpressionNode{
     
     public String value;
@@ -7,6 +12,12 @@ public class NumberNode extends ExpressionNode{
     public int intValue;
     public int row, col;
 
+    /**
+     * constructor that creates number node
+     * @param value value of number
+     * @param row row in the source code
+     * @param col column in the source code
+     */
     public NumberNode (String value, int row, int col) {
         this.value = value;
         this.row = row;
@@ -23,10 +34,18 @@ public class NumberNode extends ExpressionNode{
         }
     }
 
+    /**
+     * Convert to string
+     * @return string
+     */
     public String toString () {
         return value; 
     }
 
+    /**
+     * accept function for the visitor
+     * @param v the visitor
+     */
     public void accept(Visitor v) {
         v.visit(this);
     }

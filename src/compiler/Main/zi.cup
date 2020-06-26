@@ -20,16 +20,23 @@ parser code {:
    
             /* Check if the line number in the input is greater or
                equal to zero. */
+               
             if (s.left >= 0) {                
                 /* Add to the end of the StringBuilder error message
                    the line number of the error in the input. */
+                   
                 m.append(" in line "+(s.left+1));   
+                
                 /* Check if the column number in the input is greater
                    or equal to zero. */
-                if (s.right >= 0)                    
+                
+                if (s.right >= 0){
                     /* Add to the end of the StringBuilder error message
                        the column number of the error in the input. */
+            
                     m.append(", column "+(s.right+1));
+            
+                }                    
             }
         }
    
@@ -57,9 +64,7 @@ terminal          SEMICOLON, MAINCLASS, PUBLIC, STATIC, VOID, MAIN, COMMA,
 terminal Operator NOTEQUAL, EQUAL, GREAT, LESS, LESSQ, GREATQ;
 
 terminal String     WHILE, IF, FOR, PRINT, ELSE, ID, NUM ;
-
-
-   
+  
 /* Non terminals used in the grammar section.*/
 
 nonterminal    ProgramNode PROGRAM;
