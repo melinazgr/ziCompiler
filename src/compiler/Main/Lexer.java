@@ -341,15 +341,16 @@ class Lexer implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
+
+    private StringBuffer sb;
+    private ComplexSymbolFactory symbolFactory;
+    private int csline,cscolumn;
+      
     public Lexer(FileReader fr, ComplexSymbolFactory sf){
 	      this(fr);
         symbolFactory = sf;
     }
 
-    private StringBuffer sb;
-    private ComplexSymbolFactory symbolFactory;
-    private int csline,cscolumn;
-    
     public Symbol symbol(int code){
 	      return symbolFactory.newSymbol(Integer.toString(code), code, new Location(yyline+1,yycolumn+1-yylength()),new Location(yyline+1,yycolumn+1));
     }

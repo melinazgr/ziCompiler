@@ -2,6 +2,7 @@ package Model;
 
 import Nodes.*;
 import java.util.*;
+import java.util.concurrent.Exchanger;
 
 /**
  * Goal Code Generator
@@ -26,6 +27,9 @@ public class CodeGeneratorMIXAL {
                 
         code.append(genBeforeProgr());
         
+
+        String prevOp = "";
+
         for(IntermediateCode ir: codeIR.code){
             if(ir.operation != null &&  ir.expr1 != null && ir.resultExpr != null  && ir.expr2 == null){
                 if(ir.operation == "-"){
@@ -78,6 +82,12 @@ public class CodeGeneratorMIXAL {
                 jumpOnOperation(ir.condition, ir.operation, ir.label);
             }
             else if(ir.operation == "label"){
+
+                if (prevOp == "label") {
+                    // we should find a way to combine labels
+                    code.append(" NOP\n");
+                }
+
                 if(IntermediateCode.usedLabels.contains(ir.label)){
                     code.append("L"+ ir.label+ "");
                 }
@@ -88,10 +98,11 @@ public class CodeGeneratorMIXAL {
             else if(ir.jumpOperation != null){
                 code.append("L"+ ir.label+ "");
             }
+
+            prevOp = ir.operation;
         }
 
         code.append(genAfterProgr());
-
     }
 
     /**
@@ -300,7 +311,7 @@ public class CodeGeneratorMIXAL {
      * default code after the program starts in mixal
      * @return the code
      */
-    private String genAfterProgr(){
+    private String genAfterProgr() throws Exception{
         StringBuilder s = new StringBuilder();
         
         s.append("\tHLT\n");
@@ -337,10 +348,21 @@ public class CodeGeneratorMIXAL {
             s.append("\tALF      \n");
         }
         
-        for(NumberNode n: constants){
-            s.append(n.NodeId.toUpperCase() + "\tCON "+ n.value + "\n");
-            //TODO float conversion
+        if(!constants.isEmpty()){
+            for(NumberNode n: constants){
+                s.append( n.NodeId.toUpperCase() + "\tCON ");
+
+                if(n.type == VariableType.INT){
+                    s.append(n.intValue + "\n");
+                }
+
+                else{
+                    MixWord f = new MixWord();
+                    s.append(f.getMixalFloat(n.floatValue) + " FLOAT = " + n.value + "\n");
+                }
+            }
         }
+        
 
         s.append(
             "PRINT\tALF   - \n"+

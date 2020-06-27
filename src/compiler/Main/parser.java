@@ -277,16 +277,23 @@ public class parser extends java_cup.runtime.lr_parser {
    
             /* Check if the line number in the input is greater or
                equal to zero. */
+               
             if (s.left >= 0) {                
                 /* Add to the end of the StringBuilder error message
                    the line number of the error in the input. */
+                   
                 m.append(" in line "+(s.left+1));   
+                
                 /* Check if the column number in the input is greater
                    or equal to zero. */
-                if (s.right >= 0)                    
+                
+                if (s.right >= 0){
                     /* Add to the end of the StringBuilder error message
                        the column number of the error in the input. */
+            
                     m.append(", column "+(s.right+1));
+            
+                }                    
             }
         }
    

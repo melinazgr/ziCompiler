@@ -91,6 +91,7 @@ public class IfStmtNode extends StatementNode{
 
             cg.emitLabel(label1);
             stmt1.genCode(cg, label1, after,  StatementTypeGeneration.ALL);
+            cg.emitJump(after);
             cg.emitLabel(label2);
 
             stmt2.genCode(cg, label2, after,  StatementTypeGeneration.ALL);
