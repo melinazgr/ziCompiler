@@ -4,7 +4,7 @@ package Main;
 import java_cup.runtime.*;
 import java.util.*;
 import Nodes.*;
-
+import Error.*;
 
 /* error report */
 
@@ -39,7 +39,7 @@ parser code {:
                 }                    
             }
         }
-   
+
         /* Add to the end of the StringBuilder error message created in
            this method the message that was passed into this method. */
         m.append(" : "+message);
@@ -138,7 +138,11 @@ start with PROGRAM;
             {:
                RESULT = new NullStmtNode();
             :}
-            | error SEMICOLON
+            | error:e SEMICOLON
+            {:
+               RESULT = new NullStmtNode();
+               ErrorHandler.getInstance().addError(String.format("Syntax Error"), "", exleft.getColumn(), exright.getLine());
+            :}
             | PRINT LPAREN EXPR:expr RPAREN SEMICOLON
             {:
                RESULT = new FunctionCallNode("println", expr);

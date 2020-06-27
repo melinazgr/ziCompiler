@@ -2,7 +2,6 @@ package Model;
 
 import Nodes.*;
 import java.util.*;
-import java.util.concurrent.Exchanger;
 
 /**
  * Goal Code Generator
@@ -26,9 +25,9 @@ public class CodeGeneratorMIXAL {
     public void genCode(CodeGeneratorIR codeIR)throws Exception{
                 
         code.append(genBeforeProgr());
-        
 
         String prevOp = "";
+        int prevLabel = 0;
 
         for(IntermediateCode ir: codeIR.code){
             if(ir.operation != null &&  ir.expr1 != null && ir.resultExpr != null  && ir.expr2 == null){
@@ -83,26 +82,39 @@ public class CodeGeneratorMIXAL {
             }
             else if(ir.operation == "label"){
 
-                if (prevOp == "label") {
-                    // we should find a way to combine labels
-                    code.append(" NOP\n");
-                }
+                if(IntermediateCode.usedLabels.contains(ir.label)) {
 
-                if(IntermediateCode.usedLabels.contains(ir.label)){
-                    code.append("L"+ ir.label+ "");
+                    int label = findLabelToUse(ir.label);
+
+                    if (prevOp == "label")
+                    {
+                        if (prevLabel != label) {
+                            code.append("L"+ label);
+                        }
+                    }
+                    else{
+                        code.append("L"+ label);
+                    }
                 }
+                prevLabel = ir.label;
             }
             else if(ir.operation == "jump"){
-                code.append("\tJMP L"+ ir.label+ "\n");
-            }
-            else if(ir.jumpOperation != null){
-                code.append("L"+ ir.label+ "");
+                int label = findLabelToUse(ir.label);
+
+                code.append("\tJMP L"+ label+ "\n");
             }
 
             prevOp = ir.operation;
         }
 
         code.append(genAfterProgr());
+    }
+
+    private int findLabelToUse(int label) {
+        while (IntermediateCode.aliasLabels.containsKey(label)){
+            label = IntermediateCode.aliasLabels.get(label);
+        }
+        return label;
     }
 
     /**
@@ -158,6 +170,10 @@ public class CodeGeneratorMIXAL {
             throw new Exception("jumOnOperation: unsupported expression");
         }
         else {
+            
+            label = findLabelToUse(label);
+
+
             if(operation == "EQUAL"){
                 code.append("\tJNE L" + label);
             }
@@ -365,7 +381,7 @@ public class CodeGeneratorMIXAL {
         
 
         s.append(
-            "PRINT\tALF   - \n"+
+            "PRINT\tALF    - \n"+
             "PRINT1\tCON 0\n" +
             "PRINT2\tCON 0\n");
 

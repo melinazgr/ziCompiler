@@ -19,6 +19,7 @@ public class IntermediateCode {
     int label;
 
     public static HashSet<Integer> usedLabels = new HashSet<Integer>();
+    public static HashMap<Integer, Integer> aliasLabels = new HashMap<Integer, Integer>();
 
     public IntermediateCode(){
 
@@ -58,12 +59,15 @@ public class IntermediateCode {
         this.label = label;
         usedLabels.add(label);
     }
-
     
     public IntermediateCode(String functionName, ExpressionNode expr1){
         this.expr1 = expr1;
         this.functionName = functionName;
         this.operation = "call";
+    }
+
+    public void setAliasLabel(IntermediateCode aliasLabelNode) {
+        aliasLabels.put(label, aliasLabelNode.label);
     }
 
     /**
@@ -76,8 +80,11 @@ public class IntermediateCode {
             if(usedLabels.contains(label)){
                 return "L" + label + ":\n";
             }
+
+            // TODO: remove
+            return "L" + label + ":\n";
             
-            return "";
+            //return "";
         }
 
         else if(operation == "jump"){

@@ -82,4 +82,24 @@ public class CodeGeneratorIR implements CodeGenerator{
 
         return s.toString();
     }
+
+    public void optimize(){
+            
+        String prevOp = "";
+
+        IntermediateCode prevNode = null;
+
+        for(IntermediateCode ir: code){            
+               
+            if(ir.operation == "label"){
+
+                if (prevOp == "label") {
+                    ir.setAliasLabel(prevNode);
+                }
+            }
+
+            prevNode = ir;
+            prevOp = ir.operation;
+        }
+    }
 }

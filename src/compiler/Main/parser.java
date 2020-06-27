@@ -8,6 +8,7 @@ package Main;
 import java_cup.runtime.*;
 import java.util.*;
 import Nodes.*;
+import Error.*;
 import java_cup.runtime.ComplexSymbolFactory.Location;
 import java_cup.runtime.XMLElement;
 
@@ -296,7 +297,7 @@ public class parser extends java_cup.runtime.lr_parser {
                 }                    
             }
         }
-   
+
         /* Add to the end of the StringBuilder error message created in
            this method the message that was passed into this method. */
         m.append(" : "+message);
@@ -510,7 +511,13 @@ class CUP$parser$actions {
           case 12: // STMT ::= error SEMICOLON 
             {
               StatementNode RESULT =null;
-
+		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).xleft;
+		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).xright;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		
+               RESULT = new NullStmtNode();
+               ErrorHandler.getInstance().addError(String.format("Syntax Error"), "", exleft.getColumn(), exright.getLine());
+            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("STMT",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

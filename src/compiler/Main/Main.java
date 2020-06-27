@@ -128,6 +128,7 @@ public class Main {
             }
             
             result.genCode(cgIR);
+            cgIR.optimize();
 
             if(irOutFilename != null){
                 PrintStream ps = new PrintStream( new FileOutputStream( new File(irOutFilename)));

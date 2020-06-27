@@ -65,7 +65,7 @@ public class SyntaxAnalysis implements Visitor {
     
                 stmt.accept(this);
             }
-        }            
+        }
 
         s.append("\"];\n");
 
