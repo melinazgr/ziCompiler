@@ -1,30 +1,45 @@
 mainclass testNested {
      public static void main ( ) {
         
-        int a, b, c;
-
+        int a, b;
 
         a = 90;
         b = 20;
-        
-        c = a + b;
 
         if( a < b){
-            int k;
-            a = b;
-            a = b + k * c;
-            k = 0;
+            println(a);
         }
 
         else {
-            int l;
-            b = 40;
-            a = l * b;
+           if(a < 100){
+               println(a);
+           }
+
+           else{
+               a = a + 1;
+               //expected value 91
+               println(a);
+           }
+        }
+     
+
+    a = 3;
+    b = 10;
+     if( a > b){
+            println(a);
         }
 
-        while(a > 0){
-            int k;
-            a = b + k * c;
+        else{ 
+           if(a == 101){
+               println(a);
+           }
+
+           else{
+               a = a + 1;
+               //expected value 4
+               println(a);
+           }
         }
      }
+     
  }

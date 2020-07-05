@@ -1,5 +1,13 @@
+L1:
+L3:
 a = 0
 b = 0
+L4:
+L5:
 t1 = 10 + b
 a = t1
+L6:
+L7:
 call println a
+L8:
+L2:

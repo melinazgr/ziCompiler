@@ -1,18 +1,39 @@
+L1:
+L3:
 first = 0
 second = 0
 i = 0
 tmp = 0
+L4:
+L5:
 first = 0
+L6:
+L7:
 second = 1
+L8:
+L9:
 i = 0
+L10:
+L11:
 L13:
 iffalse i LESS 10 goto L12
+L14:
 t1 = i + 1
 i = t1
+L15:
+L16:
 t1 = first + second
 tmp = t1
+L17:
+L18:
 call println tmp
+L19:
+L20:
 first = second
+L21:
+L22:
 second = tmp
+L23:
 goto L13
 L12:
+L2:

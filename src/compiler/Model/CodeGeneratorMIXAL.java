@@ -26,9 +26,6 @@ public class CodeGeneratorMIXAL {
                 
         code.append(genBeforeProgr());
 
-        String prevOp = "";
-        int prevLabel = 0;
-
         for(IntermediateCode ir: codeIR.code){
             if(ir.operation != null &&  ir.expr1 != null && ir.resultExpr != null  && ir.expr2 == null){
                 if(ir.operation == "-"){
@@ -85,26 +82,17 @@ public class CodeGeneratorMIXAL {
                 if(IntermediateCode.usedLabels.contains(ir.label)) {
 
                     int label = findLabelToUse(ir.label);
-
-                    if (prevOp == "label")
-                    {
-                        if (prevLabel != label) {
-                            code.append("L"+ label);
-                        }
-                    }
-                    else{
+                    if(!IntermediateCode.createdLabels.contains(label)){
                         code.append("L"+ label);
+                        IntermediateCode.createdLabels.add(label);
                     }
                 }
-                prevLabel = ir.label;
             }
             else if(ir.operation == "jump"){
                 int label = findLabelToUse(ir.label);
 
                 code.append("\tJMP L"+ label+ "\n");
             }
-
-            prevOp = ir.operation;
         }
 
         code.append(genAfterProgr());
@@ -112,7 +100,11 @@ public class CodeGeneratorMIXAL {
 
     private int findLabelToUse(int label) {
         while (IntermediateCode.aliasLabels.containsKey(label)){
-            label = IntermediateCode.aliasLabels.get(label);
+            int newLabel = IntermediateCode.aliasLabels.get(label);
+            if(newLabel == label){
+                break;
+            }
+            label = newLabel;
         }
         return label;
     }
@@ -285,7 +277,7 @@ public class CodeGeneratorMIXAL {
 
         if(expr instanceof NumberNode){
              NumberNode n = (NumberNode) expr;
-            if (n.intValue > 4095 || n.intValue < -4095){
+            if (n.intValue > 4095 || n.intValue < -4095 || n.floatValue > 4095.0 || n.floatValue < -4095.0 ){
                 constants.add(n);
                 code.append("\t" + prefix + operation + n.NodeId.toUpperCase());
             } 
@@ -316,7 +308,7 @@ public class CodeGeneratorMIXAL {
         s.append(
             "TERM\tEQU 19\tthe terminal\n" +
             "SYM\tEQU 3000\n" +
-            "\tORIG 3000\n" +
+            "\tORIG 50\n" +
             "BEGIN\tNOP\n"
             );
 
@@ -379,7 +371,6 @@ public class CodeGeneratorMIXAL {
             }
         }
         
-
         s.append(
             "PRINT\tALF    - \n"+
             "PRINT1\tCON 0\n" +

@@ -1,13 +1,28 @@
+L1:
+L3:
 i = 0
 j = 0
+L4:
+L5:
 i = 5
+L6:
+L7:
 j = 1
+L8:
+L9:
 L11:
 iffalse i LESS 10 goto L10
+L12:
 t1 = j + 1
 j = t1
+L13:
+L14:
 t1 = i + 1
 i = t1
+L15:
 goto L11
 L10:
+L16:
 call println j
+L17:
+L2:

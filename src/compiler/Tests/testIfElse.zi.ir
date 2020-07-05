@@ -1,20 +1,27 @@
+L1:
+L3:
 a = 0
 b = 0
+L4:
+L5:
 a = 90
+L6:
+L7:
 b = 20
+L8:
+L9:
 iffalse a LESS b goto L12
-k = 0
-a = b
-k = 0
+L11:
+L13:
+a = 10
+L14:
+L15:
+b = 5
+L16:
+goto L10
 L12:
-l = 0
+L17:
 b = 40
-a = l
-k = 0
-L29:
-iffalse a GREAT 0 goto L26
-t1 = a - 1
-a = t1
-k = a
-goto L29
-L26:
+L18:
+L10:
+L2:

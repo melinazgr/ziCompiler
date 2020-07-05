@@ -1,13 +1,33 @@
+L1:
+L3:
 a = 0
 b = 0
+L4:
+L5:
 a = 10
+L6:
+L7:
 b = 20
+L8:
+L9:
 iffalse a LESS b goto L10
+L11:
+L12:
 a = b
+L13:
 L10:
+L14:
 iffalse a EQUAL b goto L15
+L16:
+L17:
 a = b
+L18:
 L15:
+L19:
 iffalse a LESS b goto L20
+L21:
+L22:
 a = b
+L23:
 L20:
+L2:

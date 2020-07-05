@@ -7,21 +7,12 @@ mainclass testIfElse {
         b = 20;
 
         if( a < b){
-            int k;
-            a = b;
-            k = 0;
+            a = 10;
+            b = 5;
         }
 
         else {
-            int l;
             b = 40;
-            a = l;
-        }
-
-        while(a > 0){
-            int k;
-            a = a - 1;
-            k = a;
         }
      }
  }

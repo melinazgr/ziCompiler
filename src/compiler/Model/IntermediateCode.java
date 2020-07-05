@@ -20,13 +20,13 @@ public class IntermediateCode {
 
     public static HashSet<Integer> usedLabels = new HashSet<Integer>();
     public static HashMap<Integer, Integer> aliasLabels = new HashMap<Integer, Integer>();
+    public static HashSet<Integer> createdLabels = new HashSet<Integer>();
 
     public IntermediateCode(){
 
     }
     
     //constructors for each statement / operation 
-
     public IntermediateCode (String operation, ExpressionNode expr1, ExpressionNode expr2, ExpressionNode resultExpr){
         this.operation = operation;
         this.expr1 = expr1;
@@ -123,7 +123,6 @@ public class IntermediateCode {
                     " " + operation.toString() + 
                     " " + expr2.toString() + 
                     " goto " + "L" + label + "\n";
-            
         }
 
         else if (jumpOperation != null){

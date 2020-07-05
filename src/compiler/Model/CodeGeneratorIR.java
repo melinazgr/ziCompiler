@@ -86,15 +86,17 @@ public class CodeGeneratorIR implements CodeGenerator{
     public void optimize(){
             
         String prevOp = "";
-
         IntermediateCode prevNode = null;
 
-        for(IntermediateCode ir: code){            
+        for(IntermediateCode ir : code){            
                
             if(ir.operation == "label"){
 
                 if (prevOp == "label") {
                     ir.setAliasLabel(prevNode);
+                }
+                else{
+                    ir.setAliasLabel(ir);
                 }
             }
 

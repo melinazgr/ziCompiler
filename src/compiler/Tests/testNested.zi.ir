@@ -1,27 +1,68 @@
+L1:
+L3:
 a = 0
 b = 0
-c = 0
+L4:
+L5:
 a = 90
+L6:
+L7:
 b = 20
-t1 = a + b
-c = t1
-iffalse a LESS b goto L14
-k = 0
-a = b
-t2 = k * c
-t3 = b + t2
-a = t3
-k = 0
+L8:
+L9:
+iffalse a LESS b goto L12
+L11:
+L13:
+call println a
 L14:
-l = 0
-b = 40
-t4 = l * b
-a = t4
-k = 0
+goto L10
+L12:
+L15:
+iffalse a LESS 100 goto L18
+L17:
+L19:
+call println a
+L20:
+goto L16
+L18:
+L21:
+t1 = a + 1
+a = t1
+L22:
+L23:
+call println a
+L24:
+L16:
+L10:
+L25:
+a = 3
+L26:
+L27:
+b = 10
+L28:
+L29:
+iffalse a GREAT b goto L32
+L31:
 L33:
-iffalse a GREAT 0 goto L30
-t5 = k * c
-t6 = b + t5
-a = t6
-goto L33
+call println a
+L34:
+goto L30
+L32:
+L35:
+iffalse a EQUAL 101 goto L38
+L37:
+L39:
+call println a
+L40:
+goto L36
+L38:
+L41:
+t2 = a + 1
+a = t2
+L42:
+L43:
+call println a
+L44:
+L36:
 L30:
+L2:
