@@ -1,30 +1,13 @@
-L1:
-L3:
 a = 0
-L4:
-L5:
 b = 0
-L6:
-L7:
 a = 1
-L8:
-L9:
 b = 1
-L10:
-L11:
 L13:
 iffalse a LESS 10 goto L12
-L14:
 t1 = a + 1
 a = t1
-L15:
-L16:
 t1 = b + 1
 b = t1
-L17:
-L18:
 call println b
-L19:
 goto L13
 L12:
-L2:

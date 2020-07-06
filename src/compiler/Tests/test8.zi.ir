@@ -1,24 +1,10 @@
-L1:
-L3:
 a = 0
 b = 0
-L4:
-L5:
 a = 90
-L6:
-L7:
 b = 20
-L8:
-L9:
 iffalse a LESS b goto L12
-L11:
-L13:
 a = b
-L14:
 goto L10
 L12:
-L15:
 b = 40
-L16:
 L10:
-L2:

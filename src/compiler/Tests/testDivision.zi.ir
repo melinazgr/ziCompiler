@@ -1,72 +1,28 @@
-L1:
-L3:
 a = 0
 b = 0
 c = 0
-L4:
-L5:
 a = 80
-L6:
-L7:
 b = 40
-L8:
-L9:
 t1 = a / b
 c = t1
-L10:
-L11:
 call println c
-L12:
-L13:
 a = -80
-L14:
-L15:
 b = 10
-L16:
-L17:
 t1 = a / b
 c = t1
-L18:
-L19:
 call println c
-L20:
-L21:
 a = 80
-L22:
-L23:
 b = -20
-L24:
-L25:
 t1 = a / b
 c = t1
-L26:
-L27:
 call println c
-L28:
-L29:
 a = -80
-L30:
-L31:
 b = -30
-L32:
-L33:
 t1 = a / b
 c = t1
-L34:
-L35:
 call println c
-L36:
-L37:
 a = 80
-L38:
-L39:
 b = 0
-L40:
-L41:
 t1 = a / b
 c = t1
-L42:
-L43:
 call println c
-L44:
-L2:

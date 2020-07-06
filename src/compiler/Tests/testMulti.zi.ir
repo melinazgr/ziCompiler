@@ -1,30 +1,12 @@
-L1:
-L3:
 a = 0
 b = 0
 c = 0
-L4:
-L5:
 a = 50
-L6:
-L7:
 b = 80
-L8:
-L9:
 t1 = a * b
 c = t1
-L10:
-L11:
 call println c
-L12:
-L13:
 a = -10
-L14:
-L15:
 t1 = a * b
 c = t1
-L16:
-L17:
 call println c
-L18:
-L2:

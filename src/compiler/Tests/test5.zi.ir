@@ -1,28 +1,16 @@
-L1:
-L3:
 a = 0
 b = 0
 c = 0
 d = 0
-L4:
-L5:
 t1 = a - b
 t2 = t1 - c
 d = t2
-L6:
-L7:
 t2 = b - c
 t1 = a - t2
 d = t1
-L8:
-L9:
 t1 = a + b
 t2 = t1 * c
 d = t2
-L10:
-L11:
 t2 = b + c
 t1 = a * t2
 d = t1
-L12:
-L2:
