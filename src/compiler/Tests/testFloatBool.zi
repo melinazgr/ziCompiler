@@ -1,0 +1,17 @@
+mainclass testFloat {
+     public static void main ( ) {
+      
+      float a, b;
+
+      a = 5.8;
+      b = 2.4;
+
+      if(a > b){
+          println(a);
+      }
+
+      else{
+          println(1);
+      } 
+     }
+ }

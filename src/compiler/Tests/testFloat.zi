@@ -1,0 +1,14 @@
+mainclass testFloat {
+     public static void main ( ) {
+      
+      float a, b, c;
+
+      a = 0.1;
+      b = 0.4;
+
+      c = a+b;
+      println(c);
+
+       
+     }
+ }

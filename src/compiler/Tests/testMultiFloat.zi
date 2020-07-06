@@ -1,0 +1,15 @@
+mainclass testMultiFloat {
+     public static void main ( ) {
+        
+        int a;
+        float b;
+        float c;
+
+        a = 5;
+        b = 0.2;
+        c = a * b;
+        println(c);
+
+        
+    }
+ }

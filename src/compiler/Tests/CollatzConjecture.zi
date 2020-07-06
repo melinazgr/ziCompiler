@@ -1,0 +1,26 @@
+mainclass CollatzConjecture {
+     public static void main ( ) {
+        
+        int n;
+        n = 12;
+
+        while (n != 1) { 
+            println(n); 
+      
+            // if n is odd 
+
+            if ((n - 2 * (n / 2)) != 0) {
+                n = (3 * n) + 1; 
+            }
+      
+            // if even 
+            else{
+                n = n / 2; 
+            }
+        } 
+      
+        // print 1 at the end 
+        println(n); 
+        
+     }
+ }

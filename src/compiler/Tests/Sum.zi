@@ -1,0 +1,15 @@
+mainclass Sum {
+    public static void main ( ) {
+        
+        int num, sum, i;
+        num = 100;
+        sum = 0;
+        i = 1;
+
+        for(i = 1; i <= num; i = i + 1){
+            sum = sum + i;
+        }
+
+        println(sum);
+    }
+}

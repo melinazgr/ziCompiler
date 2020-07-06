@@ -1,0 +1,10 @@
+mainclass testWhile {
+     public static void main ( ) {
+        
+        int j, sum; 
+        while (j<10){
+            sum = sum + j;
+            j = j+1;
+        }
+     }
+ }

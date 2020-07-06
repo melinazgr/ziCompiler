@@ -1,0 +1,14 @@
+mainclass Circle {
+     public static void main ( ) {
+    
+        float area, pi;
+        int r;
+
+        r = 1;
+        pi = 3.14;
+
+        area = pi * r * r; 
+
+        println(area);
+     }
+ }
