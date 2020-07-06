@@ -1,4 +1,4 @@
-mainclass testFloat {
+mainclass testFloatBool {
      public static void main ( ) {
       
       float a, b;
@@ -11,7 +11,7 @@ mainclass testFloat {
       }
 
       else{
-          println(1);
+          println(b);
       } 
      }
  }

@@ -22,10 +22,10 @@ mainclass testNested {
            }
         }
      
+        a = 3;
+        b = 10;
 
-    a = 3;
-    b = 10;
-     if( a > b){
+        if( a > b){
             println(a);
         }
 
@@ -41,5 +41,4 @@ mainclass testNested {
            }
         }
      }
-     
  }

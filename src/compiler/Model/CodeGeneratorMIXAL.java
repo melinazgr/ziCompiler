@@ -12,7 +12,6 @@ public class CodeGeneratorMIXAL {
 
     StringBuilder code = new StringBuilder();
     ArrayList<NumberNode> constants = new ArrayList<NumberNode>();
-    //TODO float terminal 18 19
 
     public CodeGeneratorMIXAL(){
     

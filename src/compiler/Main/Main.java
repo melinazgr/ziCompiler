@@ -154,10 +154,4 @@ public class Main {
     }
 }
 
-    //TODO if else grammar conflict
-    //TODO assign grammar conflict
-
-    //TODO semantic float limits
-    //TODO warning l - r value
-
     //TODO decltype comments
