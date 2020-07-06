@@ -65,6 +65,11 @@ public class IntermediateCode {
         this.functionName = functionName;
         this.operation = "call";
     }
+    public IntermediateCode(ExpressionNode expr, ExpressionNode resultExpr){
+        this.operation = "cast";
+        this.expr1 = expr;
+        this.resultExpr = resultExpr;
+    }
 
     public void setAliasLabel(IntermediateCode aliasLabelNode) {
         aliasLabels.put(label, aliasLabelNode.label);
@@ -81,10 +86,7 @@ public class IntermediateCode {
                 return "L" + label + ":\n";
             }
 
-            // TODO: remove
-            return "L" + label + ":\n";
-            
-            //return "";
+            return "";
         }
 
         else if(operation == "jump"){
@@ -93,6 +95,10 @@ public class IntermediateCode {
         
         else if(operation == "call"){
             return "call " + functionName + " " + expr1.toString() + "\n";
+        }
+
+        else if(operation == "cast"){
+            return resultExpr.toString() + " cast " + expr1.toString() + "\n";
         }
 
         else if (operation !=null && expr1 != null && resultExpr != null && expr2 != null){

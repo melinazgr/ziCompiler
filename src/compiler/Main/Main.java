@@ -15,16 +15,19 @@ import java_cup.runtime.*;
  * 
  *
  */
-
- 
 public class Main {
 
     public static boolean Debug = false;
     public static void main(String[] argv)
     {
 
-
-        String helpText = "Usage: java Main [-debug] [-ast <ast filename>] [-ir <filename>] -i <src filename>"; 
+        
+        String helpText = "Usage: java Main [-debug]\n"+
+                          "                 [-v]\n"+
+                          "                 [-ast <ast filename>]\n" +
+                          "                 [-ir <filename>]\n"+
+                          "                 [-out <mixal out filename>]\n" + 
+                          "                 -i <src filename> "; 
         String astOutFilename = null;
         String srcInputFilename = null;
         String irOutFilename = null;
@@ -78,7 +81,7 @@ public class Main {
 					verbose = true;
                 }
 				else {
-					throw new Exception(helpText);  
+					throw new Exception(helpText);
                 }
             }
 
@@ -145,7 +148,7 @@ public class Main {
             ps.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             System.exit(100);
         }
     }

@@ -13,6 +13,7 @@ public interface CodeGenerator {
     public void emitJump(int label);
     public void emitLabel(int label);
     public void emitFunctionCall(String functionName, ExpressionNode expr);
+    public void emitCast(ExpressionNode expr, ExpressionNode resultExpr);
     public String toString();
 }
 

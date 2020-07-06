@@ -70,6 +70,12 @@ public class CodeGeneratorIR implements CodeGenerator{
         code.add(interCode);
     }
 
+    public void emitCast(ExpressionNode expr, ExpressionNode resultExpr){
+        IntermediateCode interCode = new IntermediateCode(expr, resultExpr);
+        code.add(interCode);
+    }
+
+
      /**
      * Convert to string
      * @return string

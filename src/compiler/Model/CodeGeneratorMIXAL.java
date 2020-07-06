@@ -12,6 +12,8 @@ public class CodeGeneratorMIXAL {
 
     StringBuilder code = new StringBuilder();
     ArrayList<NumberNode> constants = new ArrayList<NumberNode>();
+    //TODO float terminal 18 19
+    static boolean isMixBuilder = false;
 
     public CodeGeneratorMIXAL(){
     
@@ -27,7 +29,13 @@ public class CodeGeneratorMIXAL {
         code.append(genBeforeProgr());
 
         for(IntermediateCode ir: codeIR.code){
-            if(ir.operation != null &&  ir.expr1 != null && ir.resultExpr != null  && ir.expr2 == null){
+            if(ir.operation == "cast"){
+                loadAValue(ir.expr1);
+                isMixBuilder = true;
+                code.append("\tFLOT\n");
+                storeRegisterValue(ir.resultExpr, "A");
+            }
+            else if(ir.operation != null &&  ir.expr1 != null && ir.resultExpr != null  && ir.expr2 == null){
                 if(ir.operation == "-"){
                     loadAValue(ir.expr1, true);
                     storeRegisterValue(ir.resultExpr, "A");
@@ -38,7 +46,7 @@ public class CodeGeneratorMIXAL {
                 }
             }
             else if (ir.operation !=null && ir.expr1 != null && ir.resultExpr != null && ir.expr2 != null){
-                              
+
                 if(ir.operation == "+"){
                     loadAValue(ir.expr1);
                     operateAValue(ir.expr2, "ADD");
@@ -54,17 +62,34 @@ public class CodeGeneratorMIXAL {
                 else if(ir.operation == "*"){
                     loadAValue(ir.expr1);
                     operateAValue(ir.expr2, "MUL");
-                    code.append("\tJANZ TOOLARGE\n");
-                    storeRegisterValue(ir.resultExpr, "X");
+                    if(ir.resultExpr.type == VariableType.FLOAT){
+                        storeRegisterValue(ir.resultExpr, "A");
+                    }
+                    else{
+                        code.append("\tJANZ TOOLARGE\n");
+                        storeRegisterValue(ir.resultExpr, "X");
+                    }                   
                 }
                 else if(ir.operation == "/"){
-                    loadAValue(ir.expr2);
-                    code.append("\tJAZ ZERO\n");
-                    loadAValue(ir.expr1);
-                    code.append("\tSRAX 5\n");
-                    operateAValue(ir.expr2, "DIV");
-                    code.append("\tJOV TOOLARGE\n");
-                    storeRegisterValue(ir.resultExpr, "A");
+                    if(ir.resultExpr.type == VariableType.INT){
+                        loadAValue(ir.expr2);
+                        code.append("\tJAZ ZERO\n");
+                        loadAValue(ir.expr1);
+                        code.append("\tSRAX 5\n");
+                        operateAValue(ir.expr2, "DIV");
+                        code.append("\tJOV TOOLARGE\n");
+                        storeRegisterValue(ir.resultExpr, "A");      
+                    }
+                    else{
+                        // loadAValue(ir.expr2);
+                        // code.append("\tFCMP FZERO");
+                        // code.append("\tJE ZERO");
+                        loadAValue(ir.expr1);
+                        operateAValue(ir.expr2, "DIV");
+                        // TODO too large
+                        storeRegisterValue(ir.resultExpr, "A");
+                    }
+                                  
                 }
             }
             else if(ir.operation == "call"){
@@ -159,7 +184,7 @@ public class CodeGeneratorMIXAL {
     private void jumpOnOperation(boolean condition, String operation, int label)throws Exception{
         if(condition){
            
-            throw new Exception("jumOnOperation: unsupported expression");
+            throw new Exception("jumpOnOperation: unsupported expression");
         }
         else {
             
@@ -273,18 +298,27 @@ public class CodeGeneratorMIXAL {
 
         if(expr.type == VariableType.FLOAT) {
             prefix = "F";
+            isMixBuilder = true;
         }
 
         if(expr instanceof NumberNode){
              NumberNode n = (NumberNode) expr;
-            if (n.intValue > 4095 || n.intValue < -4095 || n.floatValue > 4095.0 || n.floatValue < -4095.0 ){
+             if(n.type == VariableType.INT){
+                 if (n.intValue > 4095 || n.intValue < -4095){
+                    constants.add(n);
+                    code.append("\t" + prefix + operation +" "+ n.NodeId.toUpperCase());
+                } 
+                else{
+                    code.append("\t" + prefix + operation + " =" + expr.toString() + "=");
+                }
+             }
+             else{
                 constants.add(n);
-                code.append("\t" + prefix + operation + n.NodeId.toUpperCase());
-            } 
-            else{
-                code.append("\t" + prefix + operation + " =" + expr.toString() + "=");
-            }
+                code.append("\t" + prefix + operation +" "+ n.NodeId.toUpperCase());
+             }
+            
         }
+
         else if(expr instanceof IdNode){
             code.append("\t" + prefix + operation + " SYM+" + ((IdNode) expr).offset);
         }
@@ -304,9 +338,13 @@ public class CodeGeneratorMIXAL {
      */
     private String genBeforeProgr(){
         StringBuilder s = new StringBuilder();
+        int terminal = 19;
+        if(isMixBuilder == true){
+            terminal = 18;
+        }
 
         s.append(
-            "TERM\tEQU 19\tthe terminal\n" +
+            "TERM\tEQU " + terminal + " \tthe terminal\n" +
             "SYM\tEQU 3000\n" +
             "\tORIG 50\n" +
             "BEGIN\tNOP\n"
@@ -356,6 +394,7 @@ public class CodeGeneratorMIXAL {
             s.append("\tALF      \n");
         }
         
+        s.append("FZERO\tCON 553648128\n");
         if(!constants.isEmpty()){
             for(NumberNode n: constants){
                 s.append( n.NodeId.toUpperCase() + "\tCON ");

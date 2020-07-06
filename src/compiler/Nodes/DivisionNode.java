@@ -42,8 +42,20 @@ public class DivisionNode extends ExpressionNode {
         DivisionNode reducedAddNode =  new DivisionNode(this.term.reduce(cg), this.factor.reduce(cg));
         StatementListNode scope = (StatementListNode) this.getScopeParent();
         TempExprNode temp = scope.getTemp(this.type);
+        ExpressionNode exprFactor = reducedAddNode.factor, exprTerm = reducedAddNode.term;
         
-        cg.emitStatement("/", reducedAddNode.term, reducedAddNode.factor, temp);
+        if(this.type == VariableType.FLOAT && reducedAddNode.term.type == VariableType.INT){
+            TempExprNode tempTerm = scope.getTemp(this.type);
+            cg.emitCast( reducedAddNode.term, tempTerm);
+            exprTerm = tempTerm;
+        }
+        if(this.type == VariableType.FLOAT && reducedAddNode.factor.type == VariableType.INT){
+            TempExprNode tempFactor = scope.getTemp(this.type);
+            cg.emitCast( reducedAddNode.factor, tempFactor);
+            exprFactor = tempFactor;
+        }
+
+        cg.emitStatement("/", exprTerm, exprFactor, temp);
 
         if(reducedAddNode.factor instanceof TempExprNode){
             scope.returnTemp((TempExprNode)reducedAddNode.factor);
