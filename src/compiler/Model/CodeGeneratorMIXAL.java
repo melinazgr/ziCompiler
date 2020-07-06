@@ -13,7 +13,6 @@ public class CodeGeneratorMIXAL {
     StringBuilder code = new StringBuilder();
     ArrayList<NumberNode> constants = new ArrayList<NumberNode>();
     //TODO float terminal 18 19
-    static boolean isMixBuilder = false;
 
     public CodeGeneratorMIXAL(){
     
@@ -25,13 +24,12 @@ public class CodeGeneratorMIXAL {
      * @throws Exception
      */
     public void genCode(CodeGeneratorIR codeIR)throws Exception{
-                
-        code.append(genBeforeProgr());
+
+        code.append(genBeforeProgr(codeIR));
 
         for(IntermediateCode ir: codeIR.code){
             if(ir.operation == "cast"){
                 loadAValue(ir.expr1);
-                isMixBuilder = true;
                 code.append("\tFLOT\n");
                 storeRegisterValue(ir.resultExpr, "A");
             }
@@ -298,7 +296,6 @@ public class CodeGeneratorMIXAL {
 
         if(expr.type == VariableType.FLOAT) {
             prefix = "F";
-            isMixBuilder = true;
         }
 
         if(expr instanceof NumberNode){
@@ -336,12 +333,16 @@ public class CodeGeneratorMIXAL {
      * default code before the program starts in mixal
      * @return the code
      */
-    private String genBeforeProgr(){
+    private String genBeforeProgr(CodeGeneratorIR codeIR){
         StringBuilder s = new StringBuilder();
         int terminal = 19;
-        if(isMixBuilder == true){
-            terminal = 18;
+        
+        for(IntermediateCode ir: codeIR.code){
+            if(codeIR.isMixBuilder == true){
+                terminal = 18;
+            }
         }
+
 
         s.append(
             "TERM\tEQU " + terminal + " \tthe terminal\n" +
@@ -349,8 +350,8 @@ public class CodeGeneratorMIXAL {
             "\tORIG 50\n" +
             "BEGIN\tNOP\n"
             );
-
-        return s.toString();
+            
+            return s.toString();
     }    
 
     /**

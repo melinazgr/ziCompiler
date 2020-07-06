@@ -12,7 +12,7 @@ import java.util.*;
 public class CodeGeneratorIR implements CodeGenerator{
 
     public ArrayList<IntermediateCode> code = new ArrayList<IntermediateCode>();
-
+    public static boolean isMixBuilder = false;
     public CodeGeneratorIR(){
             
     }
@@ -36,6 +36,9 @@ public class CodeGeneratorIR implements CodeGenerator{
      */
     public void emitStatement(String operation, ExpressionNode expr1, ExpressionNode expr2, ExpressionNode resultExpr){
         IntermediateCode interCode = new IntermediateCode(operation, expr1, expr2, resultExpr);
+        if(resultExpr.type == VariableType.FLOAT){
+            isMixBuilder = true;
+        }
         code.add(interCode);
     }
 
@@ -49,6 +52,7 @@ public class CodeGeneratorIR implements CodeGenerator{
     public void emitJump(boolean condition, String operation, ExpressionNode expr1, ExpressionNode expr2, int label){
         IntermediateCode interCode = new IntermediateCode(condition, operation, expr1, expr2, label);
         code.add(interCode);
+        
     }
 
     /**
@@ -72,6 +76,7 @@ public class CodeGeneratorIR implements CodeGenerator{
 
     public void emitCast(ExpressionNode expr, ExpressionNode resultExpr){
         IntermediateCode interCode = new IntermediateCode(expr, resultExpr);
+        isMixBuilder = true;
         code.add(interCode);
     }
 
@@ -89,6 +94,10 @@ public class CodeGeneratorIR implements CodeGenerator{
         return s.toString();
     }
 
+    /**
+     * optimizes the use of labels 
+     * in the code
+     */
     public void optimize(){
             
         String prevOp = "";

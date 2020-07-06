@@ -16,4 +16,3 @@ public interface CodeGenerator {
     public void emitCast(ExpressionNode expr, ExpressionNode resultExpr);
     public String toString();
 }
-
